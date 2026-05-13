@@ -112,12 +112,15 @@ export default function Home() {
 
         <footer className={styles.footer}>
           <div>
-            <h3>JAMES MBOMA</h3>
-            <p>A dedicated software engineer, looking to solve real problems.</p>
+            Oyotō © 2026
           </div>
           <div>
-            <h3>LETS CHAT</h3>
-            <p>jamesmboma08@gmail.com</p>
+            <a href="https://github.com/mboma99" target="_blank" rel="noopener noreferrer" className={styles.socialLink}>
+              GitHub
+            </a>
+            <a href="https://www.linkedin.com/in/james-mboma/" target="_blank" rel="noopener noreferrer" className={styles.socialLink}>
+              LinkedIn
+            </a>
           </div>
         </footer>
       </div>
@@ -133,14 +136,24 @@ export default function Home() {
             <a href="#projects" onClick={() => setMenuOpen(false)}>
               PROJECTS
             </a>
-            <a href="#contact" onClick={() => setMenuOpen(false)}>
-              CONTACT
-            </a>
-            <a href="mailto:jamesmboma08@gmail.com">EMAIL</a>
-            <a href="#learn-more" onClick={() => setMenuOpen(false)}>
-              LEARN MORE
+            <a href="mailto:jamesmboma08@gmail.com">CONTACT</a>
+            <a href="#resume" onClick={() => setMenuOpen(false)}>
+              RESUME
             </a>
           </nav>
+        </div>
+        <div className={styles.menuFooter}>
+          <div className={styles.menuFooterLeft}>
+            Oyotō © 2026
+          </div>
+          <div className={styles.menuFooterRight}>
+            <a href="https://github.com/mboma99" target="_blank" rel="noopener noreferrer" className={styles.socialLink}>
+              GitHub
+            </a>
+            <a href="https://www.linkedin.com/in/james-mboma/" target="_blank" rel="noopener noreferrer" className={styles.socialLink}>
+              LinkedIn
+            </a>
+          </div>
         </div>
       </div>
     </div>
