@@ -123,27 +123,26 @@ export default function Home() {
       </div>
 
       {/* Full Page Menu Overlay */}
-      {menuOpen && (
-        <div className={styles.menuOverlay}>
-          <div className={styles.menuContent}>
-            <nav className={styles.menuNav}>
-              <a href="#about" onClick={() => setMenuOpen(false)}>
-                ABOUT
-              </a>
-              <a href="#projects" onClick={() => setMenuOpen(false)}>
-                PROJECTS
-              </a>
-              <a href="#contact" onClick={() => setMenuOpen(false)}>
-                CONTACT
-              </a>
-              <a href="mailto:jamesmboma08@gmail.com">EMAIL</a>
-              <a href="#learn-more" onClick={() => setMenuOpen(false)}>
-                LEARN MORE
-              </a>
-            </nav>
-          </div>
+      <div className={`${styles.menuOverlay} ${menuOpen ? styles.open : ''}`}>
+        <p className={styles.logo}>oyotō</p>
+        <div className={styles.menuContent}>
+          <nav className={styles.menuNav}>
+            <a href="#about" onClick={() => setMenuOpen(false)}>
+              ABOUT
+            </a>
+            <a href="#projects" onClick={() => setMenuOpen(false)}>
+              PROJECTS
+            </a>
+            <a href="#contact" onClick={() => setMenuOpen(false)}>
+              CONTACT
+            </a>
+            <a href="mailto:jamesmboma08@gmail.com">EMAIL</a>
+            <a href="#learn-more" onClick={() => setMenuOpen(false)}>
+              LEARN MORE
+            </a>
+          </nav>
         </div>
-      )}
+      </div>
     </div>
   );
 }

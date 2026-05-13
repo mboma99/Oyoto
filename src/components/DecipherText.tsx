@@ -12,7 +12,7 @@ const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()";
 
 export function DecipherText({
   text,
-  speed = 90,
+  speed = 50,
   className = "",
 }: DecipherTextProps) {
   const [displayedText, setDisplayedText] = useState(text);
