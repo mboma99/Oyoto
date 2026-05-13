@@ -1,66 +1,116 @@
+"use client";
+
+import dynamic from "next/dynamic";
 import Image from "next/image";
+import { TypewriterText } from "@/components/TypewriterText";
 import styles from "./page.module.css";
+
+const ModelScene = dynamic(() => import("@/components/ModelScene"), {
+  ssr: false,
+});
+
+type Project = {
+  id: number;
+  title: string;
+  subtitle: string;
+  description: string;
+  image: string;
+};
+
+const projects: Project[] = [
+  {
+    id: 1,
+    title: "Project One",
+    subtitle: "Web Platform",
+    description: "A modern full-stack product with smooth UX and clean architecture.",
+    image:
+      "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1400&q=80",
+  },
+  {
+    id: 2,
+    title: "Project Two",
+    subtitle: "Mobile Experience",
+    description: "Cross-platform mobile app focused on usability and performance.",
+    image:
+      "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1400&q=80",
+  },
+  {
+    id: 3,
+    title: "Project Three",
+    subtitle: "Data Visualization",
+    description: "Analytics dashboard turning complex data into clear insights.",
+    image:
+      "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1400&q=80",
+  },
+];
 
 export default function Home() {
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className={styles.intro}>
-          <h1>To get started, edit the page.tsx file.</h1>
-          <p>
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className={styles.secondary}
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+    <div className={styles.layout}>
+      <aside className={styles.sideNav}>
+        <button type="button" className={styles.menuBtn}>
+          MENU
+        </button>
+      </aside>
+
+      <div className={styles.page}>
+        <header className={styles.header}>
+          <p className={styles.logo}>oyotō</p>
+          <nav className={styles.nav}>
+            <a href="#about">ABOUT</a>
+            <a href="#projects">PROJECTS</a>
+          </nav>
+        </header>
+
+        <main>
+          <section className={styles.hero} id="about">
+            <div className={styles.modelWrap}>
+              <ModelScene modelPath="/models/abstract_shape.glb" />
+            </div>
+            <div className={styles.heroTextWrap}>
+              <TypewriterText
+                text="DEFINE YOUR FUTURE."
+                speed={150}
+                className={styles.heroTitle}
+              />
+            </div>
+          </section>
+
+          <section className={styles.projectSection} id="projects">
+            <div className={styles.sliderTrack}>
+              {projects.map((project) => (
+                <article key={project.id} className={styles.projectCard}>
+                  <div className={styles.projectContent}>
+                    <p className={styles.projectSubtitle}>{project.subtitle}</p>
+                    <h2>{project.title}</h2>
+                    <p>{project.description}</p>
+                  </div>
+                  <div className={styles.projectImageWrap}>
+                    <Image
+                      src={project.image}
+                      alt={project.title}
+                      fill
+                      sizes="(max-width: 980px) 100vw, 30vw"
+                      priority={project.id === 1}
+                    />
+                  </div>
+                </article>
+              ))}
+            </div>
+          </section>
+        </main>
+
+        <footer className={styles.footer}>
+          <div>
+            <h3>JAMES MBOMA</h3>
+            <p>A dedicated software engineer, looking to solve real problems.</p>
+          </div>
+          <div>
+            <h3>LETS CHAT</h3>
+            <p>jamesmboma08@gmail.com</p>
+          </div>
+        </footer>
+      </div>
     </div>
   );
 }
