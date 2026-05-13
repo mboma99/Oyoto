@@ -2,10 +2,14 @@
 
 import dynamic from "next/dynamic";
 import Image from "next/image";
-import { TypewriterText } from "@/components/TypewriterText";
+import { useState } from "react";
 import styles from "./page.module.css";
+import { TypewriterText } from "@/components/TypewriterText";
 
 const ModelScene = dynamic(() => import("@/components/ModelScene"), {
+  ssr: false,
+});
+const DecipherText = dynamic(() => import("@/components/DecipherText").then(mod => mod.DecipherText), {
   ssr: false,
 });
 
@@ -45,11 +49,17 @@ const projects: Project[] = [
 ];
 
 export default function Home() {
+  const [menuOpen, setMenuOpen] = useState(false);
+
   return (
     <div className={styles.layout}>
       <aside className={styles.sideNav}>
-        <button type="button" className={styles.menuBtn}>
-          MENU
+        <button
+          type="button"
+          className={styles.menuBtn}
+          onClick={() => setMenuOpen(!menuOpen)}
+        >
+          <DecipherText text={menuOpen ? "CLOSE" : "MENU"} />
         </button>
       </aside>
 
@@ -111,6 +121,29 @@ export default function Home() {
           </div>
         </footer>
       </div>
+
+      {/* Full Page Menu Overlay */}
+      {menuOpen && (
+        <div className={styles.menuOverlay}>
+          <div className={styles.menuContent}>
+            <nav className={styles.menuNav}>
+              <a href="#about" onClick={() => setMenuOpen(false)}>
+                ABOUT
+              </a>
+              <a href="#projects" onClick={() => setMenuOpen(false)}>
+                PROJECTS
+              </a>
+              <a href="#contact" onClick={() => setMenuOpen(false)}>
+                CONTACT
+              </a>
+              <a href="mailto:jamesmboma08@gmail.com">EMAIL</a>
+              <a href="#learn-more" onClick={() => setMenuOpen(false)}>
+                LEARN MORE
+              </a>
+            </nav>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
