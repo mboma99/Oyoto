@@ -121,57 +121,159 @@
   margin: 3.5rem 0 4rem;
 }
 
-.sliderTrack {
-  display: grid;
-  grid-auto-flow: column;
-  grid-auto-columns: minmax(300px, 52%);
-  gap: 1.1rem;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  padding-bottom: 1rem;
-}
-
-.sliderTrack::-webkit-scrollbar {
-  height: 8px;
-}
-
-.sliderTrack::-webkit-scrollbar-thumb {
-  background: var(--contrast);
-  border-radius: 999px;
-}
-
 .projectCard {
-  scroll-snap-align: start;
-  background: var(--contrast);
-  color: #102015;
+  background: transparent;
+  color: #ffffff;
   border-radius: 24px;
-  min-height: 280px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  min-height: 70vh;
+  display: block;
   overflow: hidden;
+  opacity: 0;
+  transform: translateY(30px) scale(0.985);
+  transition:
+    opacity 900ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 900ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.projectContent {
-  padding: 2rem;
-}
-
-.projectSubtitle {
-  font-size: 0.78rem;
-  margin-bottom: 0.8rem;
-  text-transform: uppercase;
-}
-
-.projectContent h2 {
-  margin-bottom: 0.8rem;
+.projectCardVisible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
 }
 
 .projectImageWrap {
   position: relative;
-  min-height: 220px;
+  min-height: 85vh;
 }
 
-.projectImageWrap img {
+.projectVideo {
+  width: 100%;
+  height: 85vh;
+  display: block;
   object-fit: cover;
+  pointer-events: none;
+}
+
+.brandSection {
+  margin: 4rem 0;
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+}
+
+.brandInner {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  padding: 5rem 1rem;
+}
+
+.brandTextCol {
+  color: #ffffff;
+  max-width: 54ch;
+  opacity: 0;
+  transform: translateX(-48px);
+  transition:
+    opacity 850ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 1050ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.brandAnimCol {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transform: translateX(56px);
+  transition:
+    opacity 900ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 900ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: 420ms;
+}
+
+.brandTextVisible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.brandAnimVisible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.brandEyebrow {
+  font-size: 0.85rem;
+  letter-spacing: 0.12em;
+  margin-bottom: 1rem;
+}
+
+.brandTitle {
+  font-size: clamp(2rem, 4.5vw, 3.8rem);
+  line-height: 1.08;
+  margin-bottom: 1.2rem;
+}
+
+.brandBody {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  letter-spacing: 0.04em;
+}
+
+.orbitWrap {
+  position: relative;
+  width: min(30vw, 360px);
+  aspect-ratio: 1;
+}
+
+.ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  border: 1px solid rgba(134, 166, 140, 0.75);
+}
+
+.ringOne {
+  animation: spinClock 12s linear infinite;
+}
+
+.ringTwo {
+  inset: 10%;
+  animation: spinCounter 9s linear infinite;
+}
+
+.ringThree {
+  inset: 22%;
+  animation: spinClock 6.5s linear infinite;
+}
+
+.pulseCore {
+  position: absolute;
+  inset: 38%;
+  border-radius: 999px;
+  background: #86a68c;
+  box-shadow: 0 0 60px rgba(134, 166, 140, 0.5);
+  animation: corePulse 2.2s ease-in-out infinite;
+}
+
+@keyframes spinClock {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes spinCounter {
+  from { transform: rotate(360deg); }
+  to { transform: rotate(0deg); }
+}
+
+@keyframes corePulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.85;
+  }
+  50% {
+    transform: scale(1.18);
+    opacity: 1;
+  }
 }
 
 .footer {
@@ -399,20 +501,30 @@
     height: 320px;
   }
 
-  .sliderTrack {
-    grid-auto-columns: 92%;
-  }
-
   .projectCard {
-    grid-template-columns: 1fr;
+    min-height: 70vh;
   }
 
   .projectImageWrap {
-    min-height: 180px;
+    min-height: 70vh;
   }
 
   .footer {
     flex-direction: column;
+  }
+
+  .brandSection {
+    min-height: 60vh;
+  }
+
+  .brandInner {
+    padding: 2rem 1.5rem;
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  .orbitWrap {
+    width: min(70vw, 320px);
   }
 }
 
