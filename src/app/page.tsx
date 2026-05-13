@@ -2,10 +2,14 @@
 
 import dynamic from "next/dynamic";
 import Image from "next/image";
-import { TypewriterText } from "@/components/TypewriterText";
+import { useState } from "react";
 import styles from "./page.module.css";
+import { TypewriterText } from "@/components/TypewriterText";
 
 const ModelScene = dynamic(() => import("@/components/ModelScene"), {
+  ssr: false,
+});
+const DecipherText = dynamic(() => import("@/components/DecipherText").then(mod => mod.DecipherText), {
   ssr: false,
 });
 
@@ -45,11 +49,17 @@ const projects: Project[] = [
 ];
 
 export default function Home() {
+  const [menuOpen, setMenuOpen] = useState(false);
+
   return (
     <div className={styles.layout}>
       <aside className={styles.sideNav}>
-        <button type="button" className={styles.menuBtn}>
-          MENU
+        <button
+          type="button"
+          className={styles.menuBtn}
+          onClick={() => setMenuOpen(!menuOpen)}
+        >
+          <DecipherText text={menuOpen ? "CLOSE" : "MENU"} />
         </button>
       </aside>
 
@@ -102,14 +112,49 @@ export default function Home() {
 
         <footer className={styles.footer}>
           <div>
-            <h3>JAMES MBOMA</h3>
-            <p>A dedicated software engineer, looking to solve real problems.</p>
+            Oyotō © 2026
           </div>
           <div>
-            <h3>LETS CHAT</h3>
-            <p>jamesmboma08@gmail.com</p>
+            <a href="https://github.com/mboma99" target="_blank" rel="noopener noreferrer" className={styles.socialLink}>
+              GitHub
+            </a>
+            <a href="https://www.linkedin.com/in/james-mboma/" target="_blank" rel="noopener noreferrer" className={styles.socialLink}>
+              LinkedIn
+            </a>
           </div>
         </footer>
+      </div>
+
+      {/* Full Page Menu Overlay */}
+      <div className={`${styles.menuOverlay} ${menuOpen ? styles.open : ''}`}>
+        <p className={styles.logo}>oyotō</p>
+        <div className={styles.menuContent}>
+          <nav className={styles.menuNav}>
+            <a href="#about" onClick={() => setMenuOpen(false)}>
+              ABOUT
+            </a>
+            <a href="#projects" onClick={() => setMenuOpen(false)}>
+              PROJECTS
+            </a>
+            <a href="mailto:jamesmboma08@gmail.com">CONTACT</a>
+            <a href="#resume" onClick={() => setMenuOpen(false)}>
+              RESUME
+            </a>
+          </nav>
+        </div>
+        <div className={styles.menuFooter}>
+          <div className={styles.menuFooterLeft}>
+            Oyotō © 2026
+          </div>
+          <div className={styles.menuFooterRight}>
+            <a href="https://github.com/mboma99" target="_blank" rel="noopener noreferrer" className={styles.socialLink}>
+              GitHub
+            </a>
+            <a href="https://www.linkedin.com/in/james-mboma/" target="_blank" rel="noopener noreferrer" className={styles.socialLink}>
+              LinkedIn
+            </a>
+          </div>
+        </div>
       </div>
     </div>
   );
