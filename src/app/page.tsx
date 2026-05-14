@@ -2,6 +2,7 @@
 
 import dynamic from "next/dynamic";
 import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import styles from "./page.module.css";
 import { TypewriterText } from "@/components/TypewriterText";
 import { HeroAnimation } from "@/components/HeroAnimation";
@@ -14,7 +15,6 @@ const DecipherText = dynamic(() => import("@/components/DecipherText").then(mod 
 });
 
 export default function Home() {
-  const [menuOpen, setMenuOpen] = useState(false);
   const [brandTextVisible, setBrandTextVisible] = useState(false);
   const [brandAnimVisible, setBrandAnimVisible] = useState(false);
   const brandSectionRef = useRef<HTMLElement | null>(null);
@@ -48,22 +48,12 @@ export default function Home() {
 
   return (
     <div className={styles.layout}>
-      <aside className={styles.sideNav}>
-        <button
-          type="button"
-          className={styles.menuBtn}
-          onClick={() => setMenuOpen(!menuOpen)}
-        >
-          <DecipherText text={menuOpen ? "CLOSE" : "MENU"} />
-        </button>
-      </aside>
-
       <div className={styles.page}>
         <header className={styles.header}>
           <p className={styles.logo}>oyotō</p>
           <nav className={styles.nav}>
-            <a href="#"><DecipherText text={"ABOUT"} /></a>
-            <a href="#"><DecipherText text={"PROJECTS"} /></a>
+            <Link href="/about"><DecipherText text={"ABOUT"} animateOnHover={true} /></Link>
+            <Link href="/#projects"><DecipherText text={"PROJECTS"} animateOnHover={true} /></Link>
           </nav>
         </header>
 
@@ -90,11 +80,12 @@ export default function Home() {
               <div className={`${styles.brandTextCol} ${brandTextVisible ? styles.brandTextVisible : ""}`}>
                 <p className={styles.brandEyebrow}>DIGITAL BRAND</p>
                 <h2 className={styles.brandTitle}>
-                  Build your digital presence.
+                  Build a Presence That Matters.
                 </h2>
                 <p className={styles.brandBody}>
-                  We help businesses craft unmistakable digital presence across product,
-                  content, and customer touchpoints. Unlocking faster growth.
+                  We help businesses bridge the gap between brand vision and engineering reality.
+                  We build robust software across product and content systems,
+                  turning technical reliability into your greatest brand asset.
                 </p>
               </div>
               <div className={`${styles.brandAnimCol} ${brandAnimVisible ? styles.brandAnimVisible : ""}`} aria-hidden="true">
@@ -122,37 +113,6 @@ export default function Home() {
             </a>
           </div>
         </footer>
-      </div>
-
-      <div className={`${styles.menuOverlay} ${menuOpen ? styles.open : ''}`}>
-        <p className={styles.logo}>oyotō</p>
-        <div className={styles.menuContent}>
-          <nav className={styles.menuNav}>
-            <a href="#about" onClick={() => setMenuOpen(false)}>
-              ABOUT
-            </a>
-            <a href="#projects" onClick={() => setMenuOpen(false)}>
-              PROJECTS
-            </a>
-            <a href="mailto:jamesmboma08@gmail.com">CONTACT</a>
-            <a href="#resume" onClick={() => setMenuOpen(false)}>
-              RESUME
-            </a>
-          </nav>
-        </div>
-        <div className={styles.menuFooter}>
-          <div className={styles.menuFooterLeft}>
-            Oyotō © 2026
-          </div>
-          <div className={styles.menuFooterRight}>
-            <a href="https://github.com/mboma99" target="_blank" rel="noopener noreferrer" className={styles.socialLink}>
-              GitHub
-            </a>
-            <a href="https://www.linkedin.com/in/james-mboma/" target="_blank" rel="noopener noreferrer" className={styles.socialLink}>
-              LinkedIn
-            </a>
-          </div>
-        </div>
       </div>
     </div>
   );
