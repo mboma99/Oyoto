@@ -6,6 +6,7 @@ import Link from "next/link";
 import styles from "./page.module.css";
 import { TypewriterText } from "@/components/TypewriterText";
 import { HeroAnimation } from "@/components/HeroAnimation";
+import { Footer } from "@/components/Footer";
 
 const ModelScene = dynamic(() => import("@/components/ModelScene"), {
   ssr: false,
@@ -53,7 +54,7 @@ export default function Home() {
           <p className={styles.logo}>oyotō</p>
           <nav className={styles.nav}>
             <Link href="/about"><DecipherText text={"ABOUT"} animateOnHover={true} /></Link>
-            <Link href="/#projects"><DecipherText text={"PROJECTS"} animateOnHover={true} /></Link>
+            <Link href="/projects"><DecipherText text={"PROJECTS"} animateOnHover={true} /></Link>
           </nav>
         </header>
 
@@ -73,6 +74,11 @@ export default function Home() {
 
           <section className={styles.projectSection} id="projects">
             <HeroAnimation />
+            <div style={{ display: 'flex', justifyContent: 'center', marginTop: '4rem' }}>
+              <Link href="/projects" className={styles.socialLink} style={{ fontSize: '1rem', border: '1px solid rgba(255,255,255,0.2)', padding: '1rem 2rem', borderRadius: '4px' }}>
+                <DecipherText text="VIEW ALL PROJECTS" animateOnHover={true} />
+              </Link>
+            </div>
           </section>
 
           <section className={styles.brandSection} id="brand-ai" ref={brandSectionRef}>
@@ -100,19 +106,7 @@ export default function Home() {
           </section>
         </main>
 
-        <footer className={styles.footer}>
-          <div>
-            Oyotō © 2026
-          </div>
-          <div>
-            <a href="https://github.com/mboma99" target="_blank" rel="noopener noreferrer" className={styles.socialLink}>
-              GitHub
-            </a>
-            <a href="https://www.linkedin.com/in/james-mboma/" target="_blank" rel="noopener noreferrer" className={styles.socialLink}>
-              LinkedIn
-            </a>
-          </div>
-        </footer>
+        <Footer />
       </div>
     </div>
   );

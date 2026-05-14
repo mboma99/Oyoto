@@ -255,21 +255,33 @@
 }
 
 @keyframes spinClock {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 @keyframes spinCounter {
-  from { transform: rotate(360deg); }
-  to { transform: rotate(0deg); }
+  from {
+    transform: rotate(360deg);
+  }
+
+  to {
+    transform: rotate(0deg);
+  }
 }
 
 @keyframes corePulse {
+
   0%,
   100% {
     transform: scale(1);
     opacity: 0.85;
   }
+
   50% {
     transform: scale(1.18);
     opacity: 1;
@@ -291,10 +303,14 @@
 }
 
 @keyframes typeCursor {
-  0%, 49% {
+
+  0%,
+  49% {
     opacity: 1;
   }
-  50%, 100% {
+
+  50%,
+  100% {
     opacity: 0;
   }
 }
@@ -525,6 +541,30 @@
 
   .orbitWrap {
     width: min(70vw, 320px);
+  }
+}
+
+/* Mobile Menu Styles */
+@media (max-width: 768px) {
+  .menuNav {
+    gap: 1.5rem;
+  }
+
+  .menuNav a {
+    font-size: 1.5rem;
+    letter-spacing: 0.1em;
+  }
+
+  .closeMenu {
+    top: 1rem;
+    right: 1rem;
+    font-size: 1rem;
+    letter-spacing: 0.1em;
+  }
+
+  .menuCloseBtn {
+    font-size: 1.5rem;
+    letter-spacing: 0.1em;
   }
 }
 

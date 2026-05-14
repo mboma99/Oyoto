@@ -1,0 +1,207 @@
+.layout {
+  min-height: 100vh;
+  background-color: #161616;
+  color: #ffffff;
+}
+
+.page {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 4rem 4rem 12rem;
+  position: relative;
+  z-index: 10;
+}
+
+.header {
+  height: 8rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.backBtn {
+  font-family: "Space Mono", monospace;
+  font-size: 0.8rem;
+  letter-spacing: 0.2em;
+  color: rgba(255, 255, 255, 0.6);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: color 0.3s ease;
+}
+
+.backBtn:hover {
+  color: white;
+}
+
+.hero {
+  position: relative;
+  width: 100%;
+  height: 60vh;
+  margin-bottom: 4rem;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.heroImage {
+  object-fit: cover;
+}
+
+.heroOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent, rgba(22, 22, 22, 0.8));
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 3rem;
+}
+
+.title {
+  font-size: clamp(2rem, 5vw, 4rem);
+  font-family: "Space Grotesk", sans-serif;
+  margin-bottom: 1rem;
+  letter-spacing: -0.02em;
+}
+
+.metaGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+  padding: 2rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  margin-bottom: 4rem;
+}
+
+.metaItem {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.metaLabel {
+  font-family: "Space Mono", monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  opacity: 0.4;
+  text-transform: uppercase;
+}
+
+.metaValue {
+  font-size: 1rem;
+  font-family: "Space Grotesk", sans-serif;
+}
+
+.caseStudyGrid {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 6rem;
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.mainContent {
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.sectionTitle {
+  font-family: "Space Mono", monospace;
+  font-size: 0.8rem;
+  letter-spacing: 0.3em;
+  opacity: 0.5;
+  text-transform: uppercase;
+}
+
+.sectionBody {
+  font-size: 1.15rem;
+  line-height: 1.7;
+  opacity: 0.9;
+  font-weight: 300;
+}
+
+.techList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.techItem {
+  font-family: "Space Mono", monospace;
+  font-size: 0.9rem;
+  letter-spacing: 0.1em;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.techItem::before {
+  content: "→";
+  opacity: 0.5;
+}
+
+.footer {
+  margin-top: 6rem;
+  padding: 4rem 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  font-family: "Space Mono", monospace;
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  opacity: 0.6;
+}
+
+.socialLink {
+  color: white;
+  text-decoration: none;
+  margin-left: 2rem;
+  transition: opacity 0.3s ease;
+}
+
+.socialLink:hover {
+  opacity: 0.8;
+}
+
+@media (max-width: 1024px) {
+  .caseStudyGrid {
+    grid-template-columns: 1fr;
+    gap: 4rem;
+  }
+  .metaGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 980px) {
+  .page {
+    padding: 0 2rem 4rem 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero {
+    height: 40vh;
+  }
+  .heroOverlay {
+    padding: 1.5rem;
+  }
+  .metaGrid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}
