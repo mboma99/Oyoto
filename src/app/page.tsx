@@ -51,7 +51,7 @@ export default function Home() {
     <div className={styles.layout}>
       <div className={styles.page}>
         <header className={styles.header}>
-          <p className={styles.logo}>oyotō</p>
+          <Link href="/" className={styles.logo}>oyotō</Link>
           <nav className={styles.nav}>
             <Link href="/about"><DecipherText text={"ABOUT"} animateOnHover={true} /></Link>
             <Link href="/projects"><DecipherText text={"PROJECTS"} animateOnHover={true} /></Link>

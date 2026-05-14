@@ -6,18 +6,17 @@
 }
 
 .page {
-  max-width: 1440px;
-  margin: 0 auto;
-  padding: 0 4rem 0 12rem; /* Adjusted for side nav */
+  /* Match home page spacing */
+  padding: 5.5rem 10rem 2rem;
   position: relative;
   z-index: 10;
 }
 
 .header {
-  height: 8rem;
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
+  margin-bottom: 3rem;
 }
 
 .logo {
@@ -39,8 +38,8 @@
   text-decoration: none;
   color: white;
   font-family: "Space Grotesk", sans-serif;
-  font-size: 0.9rem;
-  letter-spacing: 0.24em;
+  font-size: 1rem; /* Match home page */
+  letter-spacing: 0.12em; /* Match home page */
   opacity: 0.8;
   transition: opacity 0.3s ease;
 }
@@ -68,30 +67,10 @@
   gap: 3rem;
 }
 
-.footer {
-  padding: 4rem 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  font-family: "Space Mono", monospace;
-  font-size: 0.8rem;
-  letter-spacing: 0.12em;
-  opacity: 0.6;
-}
-
-.socialLink {
-  color: white;
-  text-decoration: none;
-  margin-left: 2rem;
-  transition: opacity 0.3s ease;
-}
-
-.socialLink:hover {
-  opacity: 0.8;
-}
-
 @media (max-width: 1200px) {
+  .page {
+    padding: 5.5rem 4rem 2rem 8rem;
+  }
   .projectsGrid {
     gap: 2rem;
   }
@@ -99,7 +78,7 @@
 
 @media (max-width: 980px) {
   .page {
-    padding: 0 2rem;
+    padding: 2rem;
   }
   .projectsGrid {
     grid-template-columns: 1fr;
@@ -107,13 +86,7 @@
 }
 
 @media (max-width: 768px) {
-  .header {
-    height: 6rem;
-  }
   .nav {
     display: none;
-  }
-  .content {
-    padding: 2rem 0;
   }
 }
