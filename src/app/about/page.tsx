@@ -3,6 +3,8 @@
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import styles from "./page.module.css";
+import { CursorParticles } from "@/components/CursorParticles";
+import { Footer } from "@/components/Footer";
 
 const DecipherText = dynamic(() => import("@/components/DecipherText").then(mod => mod.DecipherText), {
   ssr: false,
@@ -22,12 +24,13 @@ export default function About() {
 
   return (
     <div className={styles.layout}>
+      <CursorParticles />
       <div className={styles.page}>
         <header className={styles.header}>
           <Link href="/" className={styles.logo}>oyotō</Link>
           <nav className={styles.nav}>
             <Link href="/about"><DecipherText text={"ABOUT"} animateOnHover={true} /></Link>
-            <Link href="/#projects"><DecipherText text={"PROJECTS"} animateOnHover={true} /></Link>
+            <Link href="/projects"><DecipherText text={"PROJECTS"} animateOnHover={true} /></Link>
           </nav>
         </header>
 
@@ -69,19 +72,7 @@ export default function About() {
           </div>
         </main>
 
-        <footer className={styles.footer}>
-          <div>
-            Oyotō © 2026
-          </div>
-          <div>
-            <a href="https://github.com/mboma99" target="_blank" rel="noopener noreferrer" className={styles.socialLink}>
-              GitHub
-            </a>
-            <a href="https://www.linkedin.com/in/james-mboma/" target="_blank" rel="noopener noreferrer" className={styles.socialLink}>
-              LinkedIn
-            </a>
-          </div>
-        </footer>
+        <Footer />
       </div>
     </div>
   );

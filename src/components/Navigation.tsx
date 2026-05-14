@@ -34,7 +34,7 @@ export function Navigation() {
             <Link href="/about" onClick={() => setMenuOpen(false)}>
               ABOUT
             </Link>
-            <Link href="/#projects" onClick={() => setMenuOpen(false)}>
+            <Link href="/projects" onClick={() => setMenuOpen(false)}>
               PROJECTS
             </Link>
             <a href="mailto:oyotostudios@outlook.com">
