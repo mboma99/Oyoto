@@ -2,7 +2,7 @@
 
 import dynamic from "next/dynamic";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import styles from "./page.module.css";
 import { CursorParticles } from "@/components/CursorParticles";
 import { Footer } from "@/components/Footer";
@@ -11,7 +11,7 @@ const DecipherText = dynamic(() => import("@/components/DecipherText").then(mod 
   ssr: false,
 });
 
-const scrollVariants = {
+const scrollVariants: Variants = {
   hidden: { opacity: 0, y: 20 },
   visible: {
     opacity: 1,
@@ -66,7 +66,7 @@ export default function Resume() {
               <p className={styles.expTitle}>SOFTWARE ENGINEER</p>
               <ul className={styles.bulletList}>
                 <li>Maintain security of critical authentication edge services, fixing service vulnerabilities and updating service dependencies.</li>
-                <li>Designed and built a production-grade performance testing environment for a client-facing mTLS platform used by a major UK supermarket chain ahead of peak trading period.</li>
+                <li>Designed and built a production-grade performance testing environment for a client-facing mTLS platform used by a major UK supermarket chain ahead of peak trading period, ensuring scalability, resilience, and production readiness.</li>
                 <li>Expanded Java-based onboarding services, reducing SMB merchant onboarding time from two weeks to under one hour.</li>
                 <li>Automated end-to-end testing by integrating Postman CLI into an AWS EC2 environment and Jenkins CI/CD pipelines, reducing QA execution time by 80%.</li>
                 <li>Led disaster recovery and resilience testing across distributed microservices, validating failover mechanisms and ensuring compliance with 99.999% SLA targets.</li>
@@ -99,6 +99,7 @@ export default function Resume() {
                 <li>Built a classification model using a feedforward neural network, doubling user engagement across Nike platforms.</li>
                 <li>Refactored ML pipelines and removed redundant data sources, reducing cloud costs and improving model build times.</li>
                 <li>Implemented automated unit testing to ensure reliability and data integrity.</li>
+                <li>Presented findings to cross-functional stakeholders, promoting transparency and data-driven decision-making.</li>
               </ul>
             </div>
           </motion.section>
