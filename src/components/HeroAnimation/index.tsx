@@ -32,8 +32,14 @@ export function HeroAnimation() {
         start: 'top top',
         end: () => `+=${window.innerHeight * totalSteps}`,
         pin: true,
-        scrub: 0.2,
+        scrub: 1,
         anticipatePin: 1,
+        snap: {
+          snapTo: 1 / totalSteps,
+          duration: { min: 0.3, max: 0.8 },
+          delay: 0.1,
+          ease: "power2.inOut"
+        },
         invalidateOnRefresh: true,
         onUpdate: (self) => {
           const nextIndex = Math.min(

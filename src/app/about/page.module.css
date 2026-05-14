@@ -1,0 +1,159 @@
+.layout {
+  position: relative;
+  min-height: 100vh;
+}
+
+.layout::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100vh;
+  background-image:
+    linear-gradient(to bottom, transparent 0%, #161616 100%),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+    linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+  background-size: 100% 100%, 100px 100px, 100px 100px;
+  background-position: 0 0, 0 0, 0 0;
+  background-repeat: no-repeat, repeat, repeat;
+  z-index: -1;
+}
+
+.page {
+  --bg: #161616;
+  --fg: #ffffff;
+  --contrast: #86a68c;
+  min-height: 100vh;
+  padding: 5.5rem 10rem 2rem;
+  color: var(--fg);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 3rem;
+}
+
+.logo {
+  font-family: "Space Mono", monospace;
+  font-weight: 700;
+  letter-spacing: 0.5em;
+  text-transform: lowercase;
+  font-size: 1.5rem;
+}
+
+.nav {
+  display: flex;
+  gap: 3rem;
+  font-size: 1rem;
+  letter-spacing: 0.12em;
+}
+
+.content {
+  max-width: 900px;
+  margin: 4rem 0;
+}
+
+.tagline {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: clamp(1.5rem, 4vw, 2.8rem);
+  line-height: 1.2;
+  margin-bottom: 2rem;
+  text-transform: uppercase;
+}
+
+.subText {
+  font-family: "Space Mono", monospace;
+  font-size: 1rem;
+  color: #888;
+  margin-bottom: 1rem;
+  letter-spacing: 0.05em;
+}
+
+.founder {
+  font-family: "Space Mono", monospace;
+  font-size: 1.1rem;
+  margin-top: 3rem;
+  opacity: 0.8;
+}
+
+.sectionTitle {
+  font-family: "Space Mono", monospace;
+  font-size: 0.9rem;
+  letter-spacing: 0.3em;
+  color: #86a68c;
+  margin: 6rem 0 2rem;
+  text-transform: uppercase;
+}
+
+.servicesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 6rem;
+}
+
+.serviceItem {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 1.5rem 0;
+  font-size: 1.2rem;
+  letter-spacing: 0.05em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.3s ease;
+  cursor: default;
+}
+
+.serviceItem:hover {
+  color: #86a68c;
+  border-bottom-color: #86a68c;
+  padding-left: 0.5rem;
+}
+
+.contactSection {
+  margin: 6rem 0;
+}
+
+.email {
+  font-size: clamp(1.5rem, 5vw, 3rem);
+  font-family: "Space Grotesk", sans-serif;
+  text-decoration: underline;
+  text-underline-offset: 10px;
+  transition: all 0.3s ease;
+}
+
+.email:hover {
+  color: #86a68c;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.18);
+  padding-top: 2rem;
+}
+
+.socialLink {
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 0.9rem;
+  letter-spacing: 0.12em;
+  transition: all 0.3s ease;
+  padding: 0.5rem 0.75rem;
+  border-radius: 4px;
+}
+
+.socialLink:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+@media (max-width: 980px) {
+  .page {
+    padding: 1.3rem;
+  }
+}
