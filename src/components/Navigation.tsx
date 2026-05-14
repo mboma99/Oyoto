@@ -20,17 +20,16 @@ export function Navigation() {
           className={styles.menuBtn}
           onClick={() => setMenuOpen(!menuOpen)}
         >
-          <DecipherText text={menuOpen ? "CLOSE" : "MENU"} />
+          <DecipherText key={menuOpen ? "CLOSE" : "MENU"} text={menuOpen ? "CLOSE" : "MENU"} />
         </button>
       </aside>
 
       <div className={`${styles.menuOverlay} ${menuOpen ? styles.open : ""}`}>
-        <p className={styles.logo}>oyotō</p>
+        <Link href="/" className={styles.logo} onClick={() => setMenuOpen(false)}>
+          oyotō
+        </Link>
         <div className={styles.menuContent}>
           <nav className={styles.menuNav}>
-            <Link href="/" onClick={() => setMenuOpen(false)}>
-              HOME
-            </Link>
             <Link href="/about" onClick={() => setMenuOpen(false)}>
               ABOUT
             </Link>
@@ -40,7 +39,7 @@ export function Navigation() {
             <a href="mailto:oyotostudios@outlook.com">
               CONTACT
             </a>
-            <Link href="/#resume" onClick={() => setMenuOpen(false)}>
+            <Link href="/resume" onClick={() => setMenuOpen(false)}>
               RESUME
             </Link>
           </nav>

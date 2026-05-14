@@ -1,3 +1,7 @@
+.cardWrapper {
+  width: 100%;
+}
+
 .card {
   display: flex;
   flex-direction: column;
@@ -89,7 +93,7 @@
   font-size: 1rem;
   line-height: 1.6;
   opacity: 0.8;
-  height: 3.2em; /* Limit to 2 lines */
+  height: 3.2em;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
@@ -99,16 +103,14 @@
 .tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: 1rem; /* Slightly more gap for cleaner text look */
 }
 
 .tag {
   font-family: "Space Mono", monospace;
   font-size: 0.7rem;
   letter-spacing: 0.1em;
-  padding: 0.25rem 0.5rem;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 2px;
+  color: #86a68c;
   text-transform: uppercase;
+  opacity: 0.9;
 }

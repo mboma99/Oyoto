@@ -26,11 +26,11 @@ export default function ProjectsPage() {
         </header>
 
         <main className={styles.content}>
-          <h2 className={styles.sectionTitle}>[ SELECTED WORKS ]</h2>
+          <h2 className={styles.sectionTitle}>[ DEPLOYED ASSETS ]</h2>
           
           <div className={styles.projectsGrid}>
-            {projects.map((project) => (
-              <ProjectCard key={project.id} project={project} />
+            {projects.map((project, index) => (
+              <ProjectCard key={project.id} project={project} index={index} />
             ))}
           </div>
         </main>

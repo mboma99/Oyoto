@@ -2,6 +2,7 @@
 
 import dynamic from "next/dynamic";
 import Link from "next/link";
+import { motion } from "framer-motion";
 import styles from "./page.module.css";
 import { CursorParticles } from "@/components/CursorParticles";
 import { Footer } from "@/components/Footer";

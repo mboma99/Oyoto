@@ -5,18 +5,27 @@
 }
 
 .page {
-  max-width: 1440px;
-  margin: 0 auto;
-  padding: 0 4rem 4rem 12rem;
+  /* Match home page spacing */
+  padding: 5.5rem 10rem 4rem;
   position: relative;
   z-index: 10;
 }
 
 .header {
-  height: 8rem;
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
+  margin-bottom: 3rem;
+}
+
+.logo {
+  font-family: "Space Mono", monospace;
+  font-weight: 700;
+  letter-spacing: 0.5em;
+  text-transform: lowercase;
+  text-decoration: none;
+  color: white;
+  font-size: 1.5rem;
 }
 
 .backBtn {
@@ -146,6 +155,7 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  color: #86a68c;
 }
 
 .techItem::before {
@@ -153,31 +163,10 @@
   opacity: 0.5;
 }
 
-.footer {
-  margin-top: 6rem;
-  padding: 4rem 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  font-family: "Space Mono", monospace;
-  font-size: 0.8rem;
-  letter-spacing: 0.12em;
-  opacity: 0.6;
-}
-
-.socialLink {
-  color: white;
-  text-decoration: none;
-  margin-left: 2rem;
-  transition: opacity 0.3s ease;
-}
-
-.socialLink:hover {
-  opacity: 0.8;
-}
-
 @media (max-width: 1024px) {
+  .page {
+    padding: 5.5rem 4rem 4rem 8rem;
+  }
   .caseStudyGrid {
     grid-template-columns: 1fr;
     gap: 4rem;
@@ -189,7 +178,7 @@
 
 @media (max-width: 980px) {
   .page {
-    padding: 0 2rem 4rem 2rem;
+    padding: 2rem;
   }
 }
 

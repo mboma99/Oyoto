@@ -48,24 +48,6 @@ function HeroModel({ modelPath }: ModelSceneProps) {
   );
 }
 
-function FallbackModel() {
-  const ref = useRef<Group>(null);
-
-  useFrame((_, delta) => {
-    if (!ref.current) return;
-    ref.current.rotation.y += delta * 0.5;
-  });
-
-  return (
-    <group ref={ref}>
-      <mesh position={[0, 0, 0]}>
-        <torusKnotGeometry args={[0.85, 0.28, 220, 28]} />
-        <meshStandardMaterial color="#86a68c" metalness={0.45} roughness={0.35} />
-      </mesh>
-    </group>
-  );
-}
-
 export default function ModelScene({ modelPath }: ModelSceneProps) {
   useEffect(() => {
     const originalWarn = console.warn;
@@ -99,7 +81,7 @@ export default function ModelScene({ modelPath }: ModelSceneProps) {
       <directionalLight position={[-4, 2, 3]} intensity={0.9} color="#86a68c" />
       <pointLight position={[0, -1.5, 3.5]} intensity={0.5} color="#86a68c" />
 
-      <Suspense fallback={<FallbackModel />}>
+      <Suspense fallback={null}>
         <HeroModel modelPath={modelPath} />
       </Suspense>
     </Canvas>

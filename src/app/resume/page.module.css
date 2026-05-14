@@ -1,0 +1,404 @@
+.layout {
+  min-height: 100vh;
+  background-color: #161616;
+  color: #ffffff;
+}
+
+.page {
+  padding: 5.5rem 10rem 4rem;
+  position: relative;
+  z-index: 10;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6rem;
+}
+
+.logo {
+  font-family: "Space Mono", monospace;
+  font-weight: 700;
+  letter-spacing: 0.5em;
+  text-transform: lowercase;
+  text-decoration: none;
+  color: white;
+  font-size: 1.5rem;
+}
+
+.nav {
+  display: flex;
+  gap: 3rem;
+  font-size: 1rem;
+  letter-spacing: 0.12em;
+}
+
+.content {
+  max-width: 800px;
+}
+
+.resumeHeader {
+  margin-bottom: 5rem;
+}
+
+.name {
+  font-size: clamp(2.2rem, 6vw, 4rem);
+  font-family: "Space Grotesk", sans-serif;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.5rem;
+}
+
+.role {
+  font-family: "Space Mono", monospace;
+  font-size: 1.1rem;
+  letter-spacing: 0.2em;
+  color: #86a68c;
+  margin-bottom: 2rem;
+}
+
+.contactInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-family: "Space Mono", monospace;
+  font-size: 0.9rem;
+  opacity: 0.6;
+}
+
+.links {
+  display: flex;
+  gap: 1.5rem;
+  margin-top: 0.5rem;
+}
+
+.links a {
+  color: white;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  opacity: 0.8;
+  transition: opacity 0.3s ease;
+}
+
+.links a:hover {
+  opacity: 1;
+}
+
+.section {
+  margin-bottom: 6rem;
+}
+
+.sectionTitle {
+  font-family: "Space Mono", monospace;
+  font-size: 0.8rem;
+  letter-spacing: 0.4em;
+  color: rgba(255, 255, 255, 0.3);
+  margin-bottom: 2.5rem;
+  text-transform: uppercase;
+}
+
+.bodyText {
+  font-size: 1.15rem;
+  line-height: 1.7;
+  opacity: 0.9;
+  font-weight: 300;
+}
+
+.experienceItem {
+  margin-bottom: 4rem;
+}
+
+.expHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 0.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.company {
+  font-size: 1.4rem;
+  font-family: "Space Grotesk", sans-serif;
+  letter-spacing: 0.05em;
+  color: #86a68c;
+}
+
+.location, .period {
+  font-family: "Space Mono", monospace;
+  font-size: 0.8rem;
+  opacity: 0.5;
+}
+
+.expTitle {
+  font-family: "Space Mono", monospace;
+  font-size: 1rem;
+  letter-spacing: 0.1em;
+  margin-bottom: 1.5rem;
+  opacity: 0.8;
+}
+
+.bulletList {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.bulletList li {
+  position: relative;
+  padding-left: 1.5rem;
+  line-height: 1.6;
+  opacity: 0.8;
+  font-size: 1rem;
+}
+
+.bulletList li::before {
+  content: "→";
+  position: absolute;
+  left: 0;
+  opacity: 0.4;
+  color: #86a68c;
+}
+
+.skillsGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+}
+
+.skillCategory h4 {
+  font-family: "Space Mono", monospace;
+  font-size: 0.8rem;
+  letter-spacing: 0.2em;
+  margin-bottom: 1rem;
+  opacity: 0.4;
+}
+
+.skillCategory p {
+  line-height: 1.6;
+  opacity: 0.9;
+}
+
+.educationItem {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.university {
+  font-size: 1.4rem;
+  font-family: "Space Grotesk", sans-serif;
+  color: #86a68c;
+}
+
+.degree {
+  font-family: "Space Mono", monospace;
+  font-size: 1rem;
+  opacity: 0.8;
+}
+
+.resumeActions {
+  margin-top: 8rem;
+  padding-top: 4rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.downloadBtn {
+  background: transparent;
+  border: 1px solid #86a68c;
+  color: #86a68c;
+  padding: 1rem 2rem;
+  font-family: "Space Mono", monospace;
+  font-size: 0.9rem;
+  letter-spacing: 0.2em;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-radius: 4px;
+}
+
+.downloadBtn:hover {
+  background: #86a68c;
+  color: #161616;
+}
+
+@media print {
+  @page {
+    size: A4;
+    margin: 15mm;
+  }
+
+  .layout::before, .nav, .resumeActions, .header {
+    display: none !important;
+  }
+
+  .page {
+    padding: 0;
+    color: black;
+    max-width: 100%;
+    margin: 0;
+  }
+
+  .layout {
+    background: white;
+    color: black;
+    min-height: auto;
+  }
+
+  .content {
+    max-width: 100%;
+  }
+
+  .resumeHeader {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: flex-start;
+    border-bottom: 1.5pt solid #161616;
+    padding-bottom: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .name {
+    font-size: 28pt;
+    color: black;
+    margin-bottom: 0.1rem;
+    letter-spacing: -0.04em;
+  }
+
+  .role {
+    font-size: 11pt;
+    margin-bottom: 0;
+    color: #86a68c !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .contactInfo {
+    text-align: right;
+    gap: 0.1rem;
+    font-size: 8pt;
+    opacity: 1;
+  }
+
+  .links {
+    justify-content: flex-end;
+    gap: 0.75rem;
+    margin-top: 0.25rem;
+  }
+
+  .links a {
+    color: #444;
+    text-decoration: none;
+    border-bottom: 0.5pt solid #ccc;
+  }
+
+  .section {
+    margin-bottom: 1.5rem;
+  }
+
+  .sectionTitle {
+    margin-bottom: 1rem;
+    font-size: 8pt;
+    color: #161616 !important;
+    background: #f4f4f4;
+    padding: 0.2rem 0.5rem;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    border-left: 3pt solid #86a68c;
+  }
+
+  .bodyText {
+    font-size: 9pt;
+    line-height: 1.5;
+    padding-left: 0.5rem;
+  }
+
+  .experienceItem {
+    margin-bottom: 1.5rem;
+    padding-left: 0.5rem;
+  }
+
+  .expHeader {
+    margin-bottom: 0.25rem;
+  }
+
+  .company {
+    font-size: 11pt;
+    color: #161616 !important;
+    font-weight: 700;
+  }
+
+  .period {
+    font-weight: 700;
+    color: #161616 !important;
+  }
+
+  .expTitle {
+    font-size: 9.5pt;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #86a68c !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .bulletList {
+    gap: 0.2rem;
+  }
+
+  .bulletList li {
+    font-size: 8.5pt;
+    line-height: 1.35;
+    padding-left: 1.2rem;
+    color: #333;
+  }
+
+  .bulletList li::before {
+    font-size: 10pt;
+    color: #86a68c !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .skillsGrid {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0.5rem;
+    padding-left: 0.5rem;
+  }
+
+  .skillCategory h4 {
+    margin-bottom: 0.1rem;
+    font-size: 6.5pt;
+    color: #666;
+  }
+
+  .skillCategory p {
+    font-size: 7.5pt;
+    line-height: 1.2;
+  }
+
+  .educationItem {
+    padding-left: 0.5rem;
+  }
+
+  .university {
+    font-size: 11pt;
+    color: #161616 !important;
+  }
+
+  .degree {
+    font-size: 9.5pt;
+    color: #444;
+  }
+}
+
+@media (max-width: 980px) {
+  .page {
+    padding: 2rem;
+  }
+  .skillsGrid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
