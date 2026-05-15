@@ -22,14 +22,13 @@ const scrollVariants: Variants = {
 
 export default function About() {
   const services = [
-    "BACKEND ENGINEERING",
-    "MICROSERVICES ARCHITECTURE",
-    "MACHINE LEARNING",
-    "AUTHENTICATION & SECURITY",
-    "CLOUD INFRASTRUCTURE (AWS)",
-    "CI/CD AUTOMATION",
-    "FINTECH SOLUTIONS",
-    "PERFORMANCE OPTIMIZATION"
+    "FULL-STACK DEVELOPMENT",
+    "CLOUD ARCHITECTURE",
+    "UI/UX ENGINEERING",
+    "AI INTEGRATION",
+    "MOBILE APPS",
+    "BUSINESS INTELLIGENCE",
+    "TECHNICAL CONSULTING",
   ];
 
   return (
@@ -53,14 +52,14 @@ export default function About() {
           >
             <h2 className={styles.sectionTitle}>[ STUDIO OVERVIEW ]</h2>
             <p className={styles.tagline}>
-              OYOTO IS A HIGH-PERFORMANCE DIGITAL PRODUCT STUDIO specializing in building scalable, secure, and production-grade systems. 
-              Led by James Mboma, we leverage deep expertise in enterprise microservices and machine learning to bridge the gap between complex engineering and human-centric design.
+               [ OYOTO IS A MULTIFACETED DIGITAL PRODUCT DEVELOPMENT FIRM founded with a desire to
+                expand our clients presence in the digital space. ]
             </p>
             <p className={styles.subText}>
-              [ CERTAIN ENTERPRISE PROJECTS MAY BE UNDER NDA* ]
+              [ CERTAIN PROJECTS MAY BE UNDER NDA UNTIL RELEASE* ]
             </p>
             <p className={styles.founder}>
-              [ FOUNDED BY JAMES MBOMA | CURRENTLY ENGINEERING AT WORLDPAY ]
+              [ FOUNDED BY JAMES MBOMA IN 2019 ]
             </p>
           </motion.div>
 
@@ -78,33 +77,6 @@ export default function About() {
                   {service} +
                 </div>
               ))}
-            </div>
-          </motion.div>
-
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={scrollVariants}
-            style={{ marginTop: "6rem" }}
-          >
-            <h3 className={styles.sectionTitle}>[ EXPERIENCE SELECTION ]</h3>
-            <div className={styles.experienceGrid}>
-              <div className={styles.experienceItem}>
-                <span className={styles.expCompany}>WORLDPAY</span>
-                <span className={styles.expRole}>SOFTWARE ENGINEER</span>
-                <span className={styles.expYear}>2024 - PRESENT</span>
-              </div>
-              <div className={styles.experienceItem}>
-                <span className={styles.expCompany}>NIKE</span>
-                <span className={styles.expRole}>ML ENGINEER</span>
-                <span className={styles.expYear}>2022 - 2023</span>
-              </div>
-              <div className={styles.experienceItem}>
-                <span className={styles.expCompany}>LLOYDS BANK</span>
-                <span className={styles.expRole}>DATA ANALYST</span>
-                <span className={styles.expYear}>2024</span>
-              </div>
             </div>
           </motion.div>
 

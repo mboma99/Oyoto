@@ -1,6 +1,7 @@
 .layout {
   position: relative;
   min-height: 100vh;
+  overflow-x: hidden; /* prevent horizontal bleed from model */
 }
 
 .layout::before {
@@ -114,7 +115,13 @@
 
 .modelWrap {
   height: 460px;
-  overflow: visible;
+  overflow: hidden; /* prevent 3D canvas bleeding out of bounds */
+}
+
+.heroTextWrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .projectSection {
@@ -499,95 +506,88 @@
   transform: translateY(-2px);
 }
 
-@media (max-width: 980px) {
+/* ─── Tablet ─── */
+@media (max-width: 1024px) {
   .page {
-    padding: 1.3rem;
+    padding: 5.5rem 4rem 2rem 8rem;
+  }
+}
+
+/* ─── Mobile ─── */
+@media (max-width: 768px) {
+  .page {
+    padding: 5rem 1.5rem 2rem;
     margin-left: 0;
   }
 
-  .sideNav {
+  .header {
     display: none;
   }
 
+  /* Stack hero as a relative container so text can overlay the model */
   .hero {
-    grid-template-columns: 1fr;
+    position: relative;
+    display: block; /* single column */
+    min-height: 70vh;
+    overflow: hidden; /* clip model to hero bounds */
   }
 
+  /* Model fills the full hero area */
   .modelWrap {
-    height: 320px;
+    position: absolute;
+    inset: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 0;
   }
 
-  .projectCard {
-    min-height: 70vh;
+  /* Text floats above the model */
+  .heroTextWrap {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 70vh;
+    padding: 0 1rem;
   }
 
-  .projectImageWrap {
-    min-height: 70vh;
-  }
-
-  .footer {
-    flex-direction: column;
+  .heroTitle {
+    font-size: clamp(1.8rem, 10vw, 3.5rem);
+    letter-spacing: 0.3rem;
+    line-height: 1.2;
+    text-align: center;
+    /* subtle glow so text pops over the 3D model */
+    text-shadow: 0 0 40px rgba(0,0,0,0.8), 0 2px 8px rgba(0,0,0,0.6);
   }
 
   .brandSection {
-    min-height: 60vh;
+    min-height: auto;
   }
 
   .brandInner {
-    padding: 2rem 1.5rem;
+    padding: 2rem 0;
     grid-template-columns: 1fr;
-    gap: 2.5rem;
+    gap: 2rem;
   }
 
   .orbitWrap {
-    width: min(70vw, 320px);
+    width: min(60vw, 280px);
   }
 }
 
-/* Mobile Menu Styles */
-@media (max-width: 768px) {
-  .menuNav {
-    gap: 1.5rem;
+/* ─── Small Mobile ─── */
+@media (max-width: 480px) {
+  .page {
+    padding: 5rem 1rem 2rem;
   }
 
-  .menuNav a {
-    font-size: 1.5rem;
-    letter-spacing: 0.1em;
+  .heroTextWrap {
+    height: 65vh;
   }
 
-  .closeMenu {
-    top: 1rem;
-    right: 1rem;
-    font-size: 1rem;
-    letter-spacing: 0.1em;
-  }
-
-  .menuCloseBtn {
-    font-size: 1.5rem;
-    letter-spacing: 0.1em;
-  }
-}
-
-/* Mobile Menu Styles */
-@media (max-width: 768px) {
-  .menuNav {
-    gap: 1.5rem;
-  }
-
-  .menuNav a {
-    font-size: 1.5rem;
-    letter-spacing: 0.1em;
-  }
-
-  .closeMenu {
-    top: 1rem;
-    right: 1rem;
-    font-size: 1rem;
-    letter-spacing: 0.1em;
-  }
-
-  .menuCloseBtn {
-    font-size: 1.5rem;
-    letter-spacing: 0.1em;
+  .heroTitle {
+    font-size: clamp(1.4rem, 9vw, 2.8rem);
+    letter-spacing: 0.2rem;
   }
 }
