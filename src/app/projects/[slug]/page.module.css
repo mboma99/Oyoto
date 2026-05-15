@@ -176,21 +176,44 @@
   }
 }
 
-@media (max-width: 980px) {
-  .page {
-    padding: 2rem;
-  }
-}
-
 @media (max-width: 768px) {
+  .page {
+    padding: 5rem 1.5rem 3rem;
+  }
+  .header {
+    display: none; /* mobile top bar handles this */
+  }
   .hero {
     height: 40vh;
+    border-radius: 12px;
   }
   .heroOverlay {
     padding: 1.5rem;
   }
+  .title {
+    font-size: clamp(1.5rem, 7vw, 2.5rem);
+  }
+  .metaGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+  .caseStudyGrid {
+    gap: 2rem;
+  }
+  .sectionBody {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .page {
+    padding: 5rem 1rem 2rem;
+  }
+  .hero {
+    height: 30vh;
+  }
   .metaGrid {
     grid-template-columns: 1fr;
-    gap: 1.5rem;
+    gap: 1rem;
   }
 }

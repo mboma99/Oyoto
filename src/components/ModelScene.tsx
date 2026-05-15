@@ -1,7 +1,7 @@
 "use client";
 
-import { Suspense, useEffect, useMemo, useRef } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
+import { Suspense, useEffect, useMemo, useRef, useState } from "react";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { useGLTF } from "@react-three/drei";
 import { Box3, Group, Object3D, Vector3 } from "three";
 
@@ -12,6 +12,16 @@ type ModelSceneProps = {
 function HeroModel({ modelPath }: ModelSceneProps) {
   const gltf = useGLTF(modelPath);
   const rootRef = useRef<Group>(null);
+
+// Detect mobile
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const fittedModel = useMemo(() => {
     const source = gltf.scene as Object3D | undefined;
@@ -26,13 +36,15 @@ function HeroModel({ modelPath }: ModelSceneProps) {
     const center = box.getCenter(new Vector3());
     const size = box.getSize(new Vector3());
     const maxAxis = Math.max(size.x, size.y, size.z) || 1;
-    const targetSize = 2.8;
+
+    // Smaller size for mobile
+    const targetSize = isMobile ? 2.0 : 2.8;
     const scale = targetSize / maxAxis;
 
     clone.position.sub(center);
 
     return { object: clone, scale };
-  }, [gltf.scene]);
+  }, [gltf.scene, isMobile]);
 
   useFrame((_, delta) => {
     if (!rootRef.current) return;

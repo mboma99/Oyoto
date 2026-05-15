@@ -1,3 +1,4 @@
+/* ─── Desktop Side Nav ─── */
 .sideNav {
   position: fixed;
   left: 0;
@@ -26,6 +27,67 @@
   cursor: pointer;
 }
 
+/* ─── Mobile Top Bar ─── */
+.mobileTopBar {
+  display: none; /* Hidden on desktop */
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4rem;
+  background: rgba(22, 22, 22, 0.95);
+  backdrop-filter: blur(10px);
+  z-index: 2002;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.5rem;
+}
+
+.mobileTopLogo {
+  font-family: "Space Mono", monospace;
+  font-weight: 700;
+  letter-spacing: 0.4em;
+  text-transform: lowercase;
+  text-decoration: none;
+  color: white;
+  font-size: 1.1rem;
+}
+
+.hamburger {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  width: 2.5rem;
+}
+
+.hamburgerLine {
+  display: block;
+  width: 24px;
+  height: 1.5px;
+  background: #ffffff;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  transform-origin: center;
+}
+
+/* Animate to X when open */
+.hamburgerLineOpen1 {
+  transform: translateY(6.5px) rotate(45deg);
+}
+
+.hamburgerLineOpen2 {
+  opacity: 0;
+}
+
+.hamburgerLineOpen3 {
+  transform: translateY(-6.5px) rotate(-45deg);
+}
+
+/* ─── Full-Screen Overlay ─── */
 .menuOverlay {
   position: fixed;
   top: 0;
@@ -61,6 +123,8 @@
   opacity: 0;
   transform: translateY(20px);
   transition: all 0.5s ease;
+  text-decoration: none;
+  color: white;
 }
 
 .menuOverlay.open .logo {
@@ -133,7 +197,6 @@
 .menuOverlay.open .menuNav a:nth-child(2) { transition: opacity 0.5s ease 1.2s, transform 0.5s ease 1.2s, color 0.3s ease; }
 .menuOverlay.open .menuNav a:nth-child(3) { transition: opacity 0.5s ease 1.5s, transform 0.5s ease 1.5s, color 0.3s ease; }
 .menuOverlay.open .menuNav a:nth-child(4) { transition: opacity 0.5s ease 1.8s, transform 0.5s ease 1.8s, color 0.3s ease; }
-.menuOverlay.open .menuNav a:nth-child(5) { transition: opacity 0.5s ease 2.0s, transform 0.5s ease 2.0s, color 0.3s ease; }
 
 .menuFooter {
   position: absolute;
@@ -181,19 +244,60 @@
   transform: translateY(-2px);
 }
 
-@media (max-width: 980px) {
+/* ─── Tablet ─── */
+@media (max-width: 1024px) {
   .sideNav {
-    display: none;
+    width: 5rem;
   }
   .menuOverlay {
-    left: 0;
-    width: 100vw;
+    left: 5rem;
+    width: calc(100vw - 5rem);
   }
 }
 
+/* ─── Mobile ─── */
 @media (max-width: 768px) {
+  .sideNav {
+    display: none;
+  }
+
+  .mobileTopBar {
+    display: flex; /* Show on mobile */
+  }
+
+  .menuOverlay {
+    left: 0;
+    width: 100vw;
+    top: 0; 
+    align-items: flex-start; /* Move content up */
+    padding-top: 12rem; /* Initial space for logo and top spacing */
+  }
+
+  .menuOverlay .logo {
+    top: 1.5rem;
+    left: 1.5rem;
+    opacity: 1;
+    transform: none;
+  }
+
+  .menuNav a {
+    font-size: 1.75rem;
+  }
+
+  .menuContent {
+    padding-left: 1.5rem;
+    margin-top: 0; /* Already handled by padding-top on overlay */
+  }
+}
+
+/* ─── Small Mobile ─── */
+@media (max-width: 480px) {
   .menuNav a {
     font-size: 1.5rem;
     letter-spacing: 0.1em;
+  }
+  
+  .menuOverlay {
+    padding-top: 10rem;
   }
 }

@@ -63,15 +63,27 @@ export function HeroAnimation() {
   return (
     <div ref={containerRef} className="relative h-screen flex items-center">
       <div
-        className="relative mx-auto overflow-hidden text-white border border-white/15 shadow-2xl"
+        className="relative mx-auto overflow-hidden text-white border border-white/15 shadow-2xl transition-all duration-500 w-full"
         style={{
           backgroundColor: '#161616',
-          width: '100%',
+          height: 'var(--hero-height, 78vh)',
+          borderRadius: 'var(--hero-radius, 30px)',
           maxWidth: '100%',
-          height: '78vh',
-          borderRadius: '30px',
         }}
       >
+        <style dangerouslySetInnerHTML={{ __html: `
+          :root {
+            --hero-height: 78vh;
+            --hero-radius: 30px;
+          }
+          @media (max-width: 768px) {
+            :root {
+              --hero-height: 75vh;
+              --hero-radius: 20px;
+            }
+          }
+        `}} />
+
         <div className="absolute inset-0 pointer-events-none z-0">
           <Background3D currentScene={sceneIndex + 1} />
         </div>

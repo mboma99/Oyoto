@@ -14,16 +14,34 @@ export function Navigation() {
 
   return (
     <>
+      {/* Desktop side nav — hidden on mobile */}
       <aside className={styles.sideNav}>
         <button
           type="button"
           className={styles.menuBtn}
           onClick={() => setMenuOpen(!menuOpen)}
+          aria-label={menuOpen ? "Close menu" : "Open menu"}
         >
           <DecipherText key={menuOpen ? "CLOSE" : "MENU"} text={menuOpen ? "CLOSE" : "MENU"} />
         </button>
       </aside>
 
+      {/* Mobile top bar — hidden on desktop */}
+      <div className={styles.mobileTopBar}>
+        <Link href="/" className={styles.mobileTopLogo}>oyotō</Link>
+        <button
+          type="button"
+          className={styles.hamburger}
+          onClick={() => setMenuOpen(!menuOpen)}
+          aria-label={menuOpen ? "Close menu" : "Open menu"}
+        >
+          <span className={`${styles.hamburgerLine} ${menuOpen ? styles.hamburgerLineOpen1 : ""}`} />
+          <span className={`${styles.hamburgerLine} ${menuOpen ? styles.hamburgerLineOpen2 : ""}`} />
+          <span className={`${styles.hamburgerLine} ${menuOpen ? styles.hamburgerLineOpen3 : ""}`} />
+        </button>
+      </div>
+
+      {/* Full-screen overlay menu */}
       <div className={`${styles.menuOverlay} ${menuOpen ? styles.open : ""}`}>
         <Link href="/" className={styles.logo} onClick={() => setMenuOpen(false)}>
           oyotō
@@ -36,7 +54,7 @@ export function Navigation() {
             <Link href="/projects" onClick={() => setMenuOpen(false)}>
               PROJECTS
             </Link>
-            <a href="mailto:oyotostudios@outlook.com">
+            <a href="mailto:oyotostudios@outlook.com" onClick={() => setMenuOpen(false)}>
               CONTACT
             </a>
             <Link href="/resume" onClick={() => setMenuOpen(false)}>

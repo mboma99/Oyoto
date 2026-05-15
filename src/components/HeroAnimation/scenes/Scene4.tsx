@@ -25,18 +25,18 @@ export function Scene4({ imagePath1, imagePath2 }: Props) {
 
   return (
     <motion.div
-      className="absolute inset-0 flex flex-col items-center justify-center"
+      className="absolute inset-0 flex flex-col items-center justify-center px-4"
       initial={{ opacity: 0, scale: 1.08, filter: 'blur(16px)' }}
       animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
       exit={{ opacity: 0, y: 80 }}
       transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
     >
       <motion.h2
-        className="absolute top-[1rem] uppercase"
+        className="absolute top-[2rem] md:top-[1rem] uppercase"
         style={{
           fontFamily: 'Space Grotesk, sans-serif',
           fontWeight: 700,
-          fontSize: '3.5vw',
+          fontSize: 'clamp(18px, 5vw, 3.5vw)',
           letterSpacing: '0.12em',
           width: '100%',
           textAlign: 'center',
@@ -50,10 +50,10 @@ export function Scene4({ imagePath1, imagePath2 }: Props) {
         MOBILE <span style={{ color: PURPLE }}>EXPERIENCES</span>
       </motion.h2>
 
-      <div className="flex gap-[6vw] items-center mt-[8vh]">
+      <div className="flex gap-[4vw] md:gap-[6vw] items-center mt-[4vh] md:mt-[8vh]">
         <motion.div
-          className="relative overflow-hidden rounded-[2vw]"
-          style={{ width: '12rem', aspectRatio: '9/19', boxShadow: `0 40px 80px rgba(0,0,0,0.7), 0 0 40px rgba(168,85,247,0.2)`, border: `1px solid ${PURPLE}33` }}
+          className="relative overflow-hidden rounded-[4vw] md:rounded-[2vw]"
+          style={{ width: 'clamp(7.5rem, 38vw, 12rem)', aspectRatio: '9/19', boxShadow: `0 20px 40px rgba(0,0,0,0.7), 0 0 30px rgba(168,85,247,0.2)`, border: `1px solid ${PURPLE}33` }}
           initial={{ opacity: 0, y: 100, rotateZ: -8 }}
           animate={phase >= 2 ? { opacity: 1, y: 0, rotateZ: -4 } : { opacity: 0, y: 100, rotateZ: -8 }}
           transition={{ type: 'spring', damping: 22, stiffness: 120 }}
@@ -63,8 +63,8 @@ export function Scene4({ imagePath1, imagePath2 }: Props) {
         </motion.div>
 
         <motion.div
-          className="relative overflow-hidden rounded-[2vw]"
-          style={{ width: '12rem', aspectRatio: '9/19', boxShadow: `0 40px 80px rgba(0,0,0,0.7), 0 0 40px rgba(239,68,68,0.2)`, border: `1px solid ${TRAKR_RED}33` }}
+          className="relative overflow-hidden rounded-[4vw] md:rounded-[2vw]"
+          style={{ width: 'clamp(7.5rem, 38vw, 12rem)', aspectRatio: '9/19', boxShadow: `0 20px 40px rgba(0,0,0,0.7), 0 0 30px rgba(239,68,68,0.2)`, border: `1px solid ${TRAKR_RED}33` }}
           initial={{ opacity: 0, y: 100, rotateZ: 8 }}
           animate={phase >= 3 ? { opacity: 1, y: 0, rotateZ: 4 } : { opacity: 0, y: 100, rotateZ: 8 }}
           transition={{ type: 'spring', damping: 22, stiffness: 120 }}
@@ -75,13 +75,13 @@ export function Scene4({ imagePath1, imagePath2 }: Props) {
       </div>
 
       <motion.p
-        className="absolute bottom-[8vh] uppercase"
+        className="absolute bottom-[4vh] md:bottom-[8vh] uppercase"
         style={{
           fontFamily: 'Space Mono, monospace',
           letterSpacing: '0.24em',
-          fontSize: '1vw',
+          fontSize: 'clamp(8px, 1.5vw, 1vw)',
           color: 'rgba(255,255,255,0.35)',
-          paddingInline: 'clamp(2rem, 14vw, 12rem)',
+          paddingInline: '1rem',
           width: '100%',
           textAlign: 'center',
         }}

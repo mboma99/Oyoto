@@ -393,12 +393,53 @@
   }
 }
 
-@media (max-width: 980px) {
+@media (max-width: 1024px) {
   .page {
-    padding: 2rem;
+    padding: 5.5rem 4rem 4rem 8rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .page {
+    padding: 5rem 1.5rem 3rem;
+  }
+  .header {
+    display: none; /* mobile top bar handles this */
+  }
+  .content {
+    max-width: 100%;
+  }
+  .resumeHeader {
+    margin-bottom: 3rem;
+  }
+  .name {
+    font-size: clamp(1.8rem, 8vw, 3rem);
+  }
+  .section {
+    margin-bottom: 3rem;
+  }
+  .skillsGrid {
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+  .expHeader {
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+  .resumeActions {
+    margin-top: 4rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .page {
+    padding: 5rem 1rem 2rem;
   }
   .skillsGrid {
     grid-template-columns: 1fr;
-    gap: 2rem;
+    gap: 1.5rem;
+  }
+  .role {
+    font-size: 0.9rem;
   }
 }
