@@ -82,10 +82,14 @@
 
 .hero {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2rem;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 3rem;
   vertical-align: center;
   min-height: 80vh;
+}
+
+.hero > * {
+  min-width: 0;
 }
 
 .kicker,
@@ -102,11 +106,26 @@
 }
 
 .heroTitle {
+  width: min(100%, 70rem);
   font-size: clamp(2.2rem, 8vw, 6rem);
-  line-height: 1;
   text-align: center;
+  margin: 0 0 0 2rem;
   letter-spacing: 1rem;
   line-height: 8.5rem;
+  min-height: 17rem;
+  font-weight: bold;
+}
+
+.heroTitle :global(.hero-word-slot) {
+  display: inline-block;
+  min-width: 8ch;
+  color: var(--contrast);
+  text-align: center;
+}
+
+.heroTitle :global(.hero-decipher-word) {
+  width: 100%;
+  text-align: center;
 }
 
 .heroBody {
@@ -114,14 +133,17 @@
 }
 
 .modelWrap {
+  width: 100%;
   height: 460px;
   overflow: hidden; /* prevent 3D canvas bleeding out of bounds */
 }
 
 .heroTextWrap {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
+  width: 100%;
+  min-width: 30rem;
 }
 
 .projectSection {
@@ -553,10 +575,13 @@
   }
 
   .heroTitle {
+    width: min(100%, 24rem);
     font-size: clamp(1.8rem, 10vw, 3.5rem);
     letter-spacing: 0.3rem;
     line-height: 1.2;
     text-align: center;
+    margin: 0 0 0 0rem;
+    min-height: 2.4em;
     /* subtle glow so text pops over the 3D model */
     text-shadow: 0 0 40px rgba(0,0,0,0.8), 0 2px 8px rgba(0,0,0,0.6);
   }
@@ -589,5 +614,6 @@
   .heroTitle {
     font-size: clamp(1.4rem, 15vw, 4.8rem);
     letter-spacing: 0.2rem;
+    margin: 0 0 0 -7rem;
   }
 }
