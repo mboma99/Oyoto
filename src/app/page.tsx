@@ -4,12 +4,15 @@ import dynamic from "next/dynamic";
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import styles from "./page.module.css";
-import { HeroTypewriterText } from "@/components/HeroTypewriterText";
+import { HeroHeadlineText } from "@/components/HeroHeadlineText";
 import { HeroAnimation } from "@/components/HeroAnimation";
 import { Footer } from "@/components/Footer";
+import { LoadingLogo } from "@/components/LoadingLogo";
+import { SiteIntroLoader } from "@/components/SiteIntroLoader";
 
 const ModelScene = dynamic(() => import("@/components/ModelScene"), {
   ssr: false,
+  loading: () => <LoadingLogo />,
 });
 const DecipherText = dynamic(() => import("@/components/DecipherText").then(mod => mod.DecipherText), {
   ssr: false,
@@ -49,6 +52,7 @@ export default function Home() {
 
   return (
     <div className={styles.layout}>
+      <SiteIntroLoader />
       <div className={styles.page}>
         <header className={styles.header}>
           <Link href="/" className={styles.logo}>oyotō</Link>
@@ -64,8 +68,7 @@ export default function Home() {
               <ModelScene modelPath="/models/abstract_shape.glb" />
             </div>
             <div className={styles.heroTextWrap}>
-              <HeroTypewriterText
-                speed={150}
+              <HeroHeadlineText
                 className={styles.heroTitle}
               />
             </div>

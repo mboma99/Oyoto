@@ -143,52 +143,52 @@ export function projectJsonLd(slug: string): JsonLdValue | null {
 }
 
 export function siteJsonLd(): JsonLdValue {
-  return [
-    {
-      "@context": "https://schema.org",
-      "@type": "Organization",
-      "@id": `${siteUrl}/#organization`,
-      name: siteName,
-      alternateName: "Oyoto Studios",
-      url: siteUrl,
-      email: contactEmail,
-      founder: {
-        "@id": `${siteUrl}/#person`,
-      },
-      sameAs: socialLinks,
-      knowsAbout: serviceAreas,
-      makesOffer: serviceAreas.map((service) => ({
-        "@type": "Offer",
-        itemOffered: {
-          "@type": "Service",
-          name: service,
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": `${siteUrl}/#organization`,
+        name: siteName,
+        alternateName: "Oyoto Studios",
+        url: siteUrl,
+        email: contactEmail,
+        founder: {
+          "@id": `${siteUrl}/#person`,
         },
-      })),
-    },
-    {
-      "@context": "https://schema.org",
-      "@type": "Person",
-      "@id": `${siteUrl}/#person`,
-      name: founderName,
-      jobTitle: "Software Engineer",
-      url: siteUrl,
-      email: contactEmail,
-      sameAs: socialLinks,
-      worksFor: {
-        "@id": `${siteUrl}/#organization`,
+        sameAs: socialLinks,
+        knowsAbout: serviceAreas,
+        makesOffer: serviceAreas.map((service) => ({
+          "@type": "Offer",
+          itemOffered: {
+            "@type": "Service",
+            name: service,
+          },
+        })),
       },
-      knowsAbout: serviceAreas,
-    },
-    {
-      "@context": "https://schema.org",
-      "@type": "WebSite",
-      "@id": `${siteUrl}/#website`,
-      name: siteName,
-      url: siteUrl,
-      publisher: {
-        "@id": `${siteUrl}/#organization`,
+      {
+        "@type": "Person",
+        "@id": `${siteUrl}/#person`,
+        name: founderName,
+        jobTitle: "Software Engineer",
+        url: siteUrl,
+        email: contactEmail,
+        sameAs: socialLinks,
+        worksFor: {
+          "@id": `${siteUrl}/#organization`,
+        },
+        knowsAbout: serviceAreas,
       },
-      inLanguage: "en-GB",
-    },
-  ];
+      {
+        "@type": "WebSite",
+        "@id": `${siteUrl}/#website`,
+        name: siteName,
+        url: siteUrl,
+        publisher: {
+          "@id": `${siteUrl}/#organization`,
+        },
+        inLanguage: "en-GB",
+      },
+    ],
+  };
 }
