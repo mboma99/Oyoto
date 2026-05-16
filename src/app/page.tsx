@@ -4,7 +4,7 @@ import dynamic from "next/dynamic";
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import styles from "./page.module.css";
-import { TypewriterText } from "@/components/TypewriterText";
+import { HeroTypewriterText } from "@/components/HeroTypewriterText";
 import { HeroAnimation } from "@/components/HeroAnimation";
 import { Footer } from "@/components/Footer";
 
@@ -64,8 +64,7 @@ export default function Home() {
               <ModelScene modelPath="/models/abstract_shape.glb" />
             </div>
             <div className={styles.heroTextWrap}>
-              <TypewriterText
-                text="DEFINE YOUR FUTURE."
+              <HeroTypewriterText
                 speed={150}
                 className={styles.heroTitle}
               />

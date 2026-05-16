@@ -8,6 +8,7 @@ interface DecipherTextProps {
   className?: string;
   animateOnHover?: boolean;
   startScrambled?: boolean;
+  animateOnMount?: boolean;
 }
 
 const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()";
@@ -18,6 +19,7 @@ export function DecipherText({
   className = "",
   animateOnHover = false,
   startScrambled = false,
+  animateOnMount = true,
 }: DecipherTextProps) {
   // Use the original text for initial render to avoid hydration mismatch
   const [displayedText, setDisplayedText] = useState(text);
@@ -31,11 +33,11 @@ export function DecipherText({
       setDisplayedText(
         text.split("").map(() => chars[Math.floor(Math.random() * chars.length)]).join("")
       );
-    } else if (!animateOnHover) {
+    } else if (!animateOnHover && animateOnMount) {
       // Start initial decipher animation if not waiting for hover
       setIsAnimating(true);
     }
-  }, [text, startScrambled, animateOnHover]);
+  }, [text, startScrambled, animateOnHover, animateOnMount]);
 
   const startAnimation = () => {
     if (isAnimating) return;
@@ -80,7 +82,16 @@ export function DecipherText({
       style={{ position: "relative", display: "inline-block" }}
     >
       <span style={{ visibility: "hidden" }}>{text}</span>
-      <span style={{ position: "absolute", left: 0, top: 0, whiteSpace: "nowrap" }}>
+      <span
+        style={{
+          position: "absolute",
+          left: 0,
+          top: 0,
+          width: "100%",
+          textAlign: "inherit",
+          whiteSpace: "nowrap",
+        }}
+      >
         {displayedText}
       </span>
     </span>
