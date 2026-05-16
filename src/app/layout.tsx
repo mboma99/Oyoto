@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   category: "Digital product development",
   classification: "Software engineering portfolio and digital product studio",
   ...createMetadata({
-    title: "Oyoto | Build your digital presence",
+    title: "Oyoto · Build your digital presence",
     description:
       "Oyoto is a UK digital product studio founded by software engineer James Mboma, building full-stack platforms, AI integrations, mobile apps, and cloud systems.",
     path: "/",
@@ -33,8 +33,8 @@ export const metadata: Metadata = {
     ],
   }),
   title: {
-    default: "Oyoto | Build your digital presence",
-    template: "%s | Oyoto",
+    default: "Oyoto · Build your digital presence",
+    template: "%s · Oyoto",
   },
   icons: {
     icon: "/favicon.ico",

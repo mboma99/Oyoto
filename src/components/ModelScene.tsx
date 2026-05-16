@@ -83,7 +83,7 @@ function HeroModel({ modelPath }: ModelSceneProps) {
     const maxAxis = Math.max(size.x, size.y, size.z) || 1;
 
     // Smaller size for mobile
-    const targetSize = isMobile ? 1.65 : 2.8;
+    const targetSize = isMobile ? 1.5 : 2.35;
     const scale = targetSize / maxAxis;
 
     clone.position.sub(center);

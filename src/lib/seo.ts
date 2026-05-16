@@ -5,7 +5,7 @@ export const siteUrl = "https://oyoto.co.uk";
 export const siteName = "Oyoto";
 export const founderName = "James Mboma";
 export const contactEmail = "oyotostudios@outlook.com";
-export const defaultOgImage = "/hero-images/trakr-v2.png";
+export const defaultOgImage = "/hero-images/meta_thumbnail.jpg";
 
 export const socialLinks = [
   "https://github.com/mboma99",
