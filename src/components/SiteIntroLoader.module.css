@@ -1,7 +1,10 @@
 .overlay {
   position: fixed;
-  inset: 0;
-  z-index: 2147483646;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100dvh;
+  z-index: 500;
   display: grid;
   place-items: center;
   background: #161616;
