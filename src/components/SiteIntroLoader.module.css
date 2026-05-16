@@ -1,0 +1,53 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483646;
+  display: grid;
+  place-items: center;
+  background: #161616;
+  color: #ffffff;
+  opacity: 1;
+  transition:
+    opacity 520ms ease,
+    visibility 520ms ease;
+}
+
+.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.mark {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 0.18em;
+  font-family: "Space Mono", monospace;
+  font-size: clamp(2rem, 7vw, 5rem);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: lowercase;
+  filter:
+    drop-shadow(0 0 18px rgba(255, 255, 255, 0.18))
+    drop-shadow(0 0 38px rgba(134, 166, 140, 0.26));
+}
+
+.letter {
+  display: inline-block;
+  animation: cascadeBounce 900ms cubic-bezier(0.34, 1.56, 0.64, 1) infinite;
+  animation-delay: calc(var(--letter-index) * 110ms);
+}
+
+@keyframes cascadeBounce {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 0.72;
+  }
+
+  42% {
+    transform: translateY(-0.58em) scale(1.06);
+    opacity: 1;
+  }
+}
