@@ -111,7 +111,7 @@ export function getProjectBySlug(slug: string) {
   return projects.find((project) => project.slug === slug);
 }
 
-export function projectJsonLd(slug: string) {
+export function projectJsonLd(slug: string): JsonLdValue | null {
   const project = getProjectBySlug(slug);
 
   if (!project) {
@@ -142,7 +142,7 @@ export function projectJsonLd(slug: string) {
   };
 }
 
-export function siteJsonLd() {
+export function siteJsonLd(): JsonLdValue {
   return [
     {
       "@context": "https://schema.org",
