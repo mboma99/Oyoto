@@ -1,0 +1,34 @@
+# Oyoto
+
+> Oyoto is a UK digital product studio founded by software engineer James Mboma. The site documents full-stack platforms, AI integrations, mobile apps, cloud systems, ecommerce builds, and digital strategy case studies.
+
+## Core URLs
+
+- Home: https://oyoto.co.uk/
+- About: https://oyoto.co.uk/about
+- Projects: https://oyoto.co.uk/projects
+- Resume: https://oyoto.co.uk/resume
+- Sitemap: https://oyoto.co.uk/sitemap.xml
+
+## Services
+
+- Full-stack development
+- Cloud architecture
+- UI/UX engineering
+- AI integration
+- Mobile apps
+- Business intelligence
+- Technical consulting
+
+## Case Studies
+
+- Congraduation: ecommerce photography platform for modern graduation ceremonies.
+- VengCity: custom ecommerce launch for a streetwear brand.
+- Trakr: AI-driven career intelligence and application tracking ecosystem.
+- The Well Church: digital presence and high-availability streaming ecosystem.
+
+## Contact
+
+- Email: oyotostudios@outlook.com
+- GitHub: https://github.com/mboma99
+- LinkedIn: https://www.linkedin.com/in/james-mboma/
