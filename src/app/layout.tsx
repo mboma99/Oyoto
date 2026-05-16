@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { Navigation } from "@/components/Navigation";
 import {
@@ -60,6 +60,14 @@ export const metadata: Metadata = {
     "ai-purpose":
       "Portfolio and digital product studio website for software engineering, cloud architecture, AI integration, mobile apps, and case studies.",
   },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+  themeColor: "#161616",
+  colorScheme: "dark",
 };
 
 export default function RootLayout({
