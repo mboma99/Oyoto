@@ -4,7 +4,7 @@
   left: 0;
   right: 0;
   height: 100dvh;
-  z-index: 500;
+  z-index: 2001;
   display: grid;
   place-items: center;
   background: #161616;

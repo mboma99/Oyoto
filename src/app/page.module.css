@@ -41,7 +41,7 @@
   pointer-events: none;
   height: 100vh;
   background: #161616;
-  z-index: 2001;
+  z-index: 1000;
 }
 
 .menuBtn {
