@@ -34,14 +34,26 @@
   top: 0;
   left: 0;
   right: 0;
-  height: 4rem;
-  background: rgba(22, 22, 22, 0.95);
+  min-height: calc(4rem + env(safe-area-inset-top));
+  background: #161616;
   backdrop-filter: blur(10px);
-  z-index: 400;
+  -webkit-backdrop-filter: blur(10px);
+  z-index: 2002;
   align-items: center;
   justify-content: space-between;
-  padding: 0 1.5rem;
-  }
+  padding: env(safe-area-inset-top) max(1.5rem, env(safe-area-inset-right)) 0 max(1.5rem, env(safe-area-inset-left));
+}
+
+.mobileTopBar::before {
+  content: "";
+  position: fixed;
+  top: -8rem;
+  left: 0;
+  right: 0;
+  height: calc(8rem + env(safe-area-inset-top));
+  background: #161616;
+  pointer-events: none;
+}
 
 .mobileTopLogo {
   font-family: "Space Mono", monospace;
