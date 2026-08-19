@@ -6,7 +6,6 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { motion, useInView } from "framer-motion";
 import { projects } from "@/data/projects";
-import { CursorParticles } from "@/components/CursorParticles";
 import { Footer } from "@/components/Footer";
 import styles from "./page.module.css";
 import dynamic from "next/dynamic";
@@ -66,7 +65,6 @@ export default function ProjectCaseStudy({ params }: PageProps) {
 
   return (
     <div className={styles.layout}>
-      <CursorParticles />
       <div className={styles.page}>
         <header className={styles.header}>
           <Link href="/projects" className={styles.backBtn}>

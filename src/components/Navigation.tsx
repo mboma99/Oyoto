@@ -1,30 +1,26 @@
 "use client";
 
 import { useState } from "react";
-import dynamic from "next/dynamic";
 import Link from "next/link";
 import styles from "./Navigation.module.css";
-
-const DecipherText = dynamic(() => import("./DecipherText").then(mod => mod.DecipherText), {
-  ssr: false,
-});
+import { contactMailto } from "@/lib/seo";
 
 export function Navigation() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
     <>
-      {/* Desktop side nav — hidden on mobile */}
-      <aside className={styles.sideNav}>
-        <button
-          type="button"
-          className={styles.menuBtn}
-          onClick={() => setMenuOpen(!menuOpen)}
-          aria-label={menuOpen ? "Close menu" : "Open menu"}
-        >
-          <DecipherText key={menuOpen ? "CLOSE" : "MENU"} text={menuOpen ? "CLOSE" : "MENU"} />
-        </button>
-      </aside>
+      {/* Desktop menu trigger — also the overlay's close control */}
+      <button
+        type="button"
+        className={styles.desktopMenuBtn}
+        onClick={() => setMenuOpen(!menuOpen)}
+        aria-label={menuOpen ? "Close menu" : "Open menu"}
+        aria-expanded={menuOpen}
+      >
+        <span className={`${styles.menuLine} ${menuOpen ? styles.menuLineOpen1 : ""}`} />
+        <span className={`${styles.menuLine} ${menuOpen ? styles.menuLineOpen2 : ""}`} />
+      </button>
 
       {/* Mobile top bar — hidden on desktop */}
       <div className={styles.mobileTopBar}>
@@ -54,7 +50,7 @@ export function Navigation() {
             <Link href="/projects" onClick={() => setMenuOpen(false)}>
               PROJECTS
             </Link>
-            <a href="mailto:oyotostudios@outlook.com" onClick={() => setMenuOpen(false)}>
+            <a href={contactMailto} onClick={() => setMenuOpen(false)}>
               CONTACT
             </a>
             <Link href="/resume" onClick={() => setMenuOpen(false)}>

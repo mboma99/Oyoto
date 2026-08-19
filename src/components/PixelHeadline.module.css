@@ -1,0 +1,45 @@
+.wrap {
+  position: relative;
+  display: block;
+  transform: translateY(45%);
+  opacity: 0;
+  animation: ph-rise 1.2s cubic-bezier(0.19, 1, 0.22, 1) 0.8s forwards;
+}
+
+/* Keeps the layout box and doubles as the pre-hydration / no-JS fallback. */
+.text {
+  display: inline-block;
+}
+
+/* opacity rather than visibility: keeps the word in the a11y tree and find-in-page */
+.textHidden {
+  opacity: 0;
+}
+
+.canvas {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+@keyframes ph-rise {
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wrap {
+    animation: none;
+    transform: none;
+    opacity: 1;
+  }
+
+  /* no canvas is built under reduced motion — the plain word stays */
+  .canvas {
+    display: none;
+  }
+}

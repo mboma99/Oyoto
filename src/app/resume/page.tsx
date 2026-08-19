@@ -4,8 +4,8 @@ import dynamic from "next/dynamic";
 import Link from "next/link";
 import { motion, Variants } from "framer-motion";
 import styles from "./page.module.css";
-import { CursorParticles } from "@/components/CursorParticles";
 import { Footer } from "@/components/Footer";
+import { contactMailto } from "@/lib/seo";
 
 const DecipherText = dynamic(() => import("@/components/DecipherText").then(mod => mod.DecipherText), {
   ssr: false,
@@ -23,7 +23,6 @@ const scrollVariants: Variants = {
 export default function Resume() {
   return (
     <div className={styles.layout}>
-      <CursorParticles />
       <div className={styles.page}>
         <header className={styles.header}>
           <Link href="/" className={styles.logo}>oyotō</Link>
@@ -38,7 +37,7 @@ export default function Resume() {
             <h1 className={styles.name}>JAMES MBOMA</h1>
             <p className={styles.role}>SOFTWARE ENGINEER</p>
             <div className={styles.contactInfo}>
-              <a href="mailto:oyotostudios@outlook.com">oyotostudios@outlook.com</a>
+              <a href={contactMailto}>oyotostudios@outlook.com</a>
               <div className={styles.links}>
                 <a href="https://linkedin.com/in/james-mboma" target="_blank" rel="noopener noreferrer">LINKEDIN</a>
                 <a href="https://github.com/mboma99" target="_blank" rel="noopener noreferrer">GITHUB</a>

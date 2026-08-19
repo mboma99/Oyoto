@@ -4,8 +4,8 @@ import dynamic from "next/dynamic";
 import Link from "next/link";
 import { motion, Variants } from "framer-motion";
 import styles from "./page.module.css";
-import { CursorParticles } from "@/components/CursorParticles";
 import { Footer } from "@/components/Footer";
+import { contactMailto } from "@/lib/seo";
 
 const DecipherText = dynamic(() => import("@/components/DecipherText").then(mod => mod.DecipherText), {
   ssr: false,
@@ -33,7 +33,6 @@ export default function About() {
 
   return (
     <div className={styles.layout}>
-      <CursorParticles />
       <div className={styles.page}>
         <header className={styles.header}>
           <Link href="/" className={styles.logo}>oyotō</Link>
@@ -89,7 +88,7 @@ export default function About() {
           >
             <h3 className={styles.sectionTitle}>[ CONNECT ]</h3>
             <div className={styles.contactSection}>
-              <a href="mailto:oyotostudios@outlook.com" className={styles.email}>
+              <a href={contactMailto} className={styles.email}>
                 OYOTOSTUDIOS@OUTLOOK.COM
               </a>
             </div>

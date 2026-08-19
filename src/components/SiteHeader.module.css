@@ -1,0 +1,97 @@
+.siteHeader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 900; /* under Navigation's overlay (1000) and menu button (2001) */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+  padding: 1.75rem 6.5rem 1.75rem 3rem;
+  pointer-events: none;
+}
+
+.headerLeft {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  pointer-events: auto;
+}
+
+.logo {
+  font-family: "Space Mono", monospace;
+  font-weight: 700;
+  font-size: 1.15rem;
+  letter-spacing: 0.32em;
+  text-transform: lowercase;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.statusPill {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.45rem 1rem;
+  border: 1px solid #26262b;
+  border-radius: 999px;
+  background: rgba(18, 18, 22, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  font-family: "Space Mono", monospace;
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.24em;
+  color: #8e8e93;
+  white-space: nowrap;
+}
+
+.dot {
+  flex: none;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #ffffff;
+  animation: sh-pulse 2.4s ease-in-out infinite;
+}
+
+.headerNav {
+  display: flex;
+  align-items: center;
+  gap: 2.5rem;
+  pointer-events: auto;
+}
+
+.headerNav a {
+  font-family: "Space Mono", monospace;
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.24em;
+  color: #8e8e93;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.headerNav a:hover {
+  color: #ffffff;
+}
+
+@keyframes sh-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.25; }
+}
+
+@media (max-width: 1024px) {
+  .siteHeader { padding: 1.5rem 5.5rem 1.5rem 2rem; }
+  .headerNav { gap: 1.75rem; }
+}
+
+@media (max-width: 768px) {
+  /* the global mobile top bar already shows the logo and menu */
+  .siteHeader { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dot { animation: none; }
+}
