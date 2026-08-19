@@ -3,7 +3,8 @@
   top: 0;
   left: 0;
   right: 0;
-  z-index: 900; /* under Navigation's overlay (1000) and menu button (2001) */
+  z-index: 900;
+  /* under Navigation's overlay (1000) and menu button (2001) */
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -83,21 +84,87 @@
   color: #ffffff;
 }
 
+.contactPill {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.45rem 1.25rem;
+  background: #ffffff !important;
+  color: #121214 !important;
+  border-radius: 999px;
+  overflow: hidden;
+  font-family: "Space Mono", monospace;
+  font-size: 0.65rem !important;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  text-decoration: none;
+  isolation: isolate;
+  transition: transform 0.25s cubic-bezier(0.19, 1, 0.22, 1), box-shadow 0.25s ease;
+}
+
+.contactPill:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(255, 255, 255, 0.3);
+}
+
+.pillFill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+  background: #121214;
+  pointer-events: none;
+  transform: translate(-50%, -50%) scale(0);
+  transition: transform 1.4s cubic-bezier(0.19, 1, 0.22, 1);
+  z-index: 1;
+}
+
+.pillText {
+  position: relative;
+  z-index: 2;
+  transition: color 0.85s ease;
+}
+
+.contactPill:hover .pillText {
+  color: #ffffff !important;
+}
+
 @keyframes sh-pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.25; }
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.25;
+  }
 }
 
 @media (max-width: 1024px) {
-  .siteHeader { padding: 1.5rem 5.5rem 1.5rem 2rem; }
-  .headerNav { gap: 1.75rem; }
+  .siteHeader {
+    padding: 1.5rem 5.5rem 1.5rem 2rem;
+  }
+
+  .headerNav {
+    gap: 1.75rem;
+  }
 }
 
 @media (max-width: 768px) {
+
   /* the global mobile top bar already shows the logo and menu */
-  .siteHeader { display: none; }
+  .siteHeader {
+    display: none;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .dot { animation: none; }
+  .dot {
+    animation: none;
+  }
 }

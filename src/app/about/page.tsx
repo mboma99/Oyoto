@@ -5,6 +5,7 @@ import Image from "next/image";
 import styles from "./page.module.css";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
+import { SkillPit } from "@/components/SkillPit";
 import { contactEmail, contactMailto } from "@/lib/seo";
 
 const philosophy = [
@@ -81,16 +82,23 @@ export default function About() {
       <SiteHeader tagline="Studio Profile" />
 
       <header className={styles.hero}>
-        <p className={styles.eyebrow}>
-          <span className={styles.dot} aria-hidden="true" />
-          Aesthetic Restraint
-        </p>
-        <h1 className={styles.heroTitle}>
-          <span className={styles.heroLine}><span>CRAFTING</span></span>
-          <span className={styles.heroLine}>
-            <span className={styles.heroOutline}>CONTEXT</span>
-          </span>
-        </h1>
+        <div className={styles.heroContent}>
+          <p className={styles.eyebrow} data-physics-obstacle="true">
+            <span className={styles.dot} aria-hidden="true" />
+            Aesthetic Restraint
+          </p>
+          <h1 className={styles.heroTitle}>
+            <span className={styles.heroLine}>
+              <span data-physics-obstacle="true">CRAFTING</span>
+            </span>
+            <span className={styles.heroLine}>
+              <span className={styles.heroOutline} data-physics-obstacle="true">
+                CONTEXT
+              </span>
+            </span>
+          </h1>
+        </div>
+        <SkillPit />
       </header>
 
       <main>

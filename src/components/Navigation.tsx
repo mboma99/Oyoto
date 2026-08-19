@@ -50,9 +50,9 @@ export function Navigation() {
             <Link href="/projects" onClick={() => setMenuOpen(false)}>
               PROJECTS
             </Link>
-            <a href={contactMailto} onClick={() => setMenuOpen(false)}>
+            <Link href="/contact" onClick={() => setMenuOpen(false)}>
               CONTACT
-            </a>
+            </Link>
             <Link href="/resume" onClick={() => setMenuOpen(false)}>
               RESUME
             </Link>

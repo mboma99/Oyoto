@@ -15,13 +15,28 @@
 /* ─── Hero ─── */
 
 .hero {
-  padding: 14rem 3rem 6rem;
+  position: relative;
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 12rem 3rem 4rem;
+  overflow: hidden;
+  border-bottom: 1px solid var(--line);
+}
+
+.heroContent {
+  position: relative;
+  z-index: 2;
+  pointer-events: none;
 }
 
 .eyebrow {
   opacity: 0;
   animation: ab-fade 1.2s ease 0.2s forwards;
-  display: flex;
+  display: inline-flex;
+  width: fit-content;
   align-items: center;
   gap: 1rem;
   margin: 0 0 3rem;
@@ -239,6 +254,7 @@
   letter-spacing: 0.16em;
   color: var(--muted);
 }
+
 
 /* ─── Connect ─── */
 

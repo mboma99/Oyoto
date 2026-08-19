@@ -6,7 +6,7 @@ export function SiteFooter() {
   return (
     <footer className={styles.footer}>
       <div className={styles.footerTop}>
-        <p className={styles.footerMark}>oyotō</p>
+        <p className={styles.footerMark}>OYOTŌ</p>
         <div className={styles.footerLinks}>
           <div className={styles.footerCol}>
             <span className={styles.footerColTitle}>Navigation</span>
@@ -17,7 +17,7 @@ export function SiteFooter() {
           </div>
           <div className={styles.footerCol}>
             <span className={styles.footerColTitle}>Elsewhere</span>
-            <a href={contactMailto}>Contact</a>
+            <Link href="/contact">Contact</Link>
             <a
               href="https://github.com/mboma99"
               target="_blank"

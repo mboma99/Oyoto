@@ -163,7 +163,7 @@
   font-weight: 700;
   font-size: clamp(4rem, 11vw, 10rem);
   letter-spacing: -0.03em;
-  text-transform: lowercase;
+  text-transform: uppercase;
   padding-right: 4rem;
   -webkit-text-stroke: 1px rgba(255, 255, 255, 0.28);
   color: transparent;
@@ -452,6 +452,33 @@
 @keyframes oy-pulse {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.25; }
+}
+
+/* ─── Scroll reveal ─── */
+
+.reveal {
+  transform: translateY(35px);
+  opacity: 0;
+  transition: transform 1.2s cubic-bezier(0.19, 1, 0.22, 1),
+    opacity 1.2s cubic-bezier(0.19, 1, 0.22, 1);
+  will-change: transform, opacity;
+}
+
+.revealActive {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.revealDelay1 {
+  transition-delay: 0.15s;
+}
+
+.revealDelay2 {
+  transition-delay: 0.3s;
+}
+
+.revealDelay3 {
+  transition-delay: 0.45s;
 }
 
 /* ─── Responsive ─── */

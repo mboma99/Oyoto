@@ -26,6 +26,7 @@ Anything else I should know?
 
 Thanks,`)}`;
 export const defaultOgImage = "/hero-images/meta_thumbnail.jpg";
+export const defaultCalLink = "james-mboma-kzbj0s/30min";
 
 export const socialLinks = [
   "https://github.com/mboma99",
