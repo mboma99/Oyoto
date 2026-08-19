@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Navigation } from "@/components/Navigation";
+import { CursorParticles } from "@/components/CursorParticles";
 import {
   absoluteUrl,
   contactEmail,
@@ -71,6 +72,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <script {...jsonLdScript(siteJsonLd())} />
+        <CursorParticles />
         <Navigation />
         {children}
       </body>

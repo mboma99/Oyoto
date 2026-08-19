@@ -1,0 +1,170 @@
+.siteHeader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 900;
+  /* under Navigation's overlay (1000) and menu button (2001) */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+  padding: 1.75rem 6.5rem 1.75rem 3rem;
+  pointer-events: none;
+  /* inverts against whatever scrolls under it, so the header survives the
+     white contact section. Must sit on the container: the header is a stacking
+     context, so blending on its children would be confined to it. */
+  mix-blend-mode: difference;
+}
+
+.headerLeft {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  pointer-events: auto;
+}
+
+.logo {
+  font-family: "Space Mono", monospace;
+  font-weight: 700;
+  font-size: 1.15rem;
+  letter-spacing: 0.32em;
+  text-transform: lowercase;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.statusPill {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.45rem 1rem;
+  /* transparent fill + a mid-grey border: under difference a dark fill would
+     invert to near-white over the contact section, and #26262b would vanish
+     against the dark sections. backdrop-filter is unreliable inside a blend
+     group, so it goes too. */
+  border: 1px solid #575757;
+  border-radius: 999px;
+  background: transparent;
+  font-family: "Space Mono", monospace;
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.24em;
+  color: #8e8e93;
+  white-space: nowrap;
+}
+
+.dot {
+  flex: none;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #ffffff;
+  animation: sh-pulse 2.4s ease-in-out infinite;
+}
+
+.headerNav {
+  display: flex;
+  align-items: center;
+  gap: 2.5rem;
+  pointer-events: auto;
+}
+
+.headerNav a {
+  font-family: "Space Mono", monospace;
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.24em;
+  color: #8e8e93;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.headerNav a:hover {
+  color: #ffffff;
+}
+
+.contactPill {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.45rem 1.25rem;
+  background: #ffffff !important;
+  color: #121214 !important;
+  border-radius: 999px;
+  overflow: hidden;
+  font-family: "Space Mono", monospace;
+  font-size: 0.65rem !important;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  text-decoration: none;
+  isolation: isolate;
+  transition: transform 0.25s cubic-bezier(0.19, 1, 0.22, 1), box-shadow 0.25s ease;
+}
+
+.contactPill:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(255, 255, 255, 0.3);
+}
+
+.pillFill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+  background: #121214;
+  pointer-events: none;
+  transform: translate(-50%, -50%) scale(0);
+  transition: transform 1.4s cubic-bezier(0.19, 1, 0.22, 1);
+  z-index: 1;
+}
+
+.pillText {
+  position: relative;
+  z-index: 2;
+  transition: color 0.85s ease;
+}
+
+.contactPill:hover .pillText {
+  color: #ffffff !important;
+}
+
+@keyframes sh-pulse {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.25;
+  }
+}
+
+@media (max-width: 1024px) {
+  .siteHeader {
+    padding: 1.5rem 5.5rem 1.5rem 2rem;
+  }
+
+  .headerNav {
+    gap: 1.75rem;
+  }
+}
+
+@media (max-width: 768px) {
+
+  /* the global mobile top bar already shows the logo and menu */
+  .siteHeader {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dot {
+    animation: none;
+  }
+}

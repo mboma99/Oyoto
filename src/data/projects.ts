@@ -4,6 +4,7 @@ export interface Project {
   title: string;
   description: string;
   image: string;
+  category: string;
   tags: string[];
   year: string;
   client: string;
@@ -24,6 +25,7 @@ export const projects: Project[] = [
     title: "CONGRADUATION",
     description: "A comprehensive digital platform for modern graduation ceremonies.",
     image: "/hero-images/congraduation-new.jpg",
+    category: "Ecommerce",
     tags: ["REACT", "FASTAPI", "POSTGRESQL", "ECOMMERCE"],
     year: "2024",
     client: "Development Project",
@@ -42,6 +44,7 @@ export const projects: Project[] = [
     title: "VENGCITY",
     description: "Custom E-Commerce platform for a high-profile streetwear brand launch.",
     image: "/hero-images/vengcity.png",
+    category: "Brand Launch",
     tags: ["WORDPRESS", "PHP", "ECOMMERCE", "SEO"],
     year: "2021",
     client: "BanterPlug",
@@ -60,6 +63,7 @@ export const projects: Project[] = [
     title: "TRAKR",
     description: "Proprietary AI-driven career intelligence and application tracking ecosystem.",
     image: "/hero-images/trakr-v2.png",
+    category: "AI / SaaS",
     tags: ["AI/ML", "MOBILE", "AUTOMATION", "SAAS"],
     year: "2026",
     client: "In-House Project",
@@ -78,6 +82,7 @@ export const projects: Project[] = [
     title: "THE WELL CHURCH",
     description: "Digital presence and high-availability streaming ecosystem for a community organization.",
     image: "/hero-images/well-church.png",
+    category: "Broadcast",
     tags: ["SQUARESPACE", "AV ENGINEERING", "BROADCAST", "WEB"],
     year: "2023",
     client: "The Well Church",

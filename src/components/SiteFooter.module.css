@@ -1,0 +1,75 @@
+.footer {
+  padding: 6rem 3rem 3rem;
+  border-top: 1px solid #232327;
+  color: #ffffff;
+}
+
+.footerTop {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  gap: 4rem;
+  align-items: start;
+}
+
+.footerMark {
+  margin: 0;
+  font-weight: 700;
+  font-size: clamp(4rem, 13vw, 10rem);
+  line-height: 0.8;
+  letter-spacing: -0.05em;
+  text-transform: uppercase;
+}
+
+.footerLinks {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  font-size: 0.9rem;
+}
+
+.footerCol {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.footerColTitle {
+  font-family: "Space Mono", monospace;
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.32em;
+  color: #4c4c52;
+  margin-bottom: 0.5rem;
+}
+
+.footerCol a {
+  color: #ffffff;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footerCol a:hover {
+  color: #8e8e93;
+}
+
+.footerBase {
+  margin-top: 8rem;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  font-family: "Space Mono", monospace;
+  font-size: 0.62rem;
+  text-transform: uppercase;
+  letter-spacing: 0.24em;
+  color: #4c4c52;
+}
+
+@media (max-width: 768px) {
+  .footer { padding: 4rem 1.5rem 2rem; }
+  .footerTop { grid-template-columns: 1fr; gap: 2.5rem; }
+  .footerBase { margin-top: 4rem; flex-direction: column; gap: 0.5rem; }
+}
+
+@media (max-width: 480px) {
+  .footerBase { font-size: 0.58rem; }
+}

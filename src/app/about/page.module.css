@@ -1,206 +1,380 @@
-.layout {
-  position: relative;
-  min-height: 100vh;
-}
-
-.layout::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 100vh;
-  background-image:
-    linear-gradient(to bottom, transparent 0%, #161616 100%),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px),
-    linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px);
-  background-size: 100% 100%, 100px 100px, 100px 100px;
-  background-position: 0 0, 0 0, 0 0;
-  background-repeat: no-repeat, repeat, repeat;
-  z-index: -1;
-}
+/* ─── About ─── */
 
 .page {
   --bg: #161616;
   --fg: #ffffff;
-  --contrast: #86a68c;
+  --line: #232327;
+  --muted: #8e8e93;
+  --faint: #4c4c52;
+
   min-height: 100vh;
-  padding: 5.5rem 10rem 2rem;
+  background: var(--bg);
   color: var(--fg);
 }
 
-.header {
+/* ─── Hero ─── */
+
+.hero {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100svh;
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
+  padding: 12rem 3rem 4rem;
+  overflow: hidden;
+  border-bottom: 1px solid var(--line);
+}
+
+.heroContent {
+  position: relative;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.eyebrow {
+  opacity: 0;
+  animation: ab-fade 1.2s ease 0.2s forwards;
+  display: inline-flex;
+  width: fit-content;
   align-items: center;
+  gap: 1rem;
+  margin: 0 0 3rem;
+  font-family: "Space Mono", monospace;
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.4em;
+  color: var(--muted);
+}
+
+.dot {
+  flex: none;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--fg);
+  animation: ab-pulse 2.4s ease-in-out infinite;
+}
+
+.heroTitle {
+  margin: 0;
+  font-weight: 700;
+  font-size: clamp(3.5rem, 12vw, 10rem);
+  line-height: 0.8;
+  letter-spacing: -0.05em;
+}
+
+.heroLine {
+  display: block;
+  overflow: hidden;
+}
+
+.heroLine > span {
+  display: inline-block;
+  transform: translateY(110%);
+  animation: ab-reveal 1.4s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+}
+
+.heroLine:nth-child(1) > span { animation-delay: 0.4s; }
+.heroLine:nth-child(2) > span { animation-delay: 0.6s; }
+
+.heroOutline {
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.28);
+  color: transparent;
+}
+
+/* ─── Intro ─── */
+
+.intro {
+  padding: 8rem 3rem;
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: 6rem;
+  align-items: center;
+}
+
+.introFrame {
+  position: relative;
+  aspect-ratio: 1;
+  overflow: hidden;
+  background: #1c1c22;
+}
+
+.introImage {
+  object-fit: cover;
+  filter: grayscale(1);
+  transition: transform 1.2s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.introFrame:hover .introImage {
+  transform: scale(1.08);
+}
+
+.introText {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.introLead {
+  margin: 0 0 3rem;
+  font-size: clamp(1.5rem, 3vw, 3rem);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.introDim {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.introRule {
+  width: 5rem;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.2);
   margin-bottom: 3rem;
 }
 
-.logo {
+.introMeta {
+  margin: 0;
+  max-width: 36rem;
   font-family: "Space Mono", monospace;
-  font-weight: 700;
+  font-size: 0.7rem;
+  line-height: 2;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--muted);
+}
+
+/* ─── Philosophy ─── */
+
+.philosophy {
+  padding: 12rem 3rem;
+  background: rgba(255, 255, 255, 0.015);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.sectionLabel {
+  display: block;
+  margin-bottom: 5rem;
+  font-family: "Space Mono", monospace;
+  font-size: 0.62rem;
+  text-transform: uppercase;
   letter-spacing: 0.5em;
-  text-transform: lowercase;
-  text-decoration: none;
-  color: white;
-  font-size: 1.5rem;
+  color: rgba(255, 255, 255, 0.3);
 }
 
-.nav {
-  display: flex;
-  gap: 3rem;
-  font-size: 1rem;
-  letter-spacing: 0.12em;
-}
-
-.content {
-  max-width: 1000px;
-  margin: 4rem 0;
-}
-
-.tagline {
-  font-family: "Space Grotesk", sans-serif;
-  font-size: clamp(1.5rem, 4vw, 2.2rem);
-  line-height: 1.3;
-  margin-bottom: 2rem;
-  text-transform: uppercase;
-  letter-spacing: -0.01em;
-}
-
-.subText {
-  font-family: "Space Mono", monospace;
-  font-size: 0.9rem;
-  color: #888;
-  margin-bottom: 1rem;
-  letter-spacing: 0.05em;
-}
-
-.founder {
-  font-family: "Space Mono", monospace;
-  font-size: 1rem;
-  margin-top: 3rem;
-  opacity: 0.8;
-  color: #86a68c;
-}
-
-.sectionTitle {
-  font-family: "Space Mono", monospace;
-  font-size: 0.8rem;
-  letter-spacing: 0.4em;
-  color: rgba(255, 255, 255, 0.4);
-  margin-bottom: 2rem;
-  text-transform: uppercase;
-}
-
-.servicesGrid {
+.philosophyGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-  gap: 1rem;
-  margin-bottom: 4rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+  gap: 6rem;
 }
 
-.serviceItem {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 1.25rem 0;
-  font-size: 1.1rem;
-  font-family: "Space Mono", monospace;
-  letter-spacing: 0.05em;
+.philosophyTitle {
+  margin: 0 0 2rem;
+  font-weight: 700;
+  font-size: 1.5rem;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+
+.philosophyBody {
+  margin: 0;
+  font-size: 0.85rem;
+  line-height: 1.8;
+  color: var(--muted);
+}
+
+/* ─── Expertise ─── */
+
+.expertise {
+  padding: 12rem 3rem;
+}
+
+.expertiseHeading {
+  margin: 0 0 8rem;
+  font-weight: 700;
+  font-size: clamp(3rem, 8vw, 7rem);
+  line-height: 0.9;
+  letter-spacing: -0.05em;
+  text-transform: uppercase;
+}
+
+.row {
+  padding: 3rem 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
-  transition: all 0.3s ease;
-  cursor: default;
-  text-decoration: none;
-  color: white;
+  gap: 2rem;
 }
 
-.serviceItem:hover {
-  color: #86a68c;
-  border-bottom-color: #86a68c;
-  padding-left: 0.5rem;
+.expertiseList .row:last-child {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
-.experienceGrid {
+.rowLeft {
   display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.experienceItem {
-  display: grid;
-  grid-template-columns: 2fr 3fr 1.5fr;
-  padding: 1.5rem 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  font-family: "Space Mono", monospace;
-  font-size: 0.9rem;
-  letter-spacing: 0.1em;
   align-items: center;
+  gap: 2rem;
+  min-width: 0;
 }
 
-.expCompany {
+.rowNum {
+  flex: none;
+  font-family: "Space Mono", monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.24em;
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.rowTitle {
+  margin: 0;
   font-weight: 700;
-  color: #86a68c;
+  font-size: clamp(1.5rem, 3.5vw, 3rem);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  transition: padding-left 0.5s cubic-bezier(0.19, 1, 0.22, 1);
 }
 
-.expRole {
-  opacity: 0.8;
+.row:hover .rowTitle {
+  padding-left: 1rem;
 }
 
-.expYear {
-  text-align: right;
-  opacity: 0.5;
-  font-size: 0.8rem;
+.rowBody {
+  margin: 0;
+  max-width: 20rem;
+  font-family: "Space Mono", monospace;
+  font-size: 0.62rem;
+  line-height: 2;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--muted);
 }
 
-.contactSection {
-  margin: 2rem 0;
+
+/* ─── Connect ─── */
+
+.connect {
+  padding: 0 3rem 12rem;
 }
 
 .email {
-  font-size: clamp(1.2rem, 4vw, 2.2rem);
-  font-family: "Space Grotesk", sans-serif;
-  text-decoration: underline;
-  text-underline-offset: 10px;
-  transition: all 0.3s ease;
-  color: white;
+  display: inline-block;
+  font-weight: 700;
+  font-size: clamp(1.25rem, 4vw, 3rem);
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  color: var(--fg);
+  text-decoration: none;
+  overflow-wrap: anywhere;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  padding-bottom: 0.5rem;
+  transition: border-color 0.4s ease, color 0.4s ease;
 }
 
 .email:hover {
-  color: #86a68c;
+  border-bottom-color: var(--fg);
+  color: var(--muted);
 }
 
+/* ─── Scroll reveal ─── */
+
+.reveal {
+  transform: translateY(30px);
+  opacity: 0;
+  transition: transform 1.2s cubic-bezier(0.19, 1, 0.22, 1),
+    opacity 1.2s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.revealActive {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* ─── Keyframes ─── */
+
+@keyframes ab-reveal {
+  to { transform: translateY(0); }
+}
+
+@keyframes ab-fade {
+  to { opacity: 1; }
+}
+
+@keyframes ab-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.25; }
+}
+
+/* ─── Responsive ─── */
+
 @media (max-width: 1024px) {
-  .page {
-    padding: 5.5rem 4rem 2rem 8rem;
-  }
+  .hero { padding: 11rem 2rem 5rem; }
+  .intro { padding: 6rem 2rem; gap: 4rem; }
+  .philosophy { padding: 8rem 2rem; }
+  .philosophyGrid { gap: 4rem; }
+  .expertise { padding: 8rem 2rem; }
+  .expertiseHeading { margin-bottom: 5rem; }
+  .connect { padding: 0 2rem 8rem; }
 }
 
 @media (max-width: 768px) {
-  .page {
-    padding: 5rem 1.5rem 2rem;
+  .page { padding-top: calc(4rem + env(safe-area-inset-top)); }
+
+  .hero { padding: 5rem 1.5rem 3rem; }
+
+  .intro {
+    padding: 4rem 1.5rem;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 3rem;
   }
-  .header {
-    display: none; /* mobile top bar handles this */
+
+  .introLead { margin-bottom: 2rem; }
+  .introRule { margin-bottom: 2rem; }
+
+  .philosophy { padding: 5rem 1.5rem; }
+  .sectionLabel { margin-bottom: 3rem; }
+  .philosophyGrid { gap: 3.5rem; }
+  .philosophyTitle { margin-bottom: 1rem; }
+
+  .expertise { padding: 5rem 1.5rem; }
+  .expertiseHeading { margin-bottom: 3rem; }
+
+  .row {
+    padding: 2rem 0;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
   }
-  .experienceItem {
-    grid-template-columns: 1fr;
-    gap: 0.5rem;
-    padding: 1.25rem 0;
-  }
-  .expYear {
-    text-align: left;
-    margin-top: 0.25rem;
-  }
-  .servicesGrid {
-    grid-template-columns: 1fr;
-  }
-  .tagline {
-    font-size: clamp(1.2rem, 5vw, 1.8rem);
-  }
+
+  .rowLeft { gap: 1.25rem; }
+  .rowBody { max-width: none; }
+
+  .connect { padding: 0 1.5rem 5rem; }
 }
 
-@media (max-width: 480px) {
-  .page {
-    padding: 5rem 1rem 2rem;
+@media (prefers-reduced-motion: reduce) {
+  .eyebrow,
+  .heroLine > span {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+
+  .dot { animation: none; }
+
+  .reveal {
+    transform: none;
+    opacity: 1;
+    transition: none;
+  }
+
+  .introImage,
+  .rowTitle {
+    transition: none;
   }
 }
