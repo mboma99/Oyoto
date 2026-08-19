@@ -10,6 +10,10 @@
   gap: 2rem;
   padding: 1.75rem 6.5rem 1.75rem 3rem;
   pointer-events: none;
+  /* inverts against whatever scrolls under it, so the header survives the
+     white contact section. Must sit on the container: the header is a stacking
+     context, so blending on its children would be confined to it. */
+  mix-blend-mode: difference;
 }
 
 .headerLeft {
@@ -34,11 +38,13 @@
   align-items: center;
   gap: 0.5rem;
   padding: 0.45rem 1rem;
-  border: 1px solid #26262b;
+  /* transparent fill + a mid-grey border: under difference a dark fill would
+     invert to near-white over the contact section, and #26262b would vanish
+     against the dark sections. backdrop-filter is unreliable inside a blend
+     group, so it goes too. */
+  border: 1px solid #575757;
   border-radius: 999px;
-  background: rgba(18, 18, 22, 0.7);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  background: transparent;
   font-family: "Space Mono", monospace;
   font-size: 0.6rem;
   text-transform: uppercase;

@@ -1,108 +1,159 @@
 "use client";
 
-import dynamic from "next/dynamic";
-import Link from "next/link";
-import { motion, Variants } from "framer-motion";
+import { useEffect, useRef } from "react";
+import Image from "next/image";
 import styles from "./page.module.css";
-import { Footer } from "@/components/Footer";
-import { contactMailto } from "@/lib/seo";
+import { SiteHeader } from "@/components/SiteHeader";
+import { SiteFooter } from "@/components/SiteFooter";
+import { contactEmail, contactMailto } from "@/lib/seo";
 
-const DecipherText = dynamic(() => import("@/components/DecipherText").then(mod => mod.DecipherText), {
-  ssr: false,
-});
+const philosophy = [
+  {
+    title: "Intentionality",
+    body: "Every pixel, every line of code, and every interaction must serve a specific purpose within the ecosystem.",
+  },
+  {
+    title: "Performance",
+    body: "Speed and stability are the foundations of luxury. We engineer for zero friction.",
+  },
+  {
+    title: "Longevity",
+    body: "We build systems that don't just solve today's problems but anticipate the shifts of tomorrow.",
+  },
+];
 
-const scrollVariants: Variants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: { 
-    opacity: 1, 
-    y: 0, 
-    transition: { duration: 0.8, ease: [0.215, 0.61, 0.355, 1] } 
-  }
-};
+const expertise = [
+  {
+    title: "Full-stack development",
+    body: "React and Next.js front ends over FastAPI and Node services, backed by PostgreSQL.",
+  },
+  {
+    title: "Cloud architecture",
+    body: "GCP and AWS infrastructure, Nginx, and Redis, built to hold up under launch-day load.",
+  },
+  {
+    title: "UI/UX engineering",
+    body: "Design systems, motion, and interface work carried from concept through to shipped code.",
+  },
+  {
+    title: "AI integration",
+    body: "Multi-model classification and language features wired into live product data.",
+  },
+  {
+    title: "Mobile apps",
+    body: "Flutter applications delivered to iOS against the same services as the web.",
+  },
+  {
+    title: "Business intelligence",
+    body: "Analytics, reporting, and the data plumbing that makes the numbers trustworthy.",
+  },
+  {
+    title: "Technical consulting",
+    body: "Architecture review, platform selection, and a second opinion before the build starts.",
+  },
+];
 
 export default function About() {
-  const services = [
-    "FULL-STACK DEVELOPMENT",
-    "CLOUD ARCHITECTURE",
-    "UI/UX ENGINEERING",
-    "AI INTEGRATION",
-    "MOBILE APPS",
-    "BUSINESS INTELLIGENCE",
-    "TECHNICAL CONSULTING",
-  ];
+  const mainRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const root = mainRef.current;
+    if (!root) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add(styles.revealActive);
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    root.querySelectorAll(`.${styles.reveal}`).forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
 
   return (
-    <div className={styles.layout}>
-      <div className={styles.page}>
-        <header className={styles.header}>
-          <Link href="/" className={styles.logo}>oyotō</Link>
-          <nav className={styles.nav}>
-            <Link href="/about"><DecipherText text={"ABOUT"} animateOnHover={true} /></Link>
-            <Link href="/projects"><DecipherText text={"PROJECTS"} animateOnHover={true} /></Link>
-          </nav>
-        </header>
+    <div className={styles.page} ref={mainRef}>
+      <SiteHeader tagline="Studio Profile" />
 
-        <main className={styles.content}>
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={scrollVariants}
-          >
-            <h2 className={styles.sectionTitle}>[ STUDIO OVERVIEW ]</h2>
-            <p className={styles.tagline}>
-               [ OYOTO IS A MULTIFACETED DIGITAL PRODUCT DEVELOPMENT FIRM founded with a desire to
-                expand our clients presence in the digital space. ]
-            </p>
-            <p className={styles.subText}>
-              [ CERTAIN PROJECTS MAY BE UNDER NDA UNTIL RELEASE* ]
-            </p>
-            <p className={styles.founder}>
-              [ FOUNDED BY JAMES MBOMA IN 2019 ]
-            </p>
-          </motion.div>
+      <header className={styles.hero}>
+        <p className={styles.eyebrow}>
+          <span className={styles.dot} aria-hidden="true" />
+          Aesthetic Restraint
+        </p>
+        <h1 className={styles.heroTitle}>
+          <span className={styles.heroLine}><span>CRAFTING</span></span>
+          <span className={styles.heroLine}>
+            <span className={styles.heroOutline}>CONTEXT</span>
+          </span>
+        </h1>
+      </header>
 
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={scrollVariants}
-            style={{ marginTop: "6rem" }}
-          >
-            <h3 className={styles.sectionTitle}>[ EXPERTISE ]</h3>
-            <div className={styles.servicesGrid}>
-              {services.map((service, index) => (
-                <div key={index} className={styles.serviceItem}>
-                  {service} +
+      <main>
+        <section className={styles.intro}>
+          <div className={`${styles.introFrame} ${styles.reveal}`}>
+            <Image
+              src="/hero-images/well-church.png"
+              alt="The Well Church — a congregation mid-service"
+              fill
+              sizes="(max-width: 768px) 100vw, 38vw"
+              className={styles.introImage}
+            />
+          </div>
+          <div className={`${styles.introText} ${styles.reveal}`}>
+            <p className={styles.introLead}>
+              Oyoto is a multifaceted{" "}
+              <span className={styles.introDim}>digital product development</span>{" "}
+              firm, founded to expand our clients&apos; presence in the digital space.
+            </p>
+            <span className={styles.introRule} aria-hidden="true" />
+            <p className={styles.introMeta}>
+              Founded by James Mboma in 2019. Certain projects may remain under NDA
+              until release.
+            </p>
+          </div>
+        </section>
+
+        <section className={styles.philosophy}>
+          <span className={`${styles.sectionLabel} ${styles.reveal}`}>Philosophy</span>
+          <div className={styles.philosophyGrid}>
+            {philosophy.map((item) => (
+              <div key={item.title} className={styles.reveal}>
+                <h2 className={styles.philosophyTitle}>{item.title}</h2>
+                <p className={styles.philosophyBody}>{item.body}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section className={styles.expertise} id="expertise">
+          <h2 className={`${styles.expertiseHeading} ${styles.reveal}`}>Expertise</h2>
+          <div className={styles.expertiseList}>
+            {expertise.map((item, i) => (
+              <div key={item.title} className={`${styles.row} ${styles.reveal}`}>
+                <div className={styles.rowLeft}>
+                  <span className={styles.rowNum}>{String(i + 1).padStart(2, "0")}</span>
+                  <h3 className={styles.rowTitle}>{item.title}</h3>
                 </div>
-              ))}
-            </div>
-          </motion.div>
+                <p className={styles.rowBody}>{item.body}</p>
+              </div>
+            ))}
+          </div>
+        </section>
 
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={scrollVariants}
-            style={{ marginTop: "6rem" }}
-          >
-            <h3 className={styles.sectionTitle}>[ CONNECT ]</h3>
-            <div className={styles.contactSection}>
-              <a href={contactMailto} className={styles.email}>
-                OYOTOSTUDIOS@OUTLOOK.COM
-              </a>
-            </div>
+        <section className={styles.connect}>
+          <span className={`${styles.sectionLabel} ${styles.reveal}`}>Connect</span>
+          <a href={contactMailto} className={`${styles.email} ${styles.reveal}`}>
+            {contactEmail}
+          </a>
+        </section>
+      </main>
 
-            <div className={styles.servicesGrid} style={{ marginTop: "2rem" }}>
-              <a href="https://github.com/mboma99" target="_blank" rel="noopener noreferrer" className={styles.serviceItem}>GITHUB +</a>
-              <a href="https://www.linkedin.com/in/james-mboma/" target="_blank" rel="noopener noreferrer" className={styles.serviceItem}>LINKEDIN +</a>
-              <Link href="/resume" className={styles.serviceItem}>VIEW FULL RESUME +</Link>
-            </div>
-          </motion.div>
-        </main>
-
-        <Footer />
-      </div>
+      <SiteFooter />
     </div>
   );
 }
