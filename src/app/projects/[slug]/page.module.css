@@ -1,219 +1,286 @@
-.layout {
-  min-height: 100vh;
-  background-color: #161616;
-  color: #ffffff;
-}
-
 .page {
-  /* Match home page spacing */
-  padding: 5.5rem 10rem 4rem;
-  position: relative;
-  z-index: 10;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: calc(var(--header-h) + clamp(2rem, 5vw, 3.5rem)) var(--gutter) clamp(4rem, 10vw, 8rem);
 }
 
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 3rem;
-}
-
-.logo {
-  font-family: "Space Mono", monospace;
-  font-weight: 700;
-  letter-spacing: 0.5em;
-  text-transform: lowercase;
-  text-decoration: none;
-  color: white;
-  font-size: 1.5rem;
-}
-
-.backBtn {
-  font-family: "Space Mono", monospace;
-  font-size: 0.8rem;
-  letter-spacing: 0.2em;
-  color: rgba(255, 255, 255, 0.6);
-  text-decoration: none;
-  display: flex;
+.back {
+  display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  transition: color 0.3s ease;
+  font-size: 0.9rem;
+  color: var(--muted);
+  transition: color 0.3s var(--ease-out);
 }
 
-.backBtn:hover {
-  color: white;
+.back svg {
+  transition: transform 0.4s var(--ease-out);
 }
+
+.back:hover {
+  color: var(--accent);
+}
+
+.back:hover svg {
+  transform: translateX(-4px);
+}
+
+/* ─── Title page ─── */
 
 .hero {
-  position: relative;
-  width: 100%;
-  height: 60vh;
-  margin-bottom: 4rem;
-  border-radius: 20px;
-  overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  max-width: 62rem;
+  padding: clamp(3rem, 8vw, 6rem) 0 clamp(2.5rem, 5vw, 4rem);
 }
 
-.heroImage {
-  object-fit: cover;
-}
-
-.heroOverlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to bottom, transparent, rgba(22, 22, 22, 0.8));
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  padding: 3rem;
+.chapter {
+  display: block;
+  margin-bottom: 1.25rem;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1.25rem;
+  color: var(--accent);
+  animation: rise 0.8s var(--ease-out) both;
 }
 
 .title {
-  font-size: clamp(2rem, 5vw, 4rem);
-  font-family: "Space Grotesk", sans-serif;
-  margin-bottom: 1rem;
-  letter-spacing: -0.02em;
+  font-family: var(--serif);
+  font-size: clamp(3.5rem, 11vw, 9.5rem);
+  line-height: 1;
+  letter-spacing: -0.025em;
+  animation: rise 1s var(--ease-out) 0.08s both;
 }
 
-.metaGrid {
+.title em {
+  display: inline-block;
+  padding-bottom: 0.08em;
+  font-style: italic;
+  color: var(--accent);
+}
+
+.lead {
+  max-width: 34ch;
+  margin-top: 1.75rem;
+  font-family: var(--serif);
+  font-size: clamp(1.25rem, 2.2vw, 1.75rem);
+  line-height: 1.4;
+  color: var(--muted);
+  animation: rise 1s var(--ease-out) 0.16s both;
+}
+
+.meta {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 2rem;
-  padding: 2rem 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  margin-bottom: 4rem;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1.5rem;
+  padding: 1.5rem 0;
+  border-top: 1px solid var(--line);
+  margin-bottom: clamp(2rem, 4vw, 3rem);
+  animation: rise 1s var(--ease-out) 0.24s both;
 }
 
-.metaItem {
+.meta dt {
+  font-size: 0.8rem;
+  color: var(--faint);
+}
+
+.meta dd {
+  margin-top: 0.25rem;
+  font-size: 0.975rem;
+}
+
+.plate {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: var(--radius);
+  background: var(--paper);
+  box-shadow:
+    8px 8px 0 var(--paper-raised),
+    16px 16px 0 var(--paper-edge);
+  /* no entrance animation: this plate is the morph target from /projects */
+}
+
+.plateImage {
+  object-fit: cover;
+}
+
+/* ─── Reading spread: stack in the margin, prose in the column ─── */
+
+.body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2.2fr);
+  gap: clamp(2rem, 6vw, 6rem);
+  margin-top: clamp(4rem, 9vw, 7rem);
+}
+
+.margin {
+  position: sticky;
+  top: calc(var(--header-h) + 2rem);
+  align-self: start;
+}
+
+.marginTitle {
+  padding-bottom: 0.75rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid var(--line);
+  font-family: var(--serif);
+  font-size: 1.5rem;
+}
+
+.stack {
+  list-style: none;
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
   gap: 0.5rem;
 }
 
-.metaLabel {
-  font-family: "Space Mono", monospace;
-  font-size: 0.7rem;
-  letter-spacing: 0.2em;
-  opacity: 0.4;
-  text-transform: uppercase;
+.stack li {
+  padding: 0.35rem 0.85rem;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  font-size: 0.85rem;
+  color: var(--muted);
 }
 
-.metaValue {
-  font-size: 1rem;
-  font-family: "Space Grotesk", sans-serif;
+.reading {
+  max-width: 44rem;
 }
 
-.caseStudyGrid {
-  display: grid;
-  grid-template-columns: 1fr 2fr;
-  gap: 6rem;
-}
-
-.sidebar {
-  display: flex;
-  flex-direction: column;
-  gap: 3rem;
-}
-
-.mainContent {
-  display: flex;
-  flex-direction: column;
-  gap: 4rem;
-}
-
-.section {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
+.section + .section {
+  margin-top: clamp(3rem, 6vw, 4.5rem);
 }
 
 .sectionTitle {
-  font-family: "Space Mono", monospace;
-  font-size: 0.8rem;
-  letter-spacing: 0.3em;
-  opacity: 0.5;
-  text-transform: uppercase;
+  margin-bottom: 1rem;
+  font-family: var(--serif);
+  font-size: clamp(1.9rem, 3.4vw, 2.6rem);
+  line-height: 1.1;
 }
 
 .sectionBody {
-  font-size: 1.15rem;
-  line-height: 1.7;
-  opacity: 0.9;
-  font-weight: 300;
+  font-family: var(--serif);
+  font-size: clamp(1.15rem, 1.6vw, 1.35rem);
+  line-height: 1.65;
+  color: var(--text);
 }
 
-.techList {
+/* drop cap on the chapter's first paragraph */
+.section:first-child .sectionBody::first-letter {
+  float: left;
+  margin: 0.08em 0.12em 0 0;
+  font-size: 3.6em;
+  line-height: 0.8;
+  color: var(--accent);
+}
+
+/* ─── Next chapter ─── */
+
+.next {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+  margin-top: clamp(5rem, 12vw, 9rem);
+  padding: clamp(2.5rem, 6vw, 4rem) 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
 }
 
-.techItem {
-  font-family: "Space Mono", monospace;
-  font-size: 0.9rem;
-  letter-spacing: 0.1em;
+.nextLabel {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1.15rem;
+  color: var(--accent);
+}
+
+.nextTitle {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  color: #86a68c;
+  gap: 1.5rem;
+  font-family: var(--serif);
+  font-size: clamp(2.75rem, 8vw, 6.5rem);
+  line-height: 1.02;
+  transition: color 0.4s var(--ease-out), transform 0.6s var(--ease-out);
 }
 
-.techItem::before {
-  content: "→";
-  opacity: 0.5;
+.nextArrow {
+  flex: none;
+  color: var(--faint);
+  transition: transform 0.5s var(--ease-out), color 0.3s;
 }
 
-@media (max-width: 1024px) {
-  .page {
-    padding: 5.5rem 4rem 4rem;
+.nextDesc {
+  max-width: 50ch;
+  color: var(--muted);
+}
+
+.next:hover .nextTitle {
+  color: var(--accent);
+  transform: translateX(10px);
+}
+
+.next:hover .nextArrow {
+  color: var(--accent);
+  transform: translate(6px, -6px);
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
   }
-  .caseStudyGrid {
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* sections settle in as they scroll into view; no JS, no scroll listeners */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .section,
+    .margin,
+    .next {
+      animation: rise linear both;
+      animation-timeline: view();
+      animation-range: entry 5% entry 45%;
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  .meta {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .body {
     grid-template-columns: 1fr;
-    gap: 4rem;
   }
-  .metaGrid {
-    grid-template-columns: repeat(2, 1fr);
+
+  .margin {
+    position: static;
+  }
+
+  .plate {
+    aspect-ratio: 4 / 3;
   }
 }
 
-@media (max-width: 768px) {
-  .page {
-    padding: 5rem 1.5rem 3rem;
+@media (prefers-reduced-motion: reduce) {
+  .chapter,
+  .title,
+  .lead,
+  .meta {
+    animation: none;
   }
-  .header {
-    display: none; /* mobile top bar handles this */
-  }
-  .hero {
-    height: 40vh;
-    border-radius: 12px;
-  }
-  .heroOverlay {
-    padding: 1.5rem;
-  }
-  .title {
-    font-size: clamp(1.5rem, 7vw, 2.5rem);
-  }
-  .metaGrid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.5rem;
-  }
-  .caseStudyGrid {
-    gap: 2rem;
-  }
-  .sectionBody {
-    font-size: 1rem;
-  }
-}
 
-@media (max-width: 480px) {
-  .page {
-    padding: 5rem 1rem 2rem;
+  .back svg,
+  .nextTitle,
+  .nextArrow {
+    transition: color 0.3s;
   }
-  .hero {
-    height: 30vh;
-  }
-  .metaGrid {
-    grid-template-columns: 1fr;
-    gap: 1rem;
+
+  .back:hover svg,
+  .next:hover .nextTitle,
+  .next:hover .nextArrow {
+    transform: none;
   }
 }

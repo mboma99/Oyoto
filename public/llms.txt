@@ -5,7 +5,6 @@
 ## Core URLs
 
 - Home: https://oyoto.co.uk/
-- About: https://oyoto.co.uk/about
 - Projects: https://oyoto.co.uk/projects
 - Resume: https://oyoto.co.uk/resume
 - Sitemap: https://oyoto.co.uk/sitemap.xml

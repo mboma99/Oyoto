@@ -1,0 +1,930 @@
+/*
+ * The case-files book. Flat paper, solid layered page edges, one accent.
+ * Sizes inside a page use container units (cqi) so type scales with the book.
+ */
+
+.shell {
+  min-height: 100dvh;
+  padding: calc(var(--header-h) + clamp(1.5rem, 4vh, 3rem)) var(--gutter) clamp(1.5rem, 4vh, 2.5rem);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(1.25rem, 3vh, 2rem);
+  perspective: 2200px;
+  overflow: hidden;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.stageWrap {
+  width: min(100%, 1200px, (100dvh - var(--header-h) - 190px) * 1.6);
+  transform-style: preserve-3d;
+}
+
+.stage {
+  position: relative;
+  aspect-ratio: 1.6;
+  transform-style: preserve-3d;
+  transition: transform 1.1s var(--ease-turn);
+}
+
+/* closed: the cover (right half) sits centred, like a book on a desk */
+.stage[data-cover="closed"] {
+  transform: translateX(-25%);
+}
+
+/* ─── Book body ─── */
+
+.book {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  transform-style: preserve-3d;
+  touch-action: pan-y;
+  transition: opacity 0.7s var(--ease-out) 0.35s, transform 1.1s var(--ease-out);
+}
+
+.stage[data-cover="closed"] .book {
+  opacity: 0;
+  transform: scale(0.97);
+}
+
+.page {
+  position: relative;
+  background: var(--paper);
+  container-type: inline-size;
+  overflow: hidden;
+}
+
+/* page-edge depth: stacked solid offsets, no gradients */
+.leftPage {
+  border-radius: var(--radius) 0 0 var(--radius);
+  box-shadow:
+    -3px 3px 0 var(--paper-raised),
+    -6px 6px 0 var(--paper-edge),
+    -9px 9px 0 var(--paper-raised),
+    -10px 30px 50px -18px var(--shadow-soft);
+}
+
+.rightPage {
+  border-radius: 0 var(--radius) var(--radius) 0;
+  box-shadow:
+    3px 3px 0 var(--paper-raised),
+    6px 6px 0 var(--paper-edge),
+    9px 9px 0 var(--paper-raised),
+    10px 30px 50px -18px var(--shadow-soft);
+}
+
+.spine {
+  position: absolute;
+  z-index: 3;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 2px;
+  transform: translateX(-50%);
+  background: var(--spine);
+  box-shadow: 0 0 22px 8px var(--shadow-soft);
+  pointer-events: none;
+}
+
+.pageInner {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 7cqi 7cqi 5cqi;
+}
+
+.runningHead {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 1.4cqi;
+  border-bottom: 1px solid var(--line);
+  font-size: max(11px, 1.7cqi);
+  color: var(--faint);
+}
+
+.folio {
+  position: absolute;
+  left: 7cqi;
+  bottom: 4.5cqi;
+  font-family: var(--serif);
+  font-size: max(12px, 2.1cqi);
+  color: var(--faint);
+  font-variant-numeric: tabular-nums;
+}
+
+.folioRight {
+  left: auto;
+  right: 7cqi;
+}
+
+.pageFoot {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 1rem;
+  margin-top: auto;
+}
+
+.pageFoot .folio {
+  position: static;
+}
+
+.textLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  width: fit-content;
+  font-size: max(13px, 2.1cqi);
+  font-weight: 500;
+  color: var(--accent);
+  border-bottom: 1px solid transparent;
+  padding-bottom: 1px;
+  transition: border-color 0.3s var(--ease-out), color 0.3s var(--ease-out);
+}
+
+.textLink:hover {
+  border-color: var(--accent);
+}
+
+.textLink svg {
+  transition: transform 0.35s var(--ease-out);
+}
+
+.textLink:hover svg {
+  transform: translate(2px, -2px);
+}
+
+/* ─── Preface / colophon (left) ─── */
+
+.prefaceBody {
+  margin: auto 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 3.2cqi;
+}
+
+.prefaceTitle {
+  font-family: var(--serif);
+  font-size: max(30px, 7.4cqi);
+  line-height: 1.06;
+  letter-spacing: -0.01em;
+  max-width: 16ch;
+}
+
+.prefaceTitle em,
+.chapterTitle em,
+.coverTitle em {
+  color: var(--accent);
+  font-style: italic;
+}
+
+.prefaceText {
+  max-width: 36ch;
+  font-size: max(15px, 2.4cqi);
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+.ctaRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.25rem 2rem;
+}
+
+.cta {
+  padding: 0.75em 1.6em;
+  border-radius: 999px;
+  background: var(--cta);
+  color: var(--on-cta);
+  font-size: max(14px, 2.1cqi);
+  font-weight: 600;
+  white-space: nowrap;
+  transition: background-color 0.3s var(--ease-out), transform 0.2s var(--ease-out);
+}
+
+.cta:hover {
+  background: var(--cta-hi);
+}
+
+.cta:active {
+  transform: scale(0.97);
+}
+
+/* ─── Contents (right) ─── */
+
+.contentsBody {
+  margin: auto 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3cqi;
+}
+
+.contentsTitle {
+  font-family: var(--serif);
+  font-size: max(28px, 6cqi);
+  line-height: 1.1;
+}
+
+.contentsList {
+  list-style: none;
+}
+
+.contentsRow {
+  display: flex;
+  align-items: baseline;
+  gap: 1.5cqi;
+  width: 100%;
+  padding: 1.5cqi 0;
+  border: 0;
+  background: none;
+  color: var(--text);
+  text-align: left;
+  cursor: pointer;
+}
+
+.contentsName {
+  font-family: var(--serif);
+  font-size: max(18px, 3.3cqi);
+  line-height: 1.2;
+  transition: color 0.3s var(--ease-out), transform 0.45s var(--ease-out);
+}
+
+.contentsLeader {
+  flex: 1;
+  min-width: 2rem;
+  border-bottom: 1px dotted var(--line-strong);
+  transform: translateY(-0.3em);
+}
+
+.contentsFolio {
+  font-size: max(12px, 1.9cqi);
+  color: var(--faint);
+  font-variant-numeric: tabular-nums;
+}
+
+.contentsRow:hover .contentsName,
+.contentsRow:focus-visible .contentsName {
+  color: var(--accent);
+  transform: translateX(6px);
+}
+
+/* ─── Chapter (project, left) ─── */
+
+.chapterBody {
+  margin: auto 0;
+}
+
+.chapterLabel {
+  display: block;
+  margin-bottom: 2.4cqi;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: max(15px, 2.7cqi);
+  color: var(--accent);
+}
+
+.chapterTitle {
+  font-family: var(--serif);
+  font-size: max(40px, 11cqi);
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+  padding-bottom: 0.08em;
+}
+
+.chapterTitle em {
+  display: inline-block;
+}
+
+.chapterText {
+  max-width: 30ch;
+  margin-top: 3.4cqi;
+  font-family: var(--serif);
+  font-size: max(17px, 2.9cqi);
+  line-height: 1.45;
+}
+
+/* ─── Plate (project, right) ─── */
+
+.platePage {
+  padding: 6cqi;
+}
+
+.plate {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  padding-bottom: 5cqi;
+}
+
+.plateFrame {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  border-radius: 2px;
+  background: var(--paper-raised);
+  outline: 1px solid var(--line);
+  outline-offset: 6px;
+}
+
+.plateImage {
+  object-fit: cover;
+  object-position: left top;
+}
+
+.caption {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 3cqi;
+  font-size: max(11px, 1.7cqi);
+  color: var(--muted);
+}
+
+/* ─── Elsewhere (colophon, right) ─── */
+
+.elsewhere {
+  list-style: none;
+  margin: auto 0;
+}
+
+.elsewhereLink {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2.2cqi 0;
+  border-bottom: 1px solid var(--line);
+  font-family: var(--serif);
+  font-size: max(24px, 5.4cqi);
+  line-height: 1.15;
+  transition: color 0.3s var(--ease-out);
+}
+
+.elsewhereLink svg {
+  color: var(--faint);
+  transition: transform 0.4s var(--ease-out), color 0.3s;
+}
+
+.elsewhereLink:hover {
+  color: var(--accent);
+}
+
+.elsewhereLink:hover svg {
+  color: var(--accent);
+  transform: translate(3px, -3px);
+}
+
+/* ─── Turning leaf ─── */
+
+.leaf {
+  position: absolute;
+  z-index: 5;
+  top: 0;
+  bottom: 0;
+  width: 50%;
+  transform-style: preserve-3d;
+  pointer-events: none;
+}
+
+.leafNext {
+  left: 50%;
+  transform-origin: left center;
+  animation: leaf-next 0.95s var(--ease-turn) forwards;
+}
+
+.leafPrev {
+  left: 0;
+  transform-origin: right center;
+  animation: leaf-prev 0.95s var(--ease-turn) forwards;
+}
+
+.leafFace {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: var(--paper);
+  container-type: inline-size;
+  backface-visibility: hidden;
+}
+
+.leafBack {
+  transform: rotateY(180deg);
+}
+
+/* flat shade that deepens as a face turns away from the light */
+.shadeFront,
+.shadeBack {
+  position: absolute;
+  inset: 0;
+  background: var(--spine);
+  pointer-events: none;
+}
+
+.shadeFront {
+  animation: shade-out 0.95s var(--ease-turn) forwards;
+}
+
+.shadeBack {
+  animation: shade-in 0.95s var(--ease-turn) forwards;
+}
+
+/* Each leaf face carries its own copy of the spine's gutter glow. The leaf
+   sits above .spine, so without this the glow on the turning half vanishes
+   when the turn starts and snaps back when the leaf unmounts. The lifting face
+   lets its glow go as it leaves the gutter; the landing face gathers it, so it
+   matches the real spine exactly when the leaf is removed. */
+.leafFace::after {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--spine);
+  box-shadow: 0 0 22px 8px var(--shadow-soft);
+  pointer-events: none;
+}
+
+.leafNext .leafFront::after,
+.leafPrev .leafBack::after {
+  left: -1px;
+}
+
+.leafNext .leafBack::after,
+.leafPrev .leafFront::after {
+  right: -1px;
+}
+
+.leafFront::after {
+  animation: gutter-leave 0.95s linear forwards;
+}
+
+.leafBack::after {
+  animation: gutter-land 0.95s linear forwards;
+}
+
+@keyframes gutter-leave {
+  from { opacity: 1; }
+  35%, to { opacity: 0; }
+}
+
+@keyframes gutter-land {
+  from, 65% { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes leaf-next {
+  from { transform: rotateY(0deg); }
+  to { transform: rotateY(-180deg); }
+}
+
+@keyframes leaf-prev {
+  from { transform: rotateY(0deg); }
+  to { transform: rotateY(180deg); }
+}
+
+@keyframes shade-out {
+  from { opacity: 0; }
+  to { opacity: 0.55; }
+}
+
+@keyframes shade-in {
+  from { opacity: 0.55; }
+  to { opacity: 0; }
+}
+
+/* ─── Content reveal on the page being uncovered ─── */
+
+.reveal .runningHead,
+.reveal .prefaceBody > *,
+.reveal .chapterBody > *,
+.reveal .contentsTitle,
+.reveal .contentsList li,
+.reveal .elsewhere li,
+.reveal .pageFoot,
+.reveal .caption {
+  animation: rise 0.8s var(--ease-out) both;
+  animation-delay: 0.35s;
+}
+
+.reveal .prefaceBody > :nth-child(2),
+.reveal .chapterBody > :nth-child(2),
+.reveal .contentsList li:nth-child(1),
+.reveal .elsewhere li:nth-child(1) { animation-delay: 0.42s; }
+.reveal .prefaceBody > :nth-child(3),
+.reveal .chapterBody > :nth-child(3),
+.reveal .contentsList li:nth-child(2),
+.reveal .elsewhere li:nth-child(2) { animation-delay: 0.49s; }
+.reveal .prefaceBody > :nth-child(4),
+.reveal .contentsList li:nth-child(3),
+.reveal .elsewhere li:nth-child(3) { animation-delay: 0.56s; }
+.reveal .contentsList li:nth-child(4),
+.reveal .elsewhere li:nth-child(4) { animation-delay: 0.63s; }
+.reveal .contentsList li:nth-child(5) { animation-delay: 0.7s; }
+.reveal .contentsList li:nth-child(n + 6) { animation-delay: 0.77s; }
+
+.reveal .plateFrame {
+  animation: plate 1.1s var(--ease-out) 0.3s both;
+}
+
+.reveal .plateImage {
+  animation: plate-image 1.4s var(--ease-out) 0.3s both;
+}
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes plate {
+  from { clip-path: inset(0 0 100% 0); }
+  to { clip-path: inset(0); }
+}
+
+@keyframes plate-image {
+  from { transform: scale(1.08); }
+  to { transform: scale(1); }
+}
+
+/* ─── Cover ─── */
+
+.cover {
+  position: absolute;
+  z-index: 10;
+  top: 0;
+  right: 0;
+  width: 50%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--text);
+  text-align: left;
+  cursor: pointer;
+  container-type: inline-size;
+  transform-origin: left center;
+  transform-style: preserve-3d;
+  transition: transform 0.6s var(--ease-out);
+}
+
+/* hovering lifts the cover a few degrees: it invites the click */
+.stage[data-cover="closed"] .cover:hover,
+.stage[data-cover="closed"] .cover:focus-visible {
+  transform: rotateY(-14deg);
+}
+
+.stage[data-cover="opening"] .cover {
+  animation: cover-open 1.1s var(--ease-turn) forwards;
+  cursor: default;
+}
+
+.coverFace {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  border-radius: 2px var(--radius) var(--radius) 2px;
+}
+
+.coverFront {
+  display: flex;
+  flex-direction: column;
+  padding: 10cqi;
+  background: var(--spine);
+  /* the cover is the one dark surface: invert the ink tokens locally */
+  --text: #f3f3f3;
+  --muted: #a3a3a3;
+  --accent: var(--sky);
+  color: var(--text);
+  box-shadow:
+    3px 3px 0 var(--paper-raised),
+    6px 6px 0 var(--paper-edge),
+    9px 9px 0 var(--paper-raised),
+    12px 12px 0 var(--paper-edge),
+    24px 40px 60px -20px var(--shadow-soft);
+}
+
+/* inset foil frame */
+.coverFront::before {
+  content: "";
+  position: absolute;
+  inset: 4.5cqi;
+  border: 1px solid rgba(151, 172, 193, 0.4);
+  pointer-events: none;
+}
+
+.coverMark {
+  position: absolute;
+  top: 9cqi;
+  right: 9cqi;
+  width: 11cqi;
+  height: 11cqi;
+  color: var(--accent);
+}
+
+.coverTitle {
+  margin-top: auto;
+  font-family: var(--serif);
+  font-size: max(40px, 15cqi);
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+}
+
+.coverTitle em {
+  display: block;
+  padding-bottom: 0.08em;
+}
+
+.coverFoot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 9cqi;
+  font-size: max(12px, 2.6cqi);
+  color: var(--muted);
+}
+
+.coverPrompt {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  color: var(--text);
+}
+
+.coverPrompt svg {
+  animation: nudge 2.4s var(--ease-out) infinite;
+}
+
+.coverInside {
+  display: grid;
+  place-items: center;
+  background: var(--paper);
+  transform: rotateY(180deg);
+}
+
+.insideMark {
+  width: 32cqi;
+  height: 32cqi;
+  color: var(--line-strong);
+}
+
+/* rotation only: opacity on this preserve-3d element would flatten the faces */
+@keyframes cover-open {
+  from { transform: rotateY(-14deg); }
+  to { transform: rotateY(-180deg); }
+}
+
+/* the inside face dissolves as it settles onto the left page, so the spread
+   underneath shows through instead of popping in when the cover unmounts */
+.stage[data-cover="opening"] .coverInside {
+  animation: cover-settle 1.1s linear forwards;
+}
+
+@keyframes cover-settle {
+  0%, 50% { opacity: 1; }
+  85%, 100% { opacity: 0; }
+}
+
+@keyframes nudge {
+  0%, 60%, 100% { transform: none; }
+  30% { transform: translateX(4px); }
+}
+
+/* ─── Controls ─── */
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.6s var(--ease-out) 0.6s, transform 0.6s var(--ease-out) 0.6s;
+}
+
+.controls[data-visible="true"] {
+  opacity: 1;
+  transform: none;
+}
+
+.navBtn {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+  transition: background-color 0.25s var(--ease-out), color 0.25s var(--ease-out),
+    border-color 0.25s var(--ease-out), transform 0.2s var(--ease-out);
+}
+
+.navBtn:hover:not(:disabled) {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--on-accent);
+}
+
+.navBtn:active:not(:disabled) {
+  transform: scale(0.94);
+}
+
+.navBtn:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.status {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 13rem;
+  line-height: 1.3;
+}
+
+.status:focus-visible {
+  outline: none;
+}
+
+.statusLabel {
+  font-family: var(--serif);
+  font-size: 1.25rem;
+}
+
+.statusCount {
+  font-size: 0.8rem;
+  color: var(--faint);
+  font-variant-numeric: tabular-nums;
+}
+
+.hint {
+  font-size: 0.8rem;
+  color: var(--faint);
+  opacity: 0;
+  transition: opacity 0.6s var(--ease-out) 0.9s;
+}
+
+.hint[data-visible="true"] {
+  opacity: 1;
+}
+
+/* ─── Phones: one page at a time ─── */
+
+@media (max-width: 767px) {
+  .shell {
+    justify-content: flex-start;
+  }
+
+  .stageWrap {
+    width: 100%;
+  }
+
+  .stage {
+    aspect-ratio: auto;
+    min-height: 68dvh;
+  }
+
+  .stage[data-cover="closed"] {
+    transform: none;
+  }
+
+  .stage[data-cover="closed"] .book {
+    display: none;
+  }
+
+  .book {
+    position: relative;
+    inset: auto;
+    display: block;
+  }
+
+  .page {
+    border-radius: var(--radius);
+    box-shadow:
+      3px 3px 0 var(--paper-raised),
+      6px 6px 0 var(--paper-edge),
+      0 24px 40px -18px var(--shadow-soft);
+  }
+
+  .spine {
+    left: 0;
+    transform: none;
+  }
+
+  .leafPrev .leafFront::after {
+    right: auto;
+    left: -1px;
+  }
+
+  .single {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .single .pageInner {
+    position: relative;
+    inset: auto;
+    padding: 6cqi 6cqi 12cqi;
+  }
+
+  .single .platePage {
+    padding-bottom: 0;
+  }
+
+  .single .plateFrame {
+    flex: none;
+    aspect-ratio: 4 / 3;
+  }
+
+  .single .plate {
+    padding-bottom: 0;
+  }
+
+  .single .folio {
+    display: none;
+  }
+
+  .single .pageInner + .pageInner {
+    padding-top: 4cqi;
+  }
+
+  .leaf,
+  .leafNext,
+  .leafPrev {
+    left: 0;
+    width: 100%;
+  }
+
+  .cover {
+    width: 100%;
+  }
+
+  .status {
+    min-width: 0;
+    flex: 1;
+  }
+
+  /* the spread can be taller than the screen, so the turn controls ride along */
+  .controls {
+    position: sticky;
+    bottom: calc(1rem + env(safe-area-inset-bottom));
+    z-index: 20;
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--ink);
+  }
+
+  .hint {
+    display: none;
+  }
+}
+
+/* ─── Reduced motion: the book still opens and turns, instantly ─── */
+
+@media (prefers-reduced-motion: reduce) {
+  .stage,
+  .book,
+  .cover,
+  .controls,
+  .hint {
+    transition: none;
+  }
+
+  .stage[data-cover="closed"] .cover:hover,
+  .stage[data-cover="closed"] .cover:focus-visible {
+    transform: none;
+  }
+
+  .coverPrompt svg,
+  .reveal .runningHead,
+  .reveal .prefaceBody > *,
+  .reveal .chapterBody > *,
+  .reveal .contentsTitle,
+  .reveal .contentsList li,
+  .reveal .elsewhere li,
+  .reveal .pageFoot,
+  .reveal .caption,
+  .reveal .plateFrame,
+  .reveal .plateImage {
+    animation: none;
+  }
+}

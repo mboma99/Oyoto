@@ -1,28 +1,33 @@
 import Link from "next/link";
+import { LogoMark } from "@/components/Logo";
+import { contactEmail, contactMailto } from "@/lib/seo";
 import styles from "./SiteFooter.module.css";
-import { contactMailto } from "@/lib/seo";
 
 export function SiteFooter() {
   return (
     <footer className={styles.footer}>
-      <div className={styles.footerTop}>
-        <p className={styles.footerMark}>OYOTŌ</p>
-        <div className={styles.footerLinks}>
-          <div className={styles.footerCol}>
-            <span className={styles.footerColTitle}>Navigation</span>
+      <div className={styles.top}>
+        <div className={styles.brand}>
+          <LogoMark className={styles.mark} />
+          <p className={styles.line}>
+            Web, mobile and AI products, built to last.
+          </p>
+          <a href={contactMailto} className={styles.email}>
+            {contactEmail}
+          </a>
+        </div>
+
+        <nav className={styles.cols} aria-label="Footer">
+          <div className={styles.col}>
+            <h2 className={styles.colTitle}>Pages</h2>
             <Link href="/">Home</Link>
-            <Link href="/about">Studio</Link>
             <Link href="/projects">Projects</Link>
             <Link href="/resume">Resume</Link>
-          </div>
-          <div className={styles.footerCol}>
-            <span className={styles.footerColTitle}>Elsewhere</span>
             <Link href="/contact">Contact</Link>
-            <a
-              href="https://github.com/mboma99"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+          </div>
+          <div className={styles.col}>
+            <h2 className={styles.colTitle}>Elsewhere</h2>
+            <a href="https://github.com/mboma99" target="_blank" rel="noopener noreferrer">
               GitHub
             </a>
             <a
@@ -33,11 +38,12 @@ export function SiteFooter() {
               LinkedIn
             </a>
           </div>
-        </div>
+        </nav>
       </div>
-      <div className={styles.footerBase}>
+
+      <div className={styles.base}>
         <span>© 2026 Oyotō</span>
-        <span>All rights reserved</span>
+        <span>London, United Kingdom</span>
       </div>
     </footer>
   );

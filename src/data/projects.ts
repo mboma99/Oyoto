@@ -32,7 +32,7 @@ export const projects: Project[] = [
     role: "Full-stack Development Team",
     caseStudy: {
       overview: "Congraduation is a modern web-based ecommerce platform developed by our team to disrupt the traditional graduation photography market. It focuses on the digital distribution of memories, allowing graduates and guests to easily search, view, and purchase digital copies of their graduation photos.",
-      challenge: "The existing market was dominated by legacy providers with outdated platforms that failed to meet modern expectations—such as charging exorbitant fees for physical CDs and lacking support for direct digital downloads, creating significant friction for a social-media-driven generation.",
+      challenge: "The existing market was dominated by legacy providers with outdated platforms that failed to meet modern expectations, such as charging exorbitant fees for physical CDs and lacking support for direct digital downloads, creating significant friction for a social-media-driven generation.",
       solution: "We built a user-centric ecommerce photography platform that prioritizes digital accessibility. By reducing the friction between photo acquisition and device download, we created a seamless flow for graduates to claim and share their academic achievements instantly.",
       outcome: "Successfully developed a high-performance platform that provides a viable alternative to legacy monopolies, significantly improving customer satisfaction by offering fair pricing for digital assets and a modern, intuitive user experience.",
       techStack: ["React", "FastAPI", "PostgreSQL", "Tailwind CSS", "AWS S3", "SQLAlchemy", "Pydantic", "Uvicorn"],

@@ -1,19 +1,26 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import {
+  ArrowLeft,
+  ArrowUpRight,
+  CalendarBlank,
+  CaretLeft,
+  CaretRight,
+  Check,
+  Clock,
+  GlobeHemisphereWest,
+  Plus,
+  User,
+  UserPlus,
+  VideoCamera,
+  X,
+} from "@phosphor-icons/react";
 import styles from "./page.module.css";
-import { SiteHeader } from "@/components/SiteHeader";
-import { SiteFooter } from "@/components/SiteFooter";
-import { defaultCalLink, contactEmail, contactMailto } from "@/lib/seo";
+import { PageTransition } from "@/components/PageTransition";
+import { contactEmail, contactMailto } from "@/lib/seo";
 
-const GREETINGS = [
-  { word: "hello", color: "#ffb184" },
-  { word: "olá", color: "#86a68c" },
-  { word: "bonjour", color: "#93c5fd" },
-  { word: "salve", color: "#c4b5fd" },
-  { word: "konnichiwa", color: "#fde047" },
-  { word: "ciao", color: "#f4978e" },
-];
+const GREETINGS = ["hello", "olá", "bonjour", "salve", "konnichiwa", "ciao"];
 
 const TIME_SLOTS = [
   "10:00",
@@ -27,41 +34,25 @@ const TIME_SLOTS = [
   "16:00",
 ];
 
-const MONTH_NAMES = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
-];
-
-const WEEKDAY_NAMES = [
-  "Sunday",
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday",
-];
+const monthFormat = new Intl.DateTimeFormat("en-GB", { month: "long", year: "numeric" });
+const weekdayFormat = new Intl.DateTimeFormat("en-GB", { weekday: "long" });
+const longDateFormat = new Intl.DateTimeFormat("en-GB", {
+  day: "numeric",
+  month: "long",
+  year: "numeric",
+});
+const fullDateFormat = new Intl.DateTimeFormat("en-GB", { dateStyle: "full" });
 
 const FAQS = [
   {
     question: "What does the discovery call cover?",
     answer:
-      "We'll talk through where you are, your product objectives, technical requirements, and timeline. No extensive preparation is required — just bring your current concept or questions.",
+      "We'll talk through where you are, your product objectives, technical requirements, and timeline. No extensive preparation is required. Just bring your current concept or questions.",
   },
   {
     question: "How quickly can Oyoto start?",
     answer:
-      "We typically initiate new client discovery sprints and architecture reviews within 1–2 weeks, depending on current studio availability.",
+      "We typically initiate new client discovery sprints and architecture reviews within 1-2 weeks, depending on current studio availability.",
   },
   {
     question: "Do you work on a fixed-price or retainer basis?",
@@ -106,8 +97,17 @@ export default function Contact() {
   const [showGuests, setShowGuests] = useState(false);
   const [guestEmail, setGuestEmail] = useState("");
 
+  // Keyboard focus: the element each booking step hands focus to, and the
+  // calendar's roving-tabindex day (moved with the arrow keys)
+  const stepFocusRef = useRef<HTMLElement | null>(null);
+  const isFirstStepRender = useRef(true);
+  const dayButtonRefs = useRef(new Map<number, HTMLButtonElement>());
+  const [focusedDay, setFocusedDay] = useState<number | null>(null);
+  const shouldFocusDay = useRef(false);
+
   // Cycle greeting words smoothly
   useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const interval = setInterval(() => {
       setGreetingIndex((prev) => (prev + 1) % GREETINGS.length);
     }, 2800);
@@ -124,8 +124,7 @@ export default function Contact() {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.classList.add(styles.revealActive);
-          } else {
-            entry.target.classList.remove(styles.revealActive);
+            observer.unobserve(entry.target);
           }
         });
       },
@@ -167,8 +166,9 @@ export default function Contact() {
     setCurrentMonthDate(new Date(year, month + 1, 1));
   };
 
-  const isDateDisabled = (day: number) => {
-    const d = new Date(year, month, day);
+  const isDateDisabled = (day: number) => isPastOrWeekend(new Date(year, month, day));
+
+  const isPastOrWeekend = (d: Date) => {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
@@ -198,6 +198,84 @@ export default function Contact() {
     setBookingStep("select_time");
   };
 
+  // Move focus to the new step so keyboard and screen-reader users follow along
+  useEffect(() => {
+    if (isFirstStepRender.current) {
+      isFirstStepRender.current = false;
+      return;
+    }
+    stepFocusRef.current?.focus();
+  }, [bookingStep]);
+
+  // The single tabbable day: the arrow-key position, else the selected day,
+  // else the first bookable day of the month
+  const selectedDayInMonth =
+    selectedDate &&
+    selectedDate.getFullYear() === year &&
+    selectedDate.getMonth() === month
+      ? selectedDate.getDate()
+      : null;
+  let tabbableDay = [focusedDay, selectedDayInMonth].find(
+    (d): d is number => d !== null && d <= daysInMonth && !isDateDisabled(d)
+  );
+  if (tabbableDay === undefined) {
+    for (let d = 1; d <= daysInMonth; d++) {
+      if (!isDateDisabled(d)) {
+        tabbableDay = d;
+        break;
+      }
+    }
+  }
+
+  useEffect(() => {
+    if (!shouldFocusDay.current || focusedDay === null) return;
+    shouldFocusDay.current = false;
+    dayButtonRefs.current.get(focusedDay)?.focus();
+  }, [focusedDay, year, month]);
+
+  const moveFocusTo = (target: Date) => {
+    if (target.getFullYear() !== year || target.getMonth() !== month) {
+      setCurrentMonthDate(new Date(target.getFullYear(), target.getMonth(), 1));
+    }
+    shouldFocusDay.current = true;
+    setFocusedDay(target.getDate());
+  };
+
+  const handleDayKeyDown = (e: React.KeyboardEvent, day: number) => {
+    const deltas: Record<string, number> = {
+      ArrowLeft: -1,
+      ArrowRight: 1,
+      ArrowUp: -7,
+      ArrowDown: 7,
+    };
+    const from = new Date(year, month, day);
+    let target: Date | null = null;
+
+    if (e.key in deltas) {
+      // step in the pressed direction until we land on a bookable day
+      const delta = deltas[e.key];
+      const d = new Date(from);
+      for (let i = 0; i < 31; i++) {
+        d.setDate(d.getDate() + delta);
+        if (!isPastOrWeekend(d)) {
+          target = d;
+          break;
+        }
+      }
+    } else if (e.key === "PageUp" || e.key === "PageDown") {
+      const offset = e.key === "PageUp" ? -1 : 1;
+      const lastDay = new Date(year, month + offset + 1, 0).getDate();
+      const d = new Date(year, month + offset, Math.min(day, lastDay));
+      for (let i = 0; i < 7 && isPastOrWeekend(d); i++) d.setDate(d.getDate() + 1);
+      if (!isPastOrWeekend(d)) target = d;
+    } else {
+      return;
+    }
+
+    e.preventDefault();
+    if (target) moveFocusTo(target);
+  };
+
   const handleTimeSelect = (slot: string) => {
     setSelectedTime(slot);
     setBookingStep("fill_form");
@@ -209,13 +287,8 @@ export default function Contact() {
   };
 
   // Selected date formatting
-  const selectedDateWeekday = selectedDate
-    ? WEEKDAY_NAMES[selectedDate.getDay()]
-    : "";
-
-  const selectedDateFormatted = selectedDate
-    ? `${MONTH_NAMES[selectedDate.getMonth()]} ${selectedDate.getDate()}, ${selectedDate.getFullYear()}`
-    : "";
+  const selectedDateWeekday = selectedDate ? weekdayFormat.format(selectedDate) : "";
+  const selectedDateFormatted = selectedDate ? longDateFormat.format(selectedDate) : "";
 
   // Google Calendar URL generator
   const googleCalendarUrl = useMemo(() => {
@@ -250,35 +323,26 @@ export default function Contact() {
   const currentGreeting = GREETINGS[greetingIndex];
 
   return (
+    <PageTransition>
     <div className={styles.page} ref={pageRef}>
-      <SiteHeader tagline="Get in Touch" />
-
-      <main>
+      <main id="main">
         {/* Hero Section */}
         <section className={styles.heroSection}>
           <div className={styles.grid}>
             {/* Left Column: Heading, Intro & Direct Actions */}
             <div className={styles.leftCol}>
-              <p className={styles.eyebrow}>
-                <span className={styles.dot} aria-hidden="true" />
-                01 / Connect
-              </p>
-
-              <h1 className={styles.title}>
+              <h1 className={styles.title} aria-label="Say hello">
                 Say{" "}
-                <span className={styles.greetingWrap}>
-                  <span
-                    className={styles.greetingText}
-                    style={{ color: currentGreeting.color }}
-                  >
-                    {currentGreeting.word}
+                <span className={styles.greetingWrap} aria-hidden="true">
+                  <span key={currentGreeting} className={styles.greetingText}>
+                    {currentGreeting}
                   </span>
                 </span>
               </h1>
 
               <p className={styles.lead}>
                 If you&apos;re building a digital product, launching a platform,
-                or looking for senior technical architecture — let&apos;s talk
+                or looking for senior technical architecture, let&apos;s talk
                 through your vision.
               </p>
 
@@ -287,10 +351,8 @@ export default function Contact() {
               </p>
 
               <a href={contactMailto} className={styles.emailBtn}>
-                <span>Send Direct Email</span>
-                <span className={styles.emailBtnIcon} aria-hidden="true">
-                  ↗
-                </span>
+                <span>{contactEmail}</span>
+                <ArrowUpRight className={styles.emailBtnIcon} size={16} aria-hidden="true" />
               </a>
 
               <div className={styles.studioMetaList}>
@@ -320,8 +382,15 @@ export default function Contact() {
                 {bookingStep === "select_date" && (
                   <div className={styles.calContainer}>
                     <div className={styles.calHeader}>
-                      <h2 className={styles.calMonthTitle}>
-                        {MONTH_NAMES[month]} {year}
+                      <h2
+                        className={styles.calMonthTitle}
+                        aria-live="polite"
+                        tabIndex={-1}
+                        ref={(el) => {
+                          stepFocusRef.current = el;
+                        }}
+                      >
+                        {monthFormat.format(currentMonthDate)}
                       </h2>
                       <div className={styles.calNavGroup}>
                         <button
@@ -333,7 +402,7 @@ export default function Contact() {
                             isCurrentMonthOrPast ? styles.calNavBtnDisabled : ""
                           }`}
                         >
-                          ‹
+                          <CaretLeft size={18} aria-hidden="true" />
                         </button>
                         <button
                           type="button"
@@ -341,12 +410,12 @@ export default function Contact() {
                           aria-label="Next month"
                           className={styles.calNavBtn}
                         >
-                          ›
+                          <CaretRight size={18} aria-hidden="true" />
                         </button>
                       </div>
                     </div>
 
-                    <div className={styles.calWeekdays}>
+                    <div className={styles.calWeekdays} aria-hidden="true">
                       <span>Mon</span>
                       <span>Tue</span>
                       <span>Wed</span>
@@ -356,7 +425,11 @@ export default function Contact() {
                       <span>Sun</span>
                     </div>
 
-                    <div className={styles.calDaysGrid}>
+                    <div
+                      className={styles.calDaysGrid}
+                      role="group"
+                      aria-label="Choose a date. Use the arrow keys to move between days."
+                    >
                       {Array.from({ length: firstDayOfWeek }).map((_, i) => (
                         <div key={`empty-${i}`} className={styles.calDayCell} />
                       ))}
@@ -372,6 +445,15 @@ export default function Contact() {
                               type="button"
                               disabled={disabled}
                               onClick={() => handleDateSelect(day)}
+                              onKeyDown={(e) => handleDayKeyDown(e, day)}
+                              onFocus={() => setFocusedDay(day)}
+                              tabIndex={day === tabbableDay ? 0 : -1}
+                              ref={(el) => {
+                                if (el) dayButtonRefs.current.set(day, el);
+                                else dayButtonRefs.current.delete(day);
+                              }}
+                              aria-label={fullDateFormat.format(new Date(year, month, day))}
+                              aria-current={today ? "date" : undefined}
                               className={`${styles.calDayBtn} ${
                                 disabled ? styles.calDayBtnDisabled : ""
                               } ${today ? styles.calDayToday : ""}`}
@@ -394,10 +476,16 @@ export default function Contact() {
                       className={styles.backSquareBtn}
                       aria-label="Back to calendar"
                     >
-                      ←
+                      <ArrowLeft size={18} aria-hidden="true" />
                     </button>
 
-                    <h2 className={styles.timeSelectDayTitle}>
+                    <h2
+                      className={styles.timeSelectDayTitle}
+                      tabIndex={-1}
+                      ref={(el) => {
+                        stepFocusRef.current = el;
+                      }}
+                    >
                       {selectedDateWeekday}
                     </h2>
                     <p className={styles.timeSelectDateSubtitle}>
@@ -406,12 +494,12 @@ export default function Contact() {
 
                     <div className={styles.timeSelectMetaRow}>
                       <span className={styles.timeSelectMetaItem}>
-                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                        <Clock size={14} aria-hidden="true" />
                         30m
                       </span>
                       <span className={styles.timeSelectMetaItem}>
-                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
-                        Europe/London ▾
+                        <GlobeHemisphereWest size={14} aria-hidden="true" />
+                        Europe/London
                       </span>
                     </div>
 
@@ -437,11 +525,16 @@ export default function Contact() {
                   <form onSubmit={handleBookingSubmit} className={styles.calFormContainer}>
                     <div className={styles.calFormGroup}>
                       <label htmlFor="attendee-name" className={styles.calFormLabel}>
-                        Your name *
+                        Your name <span aria-hidden="true">*</span>
                       </label>
                       <input
                         id="attendee-name"
+                        ref={(el) => {
+                          stepFocusRef.current = el;
+                        }}
+                        name="name"
                         type="text"
+                        autoComplete="name"
                         required
                         value={attendeeName}
                         onChange={(e) => setAttendeeName(e.target.value)}
@@ -451,11 +544,14 @@ export default function Contact() {
 
                     <div className={styles.calFormGroup}>
                       <label htmlFor="attendee-email" className={styles.calFormLabel}>
-                        Email address *
+                        Email address <span aria-hidden="true">*</span>
                       </label>
                       <input
                         id="attendee-email"
+                        name="email"
                         type="email"
+                        autoComplete="email"
+                        spellCheck={false}
                         required
                         value={attendeeEmail}
                         onChange={(e) => setAttendeeEmail(e.target.value)}
@@ -465,13 +561,15 @@ export default function Contact() {
 
                     <div className={styles.calFormGroup}>
                       <label htmlFor="meeting-topic" className={styles.calFormLabel}>
-                        What is this meeting about? *
+                        What is this meeting about? <span aria-hidden="true">*</span>
                       </label>
                       <input
                         id="meeting-topic"
+                        name="topic"
                         type="text"
+                        autoComplete="off"
                         required
-                        placeholder="Please share the name and website of your project."
+                        placeholder="Please share the name and website of your project…"
                         value={meetingTopic}
                         onChange={(e) => setMeetingTopic(e.target.value)}
                         className={styles.calInput}
@@ -484,8 +582,9 @@ export default function Contact() {
                       </label>
                       <textarea
                         id="additional-notes"
+                        name="notes"
                         rows={3}
-                        placeholder="Please share anything that will help prepare for our meeting."
+                        placeholder="Please share anything that will help prepare for our meeting…"
                         value={additionalNotes}
                         onChange={(e) => setAdditionalNotes(e.target.value)}
                         className={styles.calTextarea}
@@ -498,14 +597,18 @@ export default function Contact() {
                         onClick={() => setShowGuests(true)}
                         className={styles.addGuestsBtn}
                       >
-                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7.5" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>
+                        <UserPlus size={16} aria-hidden="true" />
                         Add guests
                       </button>
                     ) : (
                       <div className={styles.guestInputWrap}>
                         <input
                           type="email"
-                          placeholder="Guest email address..."
+                          name="guest"
+                          aria-label="Guest email address"
+                          autoComplete="off"
+                          spellCheck={false}
+                          placeholder="Guest email address…"
                           value={guestEmail}
                           onChange={(e) => setGuestEmail(e.target.value)}
                           className={styles.calInput}
@@ -517,8 +620,9 @@ export default function Contact() {
                             setGuestEmail("");
                           }}
                           className={styles.removeGuestBtn}
+                          aria-label="Remove guest"
                         >
-                          ✕
+                          <X size={14} aria-hidden="true" />
                         </button>
                       </div>
                     )}
@@ -546,9 +650,19 @@ export default function Contact() {
                 {bookingStep === "confirmed" && (
                   <div className={styles.successCard}>
                     <div className={styles.successHeader}>
-                      <span className={styles.successIcon}>✓</span>
+                      <span className={styles.successIcon} aria-hidden="true">
+                        <Check size={18} weight="bold" />
+                      </span>
                       <div>
-                        <h3 className={styles.successTitle}>Meeting Scheduled</h3>
+                        <h2
+                          className={styles.successTitle}
+                          tabIndex={-1}
+                          ref={(el) => {
+                            stepFocusRef.current = el;
+                          }}
+                        >
+                          Meeting Scheduled
+                        </h2>
                         <p className={styles.successDesc}>
                           Your Google Meet session is ready to add to your calendar.
                         </p>
@@ -557,19 +671,19 @@ export default function Contact() {
 
                     <div className={styles.successSpecs}>
                       <div className={styles.successSpecRow}>
-                        <span>📅 Date:</span>
+                        <span><CalendarBlank size={15} aria-hidden="true" /> Date:</span>
                         <strong>{selectedDateFormatted}</strong>
                       </div>
                       <div className={styles.successSpecRow}>
-                        <span>⏰ Time:</span>
+                        <span><Clock size={15} aria-hidden="true" /> Time:</span>
                         <strong>{selectedTime} (30 mins)</strong>
                       </div>
                       <div className={styles.successSpecRow}>
-                        <span>🎥 Video:</span>
+                        <span><VideoCamera size={15} aria-hidden="true" /> Video:</span>
                         <strong>Google Meet</strong>
                       </div>
                       <div className={styles.successSpecRow}>
-                        <span>👤 Host:</span>
+                        <span><User size={15} aria-hidden="true" /> Host:</span>
                         <strong>James Mboma (Oyoto Studio)</strong>
                       </div>
                     </div>
@@ -581,7 +695,7 @@ export default function Contact() {
                         rel="noopener noreferrer"
                         className={styles.gcalBtn}
                       >
-                        Add to Google Calendar ↗
+                        Add to Google Calendar <ArrowUpRight size={15} aria-hidden="true" />
                       </a>
 
                       <button
@@ -604,9 +718,9 @@ export default function Contact() {
 
         {/* FAQ Section */}
         <section className={styles.faqSection}>
-          <span className={`${styles.sectionLabel} ${styles.reveal}`}>
-            02 / Frequently Asked Questions
-          </span>
+          <h2 className={`${styles.sectionLabel} ${styles.reveal}`}>
+            Questions, <em>answered</em>
+          </h2>
 
           <div className={styles.faqList}>
             {FAQS.map((faq, i) => {
@@ -617,6 +731,7 @@ export default function Contact() {
                     type="button"
                     onClick={() => setOpenFaq(isOpen ? null : i)}
                     aria-expanded={isOpen}
+                    aria-controls={`faq-answer-${i}`}
                     className={styles.faqButton}
                   >
                     <span className={styles.faqQuestion}>{faq.question}</span>
@@ -626,15 +741,20 @@ export default function Contact() {
                       }`}
                       aria-hidden="true"
                     >
-                      +
+                      <Plus size={16} />
                     </span>
                   </button>
                   <div
+                    id={`faq-answer-${i}`}
+                    aria-hidden={!isOpen}
+                    inert={!isOpen}
                     className={`${styles.faqAnswer} ${
                       isOpen ? styles.faqAnswerOpen : ""
                     }`}
                   >
-                    <p className={styles.faqAnswerText}>{faq.answer}</p>
+                    <div className={styles.faqAnswerInner}>
+                      <p className={styles.faqAnswerText}>{faq.answer}</p>
+                    </div>
                   </div>
                 </div>
               );
@@ -642,8 +762,7 @@ export default function Contact() {
           </div>
         </section>
       </main>
-
-      <SiteFooter />
     </div>
+    </PageTransition>
   );
 }

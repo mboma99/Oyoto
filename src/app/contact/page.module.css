@@ -1,131 +1,92 @@
 .page {
-  position: relative;
-  min-height: 100vh;
-  background-color: var(--bg);
-  color: var(--fg);
-  padding-top: calc(5rem + env(safe-area-inset-top));
-  overflow-x: hidden;
+  padding-top: calc(var(--header-h) + clamp(2.5rem, 7vw, 5rem));
 }
 
-/* ─── Hero Section ─── */
+/* ─── Hero: letter on the left, scheduler card on the right ─── */
 
 .heroSection {
-  padding: 8rem 3rem 5rem;
   max-width: 1400px;
   margin: 0 auto;
+  padding: 0 var(--gutter) clamp(4rem, 9vw, 7rem);
 }
 
 .grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4rem;
-  align-items: flex-start;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 30rem);
+  gap: clamp(2.5rem, 7vw, 7rem);
+  align-items: start;
 }
-
-/* ─── Left Column ─── */
 
 .leftCol {
   display: flex;
   flex-direction: column;
-  max-width: 36rem;
-}
-
-.eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.65rem;
-  font-family: "Space Mono", monospace;
-  font-size: 0.68rem;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-bottom: 1.5rem;
-  animation: ct-fade 0.8s cubic-bezier(0.19, 1, 0.22, 1) forwards;
-}
-
-.dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--accent-amber);
-  animation: ct-pulse 2s ease-in-out infinite;
+  align-items: flex-start;
+  animation: rise 0.9s var(--ease-out) both;
 }
 
 .title {
-  font-size: clamp(2.5rem, 5vw, 4rem);
-  font-weight: 700;
-  line-height: 1.05;
-  letter-spacing: -0.035em;
-  text-transform: uppercase;
-  margin: 0 0 1.5rem;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 0.4rem;
+  font-family: var(--serif);
+  font-size: clamp(3.5rem, 9vw, 7.5rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
 }
 
 .greetingWrap {
   display: inline-block;
-  min-width: 5.5ch;
-  position: relative;
+  padding-bottom: 0.12em; /* descender clearance for the italic "j" */
 }
 
 .greetingText {
   display: inline-block;
+  color: var(--accent);
   font-style: italic;
-  font-family: serif;
-  font-weight: 400;
-  text-transform: lowercase;
-  letter-spacing: -0.01em;
-  transition: opacity 0.35s ease, transform 0.35s cubic-bezier(0.19, 1, 0.22, 1), color 0.35s ease;
+  animation: greet 0.7s var(--ease-out) both;
+}
+
+@keyframes greet {
+  from {
+    opacity: 0;
+    transform: translateY(0.35em) rotate(-3deg);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 .lead {
-  font-size: 1.15rem;
-  line-height: 1.6;
-  color: var(--fg);
-  margin: 0 0 1.25rem;
-  font-weight: 400;
-  max-width: 32rem;
+  max-width: 34ch;
+  margin-top: 1.75rem;
+  font-family: var(--serif);
+  font-size: clamp(1.25rem, 2vw, 1.6rem);
+  line-height: 1.4;
 }
 
 .subtext {
-  font-size: 0.9rem;
-  line-height: 1.65;
+  max-width: 44ch;
+  margin-top: 1.25rem;
   color: var(--muted);
-  margin: 0 0 2rem;
-  max-width: 32rem;
 }
 
 .emailBtn {
   display: inline-flex;
   align-items: center;
-  gap: 0.75rem;
-  padding: 0.85rem 1.4rem;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  gap: 0.6rem;
+  margin-top: 2rem;
+  padding: 0.8rem 1.4rem;
+  border: 1px solid var(--line-strong);
   border-radius: 999px;
-  color: #ffffff;
-  font-family: "Space Mono", monospace;
-  font-size: 0.72rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  text-decoration: none;
-  width: fit-content;
-  margin-bottom: 3rem;
-  transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+  color: var(--text);
+  transition: border-color 0.3s var(--ease-out), color 0.3s var(--ease-out);
 }
 
 .emailBtn:hover {
-  background: #ffffff;
-  color: #0c0c0e;
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(255, 255, 255, 0.18);
+  border-color: var(--accent);
+  color: var(--accent);
 }
 
 .emailBtnIcon {
-  font-size: 0.85rem;
-  transition: transform 0.3s ease;
+  transition: transform 0.4s var(--ease-out);
 }
 
 .emailBtn:hover .emailBtnIcon {
@@ -134,707 +95,650 @@
 
 .studioMetaList {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.5rem 2rem;
-  padding-top: 2rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-  max-width: 32rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.5rem 2.5rem;
+  width: 100%;
+  margin-top: clamp(2.5rem, 5vw, 4rem);
+  padding-top: 1.75rem;
+  border-top: 1px solid var(--line);
 }
 
 .studioMetaItem {
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
+  gap: 0.2rem;
+  min-width: 0;
 }
 
 .studioMetaLabel {
-  font-family: "Space Mono", monospace;
-  font-size: 0.58rem;
-  text-transform: uppercase;
-  letter-spacing: 0.22em;
-  color: var(--muted);
+  font-size: 0.8rem;
+  color: var(--faint);
 }
 
 .studioMetaVal {
-  font-size: 0.8rem;
-  color: var(--fg);
-  font-weight: 500;
+  overflow-wrap: anywhere;
 }
 
-/* ─── Right Column: Sequential Scheduler Container ─── */
+/* ─── Scheduler card ─── */
 
 .rightCol {
-  position: relative;
-  width: 100%;
-  display: flex;
-  justify-content: flex-start;
+  animation: rise 0.9s var(--ease-out) 0.12s both;
 }
 
 .schedulerCard {
-  width: 100%;
-  max-width: 480px;
-  background: #1f1f1f;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 16px;
-  padding: 1.85rem 2rem;
-  box-shadow: none;
-  min-height: 480px;
+  min-height: 30rem;
+  padding: 1.75rem;
+  border-radius: var(--radius);
+  background: var(--paper);
+  border: 1px solid var(--line);
+  box-shadow:
+    6px 6px 0 var(--paper-raised),
+    12px 12px 0 var(--paper-edge);
 }
 
-/* ─── Step 1: Date Only (Calendar Month View) ─── */
+.calContainer,
+.timeSelectContainer,
+.calFormContainer,
+.successCard {
+  animation: step-in 0.45s var(--ease-out) both;
+}
 
-.calContainer {
-  display: flex;
-  flex-direction: column;
-  animation: ct-fade 0.3s ease forwards;
+@keyframes step-in {
+  from {
+    opacity: 0;
+    transform: translateX(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 .calHeader {
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  padding: 0.25rem 0 1.25rem;
+  align-items: center;
+  margin-bottom: 1.25rem;
 }
 
 .calMonthTitle {
-  margin: 0;
-  font-size: 1.05rem;
-  font-weight: 600;
-  color: #ffffff;
-  letter-spacing: -0.01em;
+  font-family: var(--serif);
+  font-size: 1.6rem;
+  line-height: 1.2;
 }
 
 .calNavGroup {
   display: flex;
-  gap: 0.4rem;
+  gap: 0.25rem;
 }
 
-.calNavBtn {
+.calNavBtn,
+.backSquareBtn {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: 999px;
   background: transparent;
-  border: none;
-  color: rgba(255, 255, 255, 0.75);
-  width: 32px;
-  height: 32px;
-  border-radius: 6px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  color: var(--text);
   cursor: pointer;
-  font-size: 1.15rem;
-  transition: all 0.2s ease;
+  transition: background-color 0.2s var(--ease-out), border-color 0.2s var(--ease-out),
+    transform 0.2s var(--ease-out);
 }
 
-.calNavBtn:hover:not(:disabled) {
-  background: rgba(255, 255, 255, 0.08);
-  color: #ffffff;
+.calNavBtn:hover:not(:disabled),
+.backSquareBtn:hover {
+  border-color: var(--line-strong);
+  background: var(--paper-raised);
 }
 
-.calNavBtnDisabled {
-  opacity: 0.18;
-  cursor: not-allowed !important;
-  pointer-events: none;
+.backSquareBtn:hover {
+  transform: translateX(-2px);
+}
+
+.calNavBtnDisabled,
+.calNavBtn:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.calWeekdays,
+.calDaysGrid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 0.3rem;
 }
 
 .calWeekdays {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
+  margin-bottom: 0.5rem;
   text-align: center;
-  font-family: "Space Mono", monospace;
-  font-size: 0.65rem;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  color: #71717a;
-  padding-bottom: 0.75rem;
-}
-
-.calDaysGrid {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 0.4rem;
+  font-size: 0.75rem;
+  color: var(--faint);
 }
 
 .calDayCell {
   aspect-ratio: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .calDayBtn {
   width: 100%;
   height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: transparent;
+  display: grid;
+  place-items: center;
   border: 1px solid transparent;
-  border-radius: 8px;
-  font-size: 0.88rem;
-  font-weight: 500;
-  color: #f4f4f5;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  font-size: 0.925rem;
+  font-variant-numeric: tabular-nums;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: background-color 0.2s var(--ease-out), border-color 0.2s var(--ease-out),
+    color 0.2s var(--ease-out), transform 0.2s var(--ease-out);
 }
 
 .calDayBtn:hover:not(:disabled) {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.25);
-  color: #ffffff;
+  background: var(--accent);
+  color: var(--on-accent);
+  transform: scale(1.06);
 }
 
-.calDayBtnDisabled {
-  opacity: 0.25;
-  cursor: not-allowed !important;
-  color: #52525b !important;
+.calDayBtnDisabled,
+.calDayBtn:disabled {
+  color: var(--faint);
+  opacity: 0.45;
+  cursor: default;
 }
 
 .calDayToday {
-  position: relative;
-  font-weight: 700;
+  border-color: var(--accent);
 }
 
-.calDayToday::after {
-  content: "";
-  position: absolute;
-  bottom: 4px;
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  background: var(--accent-amber);
-}
-
-
-
-/* ─── Step 2: Time Selection Screen (matching screenshot) ─── */
-
-.timeSelectContainer {
-  display: flex;
-  flex-direction: column;
-  animation: ct-fade 0.3s ease forwards;
-}
-
-.backSquareBtn {
-  width: 32px;
-  height: 32px;
-  border-radius: 6px;
-  background: transparent;
-  border: none;
-  color: rgba(255, 255, 255, 0.85);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  font-size: 1.15rem;
-  transition: all 0.2s ease;
-  padding: 0;
-}
-
-.backSquareBtn:hover {
-  background: rgba(255, 255, 255, 0.08);
-  color: #ffffff;
-  transform: translateX(-2px);
-}
+/* step 2: times */
 
 .timeSelectDayTitle {
-  margin: 1.15rem 0 0.2rem;
-  font-size: 1.35rem;
-  font-weight: 700;
-  color: #ffffff;
-  letter-spacing: -0.02em;
+  margin-top: 1rem;
+  font-family: var(--serif);
+  font-size: 2rem;
+  line-height: 1.15;
 }
 
 .timeSelectDateSubtitle {
-  margin: 0 0 0.85rem;
-  font-size: 0.86rem;
-  color: #a1a1aa;
+  color: var(--muted);
 }
 
 .timeSelectMetaRow {
   display: flex;
-  align-items: center;
-  gap: 1.15rem;
-  font-size: 0.76rem;
-  color: #a1a1aa;
   flex-wrap: wrap;
+  gap: 1.25rem;
+  margin-top: 1rem;
+  font-size: 0.85rem;
+  color: var(--muted);
 }
 
 .timeSelectMetaItem {
   display: inline-flex;
   align-items: center;
-  gap: 0.35rem;
-  font-size: 0.75rem;
-  color: #d4d4d8;
+  gap: 0.4rem;
 }
 
 .timeSelectDivider {
   height: 1px;
-  background: rgba(255, 255, 255, 0.08);
-  margin: 1rem 0 1rem;
+  margin: 1.25rem 0;
+  background: var(--line);
 }
 
 .timeSlotsStack {
-  display: flex;
-  flex-direction: column;
-  gap: 0.55rem;
-  max-height: 270px;
-  overflow-y: auto;
-  padding-right: 0.25rem;
-}
-
-.timeSlotsStack::-webkit-scrollbar {
-  width: 4px;
-}
-
-.timeSlotsStack::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.18);
-  border-radius: 4px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.5rem;
 }
 
 .timeSlotRowBtn {
-  width: 100%;
-  padding: 0.8rem 1rem;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 8px;
-  color: #ffffff;
-  font-size: 0.88rem;
-  font-weight: 600;
-  text-align: center;
+  padding: 0.75rem 0.5rem;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  font-size: 0.9rem;
+  font-variant-numeric: tabular-nums;
   cursor: pointer;
-  transition: all 0.2s cubic-bezier(0.19, 1, 0.22, 1);
+  transition: background-color 0.2s var(--ease-out), border-color 0.2s var(--ease-out),
+    color 0.2s var(--ease-out), transform 0.2s var(--ease-out);
 }
 
 .timeSlotRowBtn:hover {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.4);
-  transform: translateY(-1px);
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--on-accent);
 }
 
-/* ─── Step 3: Attendee Info Form (matching screenshot) ─── */
+.timeSlotRowBtn:active {
+  transform: scale(0.96);
+}
+
+/* step 3: details */
 
 .calFormContainer {
   display: flex;
   flex-direction: column;
-  animation: ct-fade 0.3s ease forwards;
+  gap: 1.1rem;
 }
 
 .calFormGroup {
   display: flex;
   flex-direction: column;
-  gap: 0.35rem;
-  margin-bottom: 1rem;
+  gap: 0.45rem;
 }
 
 .calFormLabel {
-  font-size: 0.84rem;
-  font-weight: 500;
-  color: #f4f4f5;
+  font-size: 0.875rem;
+  color: var(--muted);
 }
 
-.calInput {
+.calInput,
+.calTextarea {
   width: 100%;
-  padding: 0.65rem 0.85rem;
-  background: #181818;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 8px;
-  color: #ffffff;
-  font-family: inherit;
-  font-size: 0.86rem;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
-}
-
-.calInput:focus,
-.calTextarea:focus {
-  outline: none;
-  border-color: rgba(255, 255, 255, 0.45);
-  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.2);
-}
-
-.calInput::placeholder,
-.calTextarea::placeholder {
-  color: #52525b;
+  padding: 0.75rem 0.95rem;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  background: var(--paper-raised);
+  color: var(--text);
+  font: inherit;
+  font-size: 0.95rem;
+  transition: border-color 0.2s var(--ease-out);
 }
 
 .calTextarea {
-  width: 100%;
-  padding: 0.65rem 0.85rem;
-  background: #181818;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 8px;
-  color: #ffffff;
-  font-family: inherit;
-  font-size: 0.86rem;
-  min-height: 4.8rem;
+  min-height: 5.5rem;
   resize: vertical;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* --muted, not --faint: placeholders sit on paper-raised */
+.calInput::placeholder,
+.calTextarea::placeholder {
+  color: var(--muted);
+}
+
+.calInput:hover,
+.calTextarea:hover {
+  border-color: var(--muted);
+}
+
+.calInput:focus-visible,
+.calTextarea:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+  border-color: var(--accent);
 }
 
 .addGuestsBtn {
   display: inline-flex;
   align-items: center;
-  gap: 0.45rem;
-  background: transparent;
-  border: none;
-  color: #a1a1aa;
-  font-size: 0.82rem;
-  cursor: pointer;
-  padding: 0.2rem 0;
-  margin-bottom: 1.15rem;
+  gap: 0.5rem;
   width: fit-content;
-  transition: color 0.2s ease;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--accent);
+  font: inherit;
+  font-size: 0.9rem;
+  cursor: pointer;
 }
 
 .addGuestsBtn:hover {
-  color: #ffffff;
+  color: var(--accent-hi);
 }
 
 .guestInputWrap {
   display: flex;
   gap: 0.5rem;
-  margin-bottom: 1rem;
 }
 
 .removeGuestBtn {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 8px;
-  color: #a1a1aa;
-  padding: 0 0.75rem;
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 46px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  background: transparent;
+  color: var(--muted);
   cursor: pointer;
-  font-size: 0.8rem;
-  transition: all 0.2s ease;
+  transition: border-color 0.2s var(--ease-out), color 0.2s var(--ease-out);
 }
 
 .removeGuestBtn:hover {
-  color: #ffffff;
-  border-color: rgba(255, 255, 255, 0.3);
+  border-color: var(--text);
+  color: var(--text);
 }
 
 .calDisclaimer {
-  font-size: 0.74rem;
-  color: #71717a;
-  margin: 0.2rem 0 1.15rem;
-  line-height: 1.4;
+  font-size: 0.8rem;
+  color: var(--muted);
 }
 
 .calDisclaimer a {
-  color: #a1a1aa;
-  text-decoration: underline;
+  color: var(--text);
+  border-bottom: 1px solid var(--line-strong);
 }
 
 .calDisclaimer a:hover {
-  color: #ffffff;
+  color: var(--accent);
+  border-color: var(--accent);
 }
 
 .calFormActions {
   display: flex;
   justify-content: flex-end;
-  align-items: center;
-  gap: 1rem;
+  gap: 0.75rem;
+  margin-top: 0.25rem;
 }
 
-.calBackBtn {
+.calBackBtn,
+.secondaryActionBtn {
+  padding: 0.7rem 1.25rem;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
   background: transparent;
-  border: none;
-  color: #d4d4d8;
-  font-size: 0.86rem;
-  font-weight: 500;
+  color: var(--text);
+  font: inherit;
+  font-size: 0.9rem;
   cursor: pointer;
-  padding: 0.5rem 0.85rem;
-  border-radius: 6px;
-  transition: color 0.2s ease;
+  transition: border-color 0.2s var(--ease-out), color 0.2s var(--ease-out);
 }
 
-.calBackBtn:hover {
-  color: #ffffff;
+.calBackBtn:hover,
+.secondaryActionBtn:hover {
+  border-color: var(--text);
 }
 
-.calConfirmBtn {
-  background: #ffffff;
-  color: #18181b;
-  border: none;
-  border-radius: 8px;
-  padding: 0.6rem 1.35rem;
-  font-size: 0.86rem;
+.calConfirmBtn,
+.gcalBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.7rem 1.5rem;
+  border: 0;
+  border-radius: 999px;
+  background: var(--cta);
+  color: var(--on-cta);
+  font: inherit;
+  font-size: 0.9rem;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: background-color 0.2s var(--ease-out), transform 0.2s var(--ease-out);
 }
 
-.calConfirmBtn:hover {
-  background: #e4e4e7;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.15);
+.calConfirmBtn:hover,
+.gcalBtn:hover {
+  background: var(--cta-hi);
 }
 
-/* ─── Step 4: Success Card ─── */
-
-.successCard {
-  display: flex;
-  flex-direction: column;
-  gap: 1.25rem;
-  padding: 0.5rem 0;
-  animation: ct-fade 0.3s ease forwards;
+.calConfirmBtn:active,
+.gcalBtn:active {
+  transform: scale(0.97);
 }
+
+/* step 4: confirmed */
 
 .successHeader {
   display: flex;
-  align-items: center;
-  gap: 0.75rem;
+  gap: 1rem;
+  align-items: flex-start;
 }
 
 .successIcon {
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  background: rgba(134, 166, 140, 0.2);
-  border: 1px solid var(--accent-sage);
-  color: var(--accent-sage);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.85rem;
-  font-weight: 700;
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--on-accent);
+  animation: stamp 0.6s var(--ease-out) 0.15s both;
+}
+
+@keyframes stamp {
+  from {
+    transform: scale(0.4) rotate(-20deg);
+    opacity: 0;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
 }
 
 .successTitle {
-  margin: 0;
-  font-size: 1.15rem;
-  font-weight: 700;
+  font-family: var(--serif);
+  font-size: 1.75rem;
+  line-height: 1.15;
 }
 
 .successDesc {
-  margin: 0;
-  font-size: 0.85rem;
-  line-height: 1.6;
+  margin-top: 0.25rem;
   color: var(--muted);
+  font-size: 0.925rem;
 }
 
 .successSpecs {
   display: flex;
   flex-direction: column;
-  gap: 0.6rem;
-  padding: 1rem;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 8px;
+  margin: 1.5rem 0;
+  border-top: 1px solid var(--line);
 }
 
 .successSpecRow {
   display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 0.9rem;
+}
+
+.successSpecRow > span {
+  display: inline-flex;
   align-items: center;
-  gap: 0.65rem;
-  font-size: 0.78rem;
-  color: rgba(255, 255, 255, 0.85);
+  gap: 0.5rem;
+  color: var(--muted);
+}
+
+.successSpecRow strong {
+  font-weight: 500;
+  text-align: right;
 }
 
 .calActionsGroup {
   display: flex;
   flex-direction: column;
-  gap: 0.65rem;
-  margin-top: 0.5rem;
+  gap: 0.6rem;
 }
 
-.gcalBtn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.65rem;
-  padding: 0.85rem 1.25rem;
-  background: #ffffff;
-  color: #121214;
-  font-size: 0.82rem;
-  font-weight: 700;
-  border-radius: 8px;
-  text-decoration: none;
-  cursor: pointer;
-  transition: all 0.25s ease;
-}
-
-.gcalBtn:hover {
-  background: #f1f4ed;
-  transform: translateY(-1px);
-  box-shadow: 0 6px 20px rgba(255, 255, 255, 0.2);
-}
-
-.secondaryActionBtn {
-  background: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  color: rgba(255, 255, 255, 0.75);
-  font-size: 0.78rem;
-  padding: 0.65rem 1rem;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.secondaryActionBtn:hover {
-  border-color: rgba(255, 255, 255, 0.4);
-  color: #ffffff;
-}
-
-/* ─── FAQ Section ─── */
+/* ─── FAQ ─── */
 
 .faqSection {
-  padding: 8rem 3rem 10rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: clamp(4rem, 9vw, 7rem) var(--gutter);
+  border-top: 1px solid var(--line);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  gap: clamp(2rem, 6vw, 6rem);
+  align-items: start;
 }
 
 .sectionLabel {
-  display: block;
-  margin-bottom: 3.5rem;
-  font-family: "Space Mono", monospace;
-  font-size: 0.62rem;
-  text-transform: uppercase;
-  letter-spacing: 0.5em;
-  color: rgba(255, 255, 255, 0.3);
+  position: sticky;
+  top: calc(var(--header-h) + 2rem);
+  font-family: var(--serif);
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  line-height: 1.05;
+}
+
+.sectionLabel em {
+  color: var(--accent);
+  font-style: italic;
 }
 
 .faqList {
-  display: flex;
-  flex-direction: column;
-  max-width: 58rem;
+  border-top: 1px solid var(--line);
 }
 
 .faqItem {
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-  transition: border-color 0.3s ease;
-}
-
-.faqItem:last-child {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid var(--line);
 }
 
 .faqButton {
-  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 2rem 0;
-  background: transparent;
-  border: none;
-  color: var(--fg);
+  gap: 1.5rem;
+  width: 100%;
+  padding: 1.5rem 0;
+  border: 0;
+  background: none;
+  color: var(--text);
+  font: inherit;
   text-align: left;
   cursor: pointer;
-  gap: 2rem;
 }
 
 .faqQuestion {
-  font-size: clamp(1.15rem, 2.2vw, 1.65rem);
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  line-height: 1.2;
-  text-transform: uppercase;
-  transition: color 0.3s ease;
+  font-family: var(--serif);
+  font-size: clamp(1.25rem, 2vw, 1.6rem);
+  line-height: 1.25;
+  transition: color 0.3s var(--ease-out);
 }
 
 .faqButton:hover .faqQuestion {
-  color: var(--muted);
+  color: var(--accent);
 }
 
 .faqIcon {
   flex: none;
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #ffffff;
-  transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1), border-color 0.3s ease, background-color 0.3s ease;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  transition: transform 0.45s var(--ease-out), background-color 0.3s var(--ease-out),
+    border-color 0.3s var(--ease-out), color 0.3s var(--ease-out);
 }
 
 .faqIconOpen {
   transform: rotate(45deg);
-  border-color: #ffffff;
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--on-accent);
 }
 
 .faqAnswer {
-  overflow: hidden;
-  max-height: 0;
+  display: grid;
+  grid-template-rows: 0fr;
   opacity: 0;
-  transition: max-height 0.5s cubic-bezier(0.19, 1, 0.22, 1), opacity 0.4s ease, padding 0.5s ease;
+  transition: grid-template-rows 0.5s var(--ease-out), opacity 0.4s ease;
 }
 
 .faqAnswerOpen {
-  max-height: 20rem;
+  grid-template-rows: 1fr;
   opacity: 1;
-  padding-bottom: 2rem;
+}
+
+.faqAnswerInner {
+  min-height: 0;
+  overflow: hidden;
 }
 
 .faqAnswerText {
-  margin: 0;
-  font-size: 0.95rem;
-  line-height: 1.8;
+  max-width: 60ch;
+  padding-bottom: 1.75rem;
   color: var(--muted);
+  line-height: 1.7;
 }
 
-/* ─── Scroll Reveal ─── */
+/* ─── Scroll reveal (IntersectionObserver in page.tsx) ─── */
 
 .reveal {
-  transform: translateY(30px);
   opacity: 0;
-  transition: transform 1s cubic-bezier(0.19, 1, 0.22, 1),
-    opacity 1s cubic-bezier(0.19, 1, 0.22, 1);
-  will-change: transform, opacity;
+  transform: translateY(24px);
+  transition: opacity 0.9s var(--ease-out), transform 0.9s var(--ease-out);
 }
 
 .revealActive {
-  transform: translateY(0);
   opacity: 1;
+  transform: none;
 }
 
-/* ─── Keyframes ─── */
-
-@keyframes ct-fade {
-  from { opacity: 0; transform: translateY(6px); }
-  to { opacity: 1; transform: translateY(0); }
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 
-@keyframes ct-pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.25; }
+@media (max-width: 1023px) {
+  .grid,
+  .faqSection {
+    grid-template-columns: 1fr;
+  }
+
+  .sectionLabel {
+    position: static;
+  }
 }
 
-/* ─── Responsive ─── */
+@media (max-width: 767px) {
+  .schedulerCard {
+    padding: 1.25rem;
+  }
 
-@media (max-width: 1024px) {
-  .heroSection { padding: 7rem 2rem 4.5rem; }
-  .grid { grid-template-columns: 1fr; gap: 3rem; }
-  .faqSection { padding: 6rem 2rem 6rem; }
-}
+  .studioMetaList {
+    grid-template-columns: 1fr;
+  }
 
-@media (max-width: 768px) {
-  .page { padding-top: calc(4rem + env(safe-area-inset-top)); }
-  .heroSection { padding: 4rem 1.5rem 3rem; }
-  .title { font-size: clamp(2rem, 8vw, 2.75rem); margin-bottom: 1rem; }
-  .lead { font-size: 1.05rem; }
-  .subtext { font-size: 0.85rem; margin-bottom: 1.5rem; }
-  .schedulerCard { padding: 1.5rem 1.25rem; }
-  .studioMetaList { grid-template-columns: 1fr; gap: 1rem; }
-  .faqSection { padding: 4.5rem 1.5rem 5rem; }
-  .faqButton { padding: 1.5rem 0; }
-  .faqQuestion { font-size: 1.05rem; }
+  .timeSlotsStack {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .eyebrow {
-    animation: none;
-    opacity: 1;
-  }
-  .dot {
-    animation: none;
-  }
-  .reveal {
-    transform: none;
-    opacity: 1;
-    transition: none;
-  }
+  .leftCol,
+  .rightCol,
   .greetingText,
-  .faqAnswer,
-  .faqIcon {
+  .calContainer,
+  .timeSelectContainer,
+  .calFormContainer,
+  .successCard,
+  .successIcon {
+    animation: none;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
     transition: none;
+  }
+
+  .faqAnswer,
+  .faqIcon,
+  .emailBtnIcon {
+    transition: none;
+  }
+
+  .calDayBtn:hover:not(:disabled),
+  .backSquareBtn:hover {
+    transform: none;
   }
 }

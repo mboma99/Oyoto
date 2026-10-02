@@ -9,8 +9,8 @@ export default function manifest(): MetadataRoute.Manifest {
       "UK digital product studio and software engineering portfolio by James Mboma.",
     start_url: "/",
     display: "standalone",
-    background_color: "#161616",
-    theme_color: "#86a68c",
+    background_color: "#f3f3f3",
+    theme_color: "#f3f3f3",
     icons: [
       {
         src: "/favicon.ico",
