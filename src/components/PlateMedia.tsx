@@ -11,6 +11,9 @@ type Props = {
   sizes: string;
   className?: string;
   priority?: boolean;
+  /** Show the film's last frame without playing it: for the book's turning
+      leaf, a copy that's only on screen for the length of the turn. */
+  still?: boolean;
 };
 
 /* Where each film has got to, by src. A plate's <video> is re-created more
@@ -66,28 +69,45 @@ function resumeFilm(src: string) {
     return () => {
       video.removeEventListener("loadedmetadata", resume);
       video.removeEventListener("timeupdate", record);
-      playheads.set(src, { time: video.currentTime, at: performance.now(), frame: grabFrame(video) });
+      // a copy that went before it had loaded (or a Strict Mode test detach)
+      // only knows time 0; the saved playhead still extrapolates correctly
+      if (video.readyState < HTMLMediaElement.HAVE_METADATA) return;
+      const prev = playheads.get(src);
+      playheads.set(src, {
+        time: video.currentTime,
+        at: performance.now(),
+        frame: grabFrame(video) ?? prev?.frame,
+      });
     };
   };
   resumeRefs.set(src, ref);
   return ref;
 }
 
-const filmProps = (src: string, priority?: boolean) =>
-  ({
-    ref: resumeFilm(src),
-    src,
-    autoPlay: true,
-    muted: true,
-    loop: true,
-    playsInline: true,
-    preload: priority ? "auto" : "metadata",
-  }) as const;
+/* A still copy shows where the film got to and never loads or plays, so it
+   can't disturb the playhead the live copy will resume from. */
+const showLastFrame = (src: string) => (video: HTMLVideoElement | null) => {
+  const frame = video && playheads.get(src)?.frame;
+  if (frame) video.poster = frame;
+};
+
+const filmProps = (src: string, priority?: boolean, still?: boolean) =>
+  still
+    ? ({ ref: showLastFrame(src), src, muted: true, playsInline: true, preload: "none" } as const)
+    : ({
+        ref: resumeFilm(src),
+        src,
+        autoPlay: true,
+        muted: true,
+        loop: true,
+        playsInline: true,
+        preload: priority ? "auto" : "metadata",
+      } as const);
 
 /* A project's plate. Screen recordings sit whole in phone shells, side by
    side; any other film fills the plate the way <Image fill> does; otherwise
    the still. Reduced-motion visitors get the still instead of any film. */
-export default function PlateMedia({ project, alt, sizes, className, priority }: Props) {
+export default function PlateMedia({ project, alt, sizes, className, priority, still }: Props) {
   const reduceMotion = useReducedMotion();
 
   if (project.phones?.length && !reduceMotion) {
@@ -110,7 +130,7 @@ export default function PlateMedia({ project, alt, sizes, className, priority }:
               className={styles.screen}
               poster={phone.poster}
               aria-label={alt ? `${phone.label} screen recording` : undefined}
-              {...filmProps(phone.video, priority)}
+              {...filmProps(phone.video, priority, still)}
             />
           </div>
         ))}
@@ -127,7 +147,7 @@ export default function PlateMedia({ project, alt, sizes, className, priority }:
         poster={project.image}
         aria-label={alt || undefined}
         aria-hidden={alt ? undefined : true}
-        {...filmProps(project.video, priority)}
+        {...filmProps(project.video, priority, still)}
       />
     );
   }

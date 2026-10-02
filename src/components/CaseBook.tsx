@@ -60,6 +60,8 @@ type PageProps = {
   index: number;
   reveal?: boolean;
   onJump?: (to: number) => void;
+  /** a copy on the turning leaf: films hold their last frame instead of playing */
+  still?: boolean;
 };
 
 function RunningHead({ left, right }: { left: string; right: string }) {
@@ -146,7 +148,7 @@ function LeftPage({ spread, index, reveal }: PageProps) {
   );
 }
 
-function RightPage({ spread, index, reveal, onJump }: PageProps) {
+function RightPage({ spread, index, reveal, onJump, still }: PageProps) {
   if (spread.kind === "contents") {
     return (
       <div className={`${styles.pageInner} ${reveal ? styles.reveal : ""}`}>
@@ -189,6 +191,7 @@ function RightPage({ spread, index, reveal, onJump }: PageProps) {
               alt={`${titleCase(project.title)} project screenshot`}
               sizes="(max-width: 767px) 92vw, 46vw"
               className={styles.plateImage}
+              still={still}
             />
           </div>
           <figcaption className={styles.caption}>
@@ -440,9 +443,9 @@ export function CaseBook() {
               >
                 <div className={`${styles.leafFace} ${styles.leafFront}`}>
                   {isNarrow ? (
-                    <SinglePage spread={spreads[leafSingle]} index={leafSingle} />
+                    <SinglePage spread={spreads[leafSingle]} index={leafSingle} still />
                   ) : turn.dir === "next" ? (
-                    <RightPage spread={spreads[turn.from]} index={turn.from} />
+                    <RightPage spread={spreads[turn.from]} index={turn.from} still />
                   ) : (
                     <LeftPage spread={spreads[turn.from]} index={turn.from} />
                   )}
@@ -452,7 +455,7 @@ export function CaseBook() {
                   {isNarrow ? null : turn.dir === "next" ? (
                     <LeftPage spread={spreads[turn.to]} index={turn.to} />
                   ) : (
-                    <RightPage spread={spreads[turn.to]} index={turn.to} />
+                    <RightPage spread={spreads[turn.to]} index={turn.to} still />
                   )}
                   <span className={styles.shadeBack} />
                 </div>
