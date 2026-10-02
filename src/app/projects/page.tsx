@@ -2,6 +2,7 @@
 
 import { useEffect, useState, ViewTransition } from "react";
 import Image from "next/image";
+import PlateMedia from "@/components/PlateMedia";
 import Link from "next/link";
 import { ArrowUpRight } from "@phosphor-icons/react";
 import styles from "./page.module.css";
@@ -134,17 +135,21 @@ export default function ProjectsPage() {
               {visible.map((project) => {
                 const isActive = project.slug === plateSlug;
                 return (
+                  /* Every layer keeps a fixed name. React only registers a name
+                     on mount and forgets it by the name it has at unmount, so
+                     toggling it with hover left a stale entry that collided
+                     with the case study's plate. The clicked row is always the
+                     active (visible) layer, so it is the one that morphs. */
                   <ViewTransition
                     key={project.slug}
-                    name={isActive ? `plate-${project.slug}` : undefined}
+                    name={`plate-${project.slug}`}
                     share="plate-morph"
                     default="none"
                   >
                     <div className={styles.plateLayer} data-active={isActive}>
-                      <Image
-                        src={project.image}
+                      <PlateMedia
+                        project={project}
                         alt=""
-                        fill
                         sizes="(max-width: 767px) 1px, 40vw"
                         className={styles.plateImage}
                         priority={project.slug === projects[0].slug}

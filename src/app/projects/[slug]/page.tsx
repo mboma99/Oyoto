@@ -1,5 +1,5 @@
 import { ViewTransition } from "react";
-import Image from "next/image";
+import PlateMedia from "@/components/PlateMedia";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowUpRight } from "@phosphor-icons/react/ssr";
@@ -78,10 +78,9 @@ export default async function ProjectCaseStudy({
 
         <ViewTransition name={`plate-${project.slug}`} share="plate-morph" default="none">
           <figure className={styles.plate}>
-            <Image
-              src={project.image}
+            <PlateMedia
+              project={project}
               alt={`${titleCase(project.title)} project screenshot`}
-              fill
               sizes="(max-width: 1400px) 100vw, 1400px"
               className={styles.plateImage}
               priority

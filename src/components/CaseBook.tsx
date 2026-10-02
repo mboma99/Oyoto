@@ -1,11 +1,11 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { motion, useMotionValue, useReducedMotion, useSpring } from "framer-motion";
 import { ArrowLeft, ArrowRight, ArrowUpRight } from "@phosphor-icons/react";
 import { LogoMark } from "@/components/Logo";
+import PlateMedia from "@/components/PlateMedia";
 import { projects, type Project } from "@/data/projects";
 import { contactEmail, contactMailto } from "@/lib/seo";
 import styles from "./CaseBook.module.css";
@@ -184,10 +184,9 @@ function RightPage({ spread, index, reveal, onJump }: PageProps) {
       <div className={`${styles.pageInner} ${styles.platePage} ${reveal ? styles.reveal : ""}`}>
         <figure className={styles.plate}>
           <div className={styles.plateFrame}>
-            <Image
-              src={project.image}
+            <PlateMedia
+              project={project}
               alt={`${titleCase(project.title)} project screenshot`}
-              fill
               sizes="(max-width: 767px) 92vw, 46vw"
               className={styles.plateImage}
             />
@@ -260,14 +259,16 @@ export function CaseBook() {
 
   const isOpen = cover === "open";
 
-  /* pointer tilt: a few degrees of give, driven by motion values (no re-renders) */
+  /* pointer tilt: a few degrees of give while the cover is closed, driven by
+     motion values (no re-renders). Once open the spread lies flat: text on a
+     tilted 3D plane is resampled by the browser and reads soft. */
   const tiltX = useMotionValue(0);
   const tiltY = useMotionValue(0);
   const rotateX = useSpring(tiltX, { stiffness: 120, damping: 20 });
   const rotateY = useSpring(tiltY, { stiffness: 120, damping: 20 });
 
   const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
-    if (reduceMotion || e.pointerType !== "mouse") return;
+    if (reduceMotion || isOpen || cover === "opening" || e.pointerType !== "mouse") return;
     const rect = e.currentTarget.getBoundingClientRect();
     const px = (e.clientX - rect.left) / rect.width - 0.5;
     const py = (e.clientY - rect.top) / rect.height - 0.5;
@@ -282,6 +283,7 @@ export function CaseBook() {
 
   const openBook = () => {
     if (cover !== "closed") return;
+    resetTilt();
     if (reduceMotion) {
       setCover("open");
       return;
@@ -382,7 +384,7 @@ export function CaseBook() {
         onPointerMove={handlePointerMove}
         onPointerLeave={resetTilt}
       >
-        <div className={styles.stage} data-cover={cover}>
+        <div className={styles.stage} data-cover={cover} data-turning={!!turn}>
           <div
             ref={bookRef}
             className={styles.book}

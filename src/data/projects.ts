@@ -3,7 +3,20 @@ export interface Project {
   slug: string;
   title: string;
   description: string;
+  /** Still: the plate everywhere a film can't play, and the film's poster. */
   image: string;
+  /** Optional looping film, muted, that fills the plate in place of the still. */
+  video?: string;
+  /** Portrait screen recordings, each shown whole in its own phone shell,
+      side by side, instead of a film that fills (and crops) the plate. */
+  phones?: {
+    video: string;
+    /** Frame shown while the recording loads. */
+    poster: string;
+    label: string;
+  }[];
+  /** The recordings' width / height, so each shell matches exactly. */
+  screenRatio?: number;
   category: string;
   tags: string[];
   year: string;
@@ -19,6 +32,69 @@ export interface Project {
 }
 
 export const projects: Project[] = [
+  {
+    id: "2",
+    slug: "trakr",
+    title: "TRAKR",
+    description: "Proprietary AI-driven career intelligence and application tracking ecosystem.",
+    image: "/hero-images/trakr-v2.png",
+    phones: [
+      { video: "/projects/trakr.mp4", poster: "/projects/trakr.jpg", label: "sign-in and onboarding" },
+    ],
+    screenRatio: 600 / 1304,
+    category: "AI / SaaS",
+    tags: ["AI/ML", "MOBILE", "AUTOMATION", "SAAS"],
+    year: "2026",
+    client: "In-House Project",
+    role: "Full-stack Engineering Team",
+    caseStudy: {
+      overview: "Trakr is our most ambitious in-house project to date: a high-tech intelligence layer designed to revolutionize the job hunting process. Built from the ground up, it serves as a central command center for career transitions, automating the tedious work of tracking and status monitoring.",
+      challenge: "Processing thousands of unstructured emails and application notifications across disparate platforms while maintaining near-perfect accuracy in status detection. The system had to be fast, secure, and capable of handling complex authentication flows with major email providers.",
+      solution: "We developed a multi-model classification engine powered by Python and FastAPI, which funnels live Gmail data through our proprietary ML models to automatically detect and categorize job statuses. The entire ecosystem is delivered via a high-performance native iOS application built with Flutter, utilizing Redis for real-time processing and GCP for secure, scalable infrastructure.",
+      outcome: "Currently in [ CLOSED BETA ]. Trakr is already demonstrating a 90% reduction in manual tracking time for our early testers, effectively changing the game for high-stakes job hunting through intelligent automation.",
+      techStack: ["FastAPI", "Python (ML Models)", "Flutter (iOS)", "Redis", "GCP", "Gmail API", "Google OAuth", "Nginx"],
+    },
+  },
+  {
+    id: "3",
+    slug: "lloyds-banking-group",
+    title: "LLOYDS BANKING GROUP",
+    description: "Data pipelines and AI summarisation behind senior leadership reporting.",
+    image: "/projects/lloyds.jpg",
+    video: "/projects/lloyds.mp4",
+    category: "Data & AI",
+    tags: ["PYTHON", "SQL", "DATA PIPELINES", "AI"],
+    year: "2024",
+    client: "Lloyds Banking Group",
+    role: "Data Engineering & AI",
+    caseStudy: {
+      overview: "Lloyds Banking Group brought our team in to support the reporting that its senior leadership relies on for decision-making. We worked inside the data function, building the transformation pipelines behind executive reporting and exploring where AI could take the slowest manual steps off the analysts' desks.",
+      challenge: "Leadership reporting took longer to assemble than to interpret. Analysts spent much of their time gathering, cleaning and summarising material, including lengthy client presentations, before any real analysis could begin, and stakeholders needed insight they could act on rather than raw data.",
+      solution: "We built repeatable data transformation pipelines to feed executive reporting and analysis, then developed a proof of concept using Copilot to summarise and categorise client presentations automatically. Throughout, we worked closely with stakeholders to turn operational requirements into usable, decision-ready insight.",
+      outcome: "The AI summarisation proof of concept cut the delivery time of critical analysis by 30%, and the reporting pipelines gave leadership a faster, more consistent view of the information they depend on.",
+      techStack: ["Python", "SQL", "Microsoft Copilot", "Data Pipelines"],
+    },
+  },
+  {
+    id: "4",
+    slug: "nike",
+    title: "NIKE",
+    description: "Recommender and classification models driving member engagement across Nike platforms.",
+    image: "/projects/nike.jpg",
+    video: "/projects/nike.mp4",
+    category: "Machine Learning",
+    tags: ["MACHINE LEARNING", "DATABRICKS", "PYSPARK", "AWS"],
+    year: "2023",
+    client: "Nike",
+    role: "Machine Learning Engineering",
+    caseStudy: {
+      overview: "Nike's digital platforms decide what each member sees, and those decisions run on models that have to stay accurate and affordable to retrain. Our team worked embedded with Nike's data science function, building and maintaining the machine learning systems behind personalisation and engagement.",
+      challenge: "The models needed to raise member engagement and lifetime value while running on pipelines that had grown expensive and slow to rebuild. Redundant data sources and costly retraining cycles were limiting how quickly improvements could reach members.",
+      solution: "We built a recommender system on Databricks, Snowflake and PySpark to raise user lifetime value, alongside a feedforward neural network classifier to drive engagement. We then refactored the ML pipelines behind them, removing redundant data sources and adding automated unit testing to protect reliability and data integrity.",
+      outcome: "The classifier doubled user engagement across Nike platforms, while the pipeline refactor reduced cloud cost and shortened model build times. Findings were presented to cross-functional stakeholders, keeping modelling decisions clear outside the data team.",
+      techStack: ["Python", "TensorFlow", "PySpark", "Databricks", "Snowflake", "AWS"],
+    },
+  },
   {
     id: "1",
     slug: "congraduation",
@@ -36,63 +112,6 @@ export const projects: Project[] = [
       solution: "We built a user-centric ecommerce photography platform that prioritizes digital accessibility. By reducing the friction between photo acquisition and device download, we created a seamless flow for graduates to claim and share their academic achievements instantly.",
       outcome: "Successfully developed a high-performance platform that provides a viable alternative to legacy monopolies, significantly improving customer satisfaction by offering fair pricing for digital assets and a modern, intuitive user experience.",
       techStack: ["React", "FastAPI", "PostgreSQL", "Tailwind CSS", "AWS S3", "SQLAlchemy", "Pydantic", "Uvicorn"],
-    },
-  },
-  {
-    id: "2",
-    slug: "vengcity",
-    title: "VENGCITY",
-    description: "Custom E-Commerce platform for a high-profile streetwear brand launch.",
-    image: "/hero-images/vengcity.png",
-    category: "Brand Launch",
-    tags: ["WORDPRESS", "PHP", "ECOMMERCE", "SEO"],
-    year: "2021",
-    client: "BanterPlug",
-    role: "Web Development Team",
-    caseStudy: {
-      overview: "VengCity was a collaboration between our studio and a high-profile social-media creator to launch their new clothing brand, BanterPlug. The goal was to create a robust, easy-to-manage E-Commerce destination that could handle the surge of traffic from a massive social media following.",
-      challenge: "Converting a conceptual UI design into a pixel-perfect, responsive reality while ensuring the platform could scale during high-pressure launch windows. The client specifically required a CMS that was intuitive enough for them to manage inventory and monitor performance independently.",
-      solution: "We developed a custom, modular WordPress theme using PHP and SASS, built from the ground up to match the designer's vision. We integrated WooCommerce for its powerful inventory management and analytics, and prioritized SEO to ensure the brand dominated search queries for their niche.",
-      outcome: "The launch was a massive success; the site appeared on the first page of Google search results within weeks, and the initial product line sold out completely within just 21 days of going live.",
-      techStack: ["WordPress", "PHP", "WooCommerce", "SASS", "JavaScript", "SEO Optimization"],
-    },
-  },
-  {
-    id: "3",
-    slug: "trakr",
-    title: "TRAKR",
-    description: "Proprietary AI-driven career intelligence and application tracking ecosystem.",
-    image: "/hero-images/trakr-v2.png",
-    category: "AI / SaaS",
-    tags: ["AI/ML", "MOBILE", "AUTOMATION", "SAAS"],
-    year: "2026",
-    client: "In-House Project",
-    role: "Full-stack Engineering Team",
-    caseStudy: {
-      overview: "Trakr is our most ambitious in-house project to date: a high-tech intelligence layer designed to revolutionize the job hunting process. Built from the ground up, it serves as a central command center for career transitions, automating the tedious work of tracking and status monitoring.",
-      challenge: "Processing thousands of unstructured emails and application notifications across disparate platforms while maintaining near-perfect accuracy in status detection. The system had to be fast, secure, and capable of handling complex authentication flows with major email providers.",
-      solution: "We developed a multi-model classification engine powered by Python and FastAPI, which funnels live Gmail data through our proprietary ML models to automatically detect and categorize job statuses. The entire ecosystem is delivered via a high-performance native iOS application built with Flutter, utilizing Redis for real-time processing and GCP for secure, scalable infrastructure.",
-      outcome: "Currently in [ CLOSED BETA ]. Trakr is already demonstrating a 90% reduction in manual tracking time for our early testers, effectively changing the game for high-stakes job hunting through intelligent automation.",
-      techStack: ["FastAPI", "Python (ML Models)", "Flutter (iOS)", "Redis", "GCP", "Gmail API", "Google OAuth", "Nginx"],
-    },
-  },
-  {
-    id: "4",
-    slug: "the-well-church",
-    title: "THE WELL CHURCH",
-    description: "Digital presence and high-availability streaming ecosystem for a community organization.",
-    image: "/hero-images/well-church.png",
-    category: "Broadcast",
-    tags: ["SQUARESPACE", "AV ENGINEERING", "BROADCAST", "WEB"],
-    year: "2023",
-    client: "The Well Church",
-    role: "Digital Strategy & AV Engineering",
-    caseStudy: {
-      overview: "The Well Church, a community organization, partnered with our studio to establish a modern digital presence and modernize their physical-to-digital broadcasting capabilities. The goal was to create a reliable bridge between their physical services and their global digital audience.",
-      challenge: "Developing a robust web platform that was high-performance yet easy for non-technical staff to manage, while simultaneously overhauling legacy AV systems to support professional-grade live streaming.",
-      solution: "We deployed a highly available, custom-architected Squarespace platform optimized for ease of use and content management. In parallel, we re-engineered their AV infrastructure, organizing their streaming pipeline and implementing a professional broadcast platform to ensure seamless, low-latency live delivery.",
-      outcome: "The digital transformation led to a measurable increase in global engagement and physical attendance. By lowering the barrier to entry for digital seekers, the church saw a significant surge in new congregation members finding the organization through their online platforms.",
-      techStack: ["Squarespace", "AV Integration", "OBS Studio", "Facebook Live", "Digital Strategy"],
     },
   },
 ];

@@ -53,6 +53,15 @@
   transition: opacity 0.7s var(--ease-out) 0.35s, transform 1.1s var(--ease-out);
 }
 
+/* An open, idle book drops out of 3D entirely so the browser draws its text
+   crisply instead of as a texture on a 3D plane; the chain comes back for
+   the length of each page turn. */
+.stageWrap:has(> .stage[data-cover="open"][data-turning="false"]),
+.stage[data-cover="open"][data-turning="false"],
+.stage[data-cover="open"][data-turning="false"] .book {
+  transform-style: flat;
+}
+
 .stage[data-cover="closed"] .book {
   opacity: 0;
   transform: scale(0.97);
