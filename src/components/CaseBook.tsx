@@ -80,7 +80,7 @@ function LeftPage({ spread, index, reveal }: PageProps) {
           <h2 className={styles.prefaceTitle}>
             Bridging brand vision and <em>engineering reality.</em>
           </h2>
-          <p className={styles.prefaceText}>
+          <p className={`${styles.prefaceText} ${styles.prefaceIntro}`}>
             We design and build web, mobile and AI products for founders and teams, from
             ecommerce launches to AI products in closed beta.
           </p>
@@ -371,6 +371,11 @@ export function CaseBook() {
      that is changing, so the page underneath is already the destination. */
   const baseLeft = turn ? (turn.dir === "next" ? turn.from : turn.to) : current;
   const baseRight = turn ? (turn.dir === "next" ? turn.to : turn.from) : current;
+  /* On a phone the book is a top-bound notepad: going forward, the current
+     sheet flips up off the stack and the next one is already underneath;
+     going back, the previous sheet drops down over the current one. */
+  const baseSingle = turn ? (turn.dir === "next" ? turn.to : turn.from) : current;
+  const leafSingle = turn ? (turn.dir === "next" ? turn.from : turn.to) : current;
   const revealLeft = (!!turn && turn.dir === "prev") || cover === "opening";
   const revealRight = (!!turn && turn.dir === "next") || cover === "opening";
 
@@ -398,10 +403,10 @@ export function CaseBook() {
             {isNarrow ? (
               <div className={styles.page}>
                 <SinglePage
-                  key={spreads[shown].id}
-                  spread={spreads[shown]}
-                  index={shown}
-                  reveal={!!turn || cover === "opening"}
+                  key={spreads[baseSingle].id}
+                  spread={spreads[baseSingle]}
+                  index={baseSingle}
+                  reveal={turn?.dir === "next" || cover === "opening"}
                   onJump={jump}
                 />
               </div>
@@ -435,7 +440,7 @@ export function CaseBook() {
               >
                 <div className={`${styles.leafFace} ${styles.leafFront}`}>
                   {isNarrow ? (
-                    <SinglePage spread={spreads[turn.from]} index={turn.from} />
+                    <SinglePage spread={spreads[leafSingle]} index={leafSingle} />
                   ) : turn.dir === "next" ? (
                     <RightPage spread={spreads[turn.from]} index={turn.from} />
                   ) : (

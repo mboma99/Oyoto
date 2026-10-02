@@ -156,16 +156,20 @@
   line-height: 1.1;
 }
 
+/* Running text is set in the sans: the serif is a display face with a single
+   heavy weight, which reads as bold at paragraph sizes. */
 .sectionBody {
-  font-family: var(--serif);
-  font-size: clamp(1.15rem, 1.6vw, 1.35rem);
-  line-height: 1.65;
+  font-family: var(--sans);
+  font-size: clamp(1.05rem, 1.3vw, 1.2rem);
+  font-weight: 400;
+  line-height: 1.75;
   color: var(--text);
 }
 
-/* drop cap on the chapter's first paragraph */
+/* drop cap on the chapter's first paragraph, still in the display serif */
 .section:first-child .sectionBody::first-letter {
   float: left;
+  font-family: var(--serif);
   margin: 0.08em 0.12em 0 0;
   font-size: 3.6em;
   line-height: 0.8;

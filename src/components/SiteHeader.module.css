@@ -8,10 +8,21 @@
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
+  border-bottom: 1px solid var(--line);
+}
+
+/* The frosted glass lives on a layer behind the header's content. On the
+   header itself, backdrop-filter would make it the containing block for
+   position: fixed children, trapping the full-screen menu inside the bar. */
+.header::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
   background: var(--glass);
   -webkit-backdrop-filter: var(--glass-blur);
   backdrop-filter: var(--glass-blur);
-  border-bottom: 1px solid var(--line);
+  pointer-events: none;
 }
 
 .logo {

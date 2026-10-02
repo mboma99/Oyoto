@@ -508,6 +508,22 @@
   to { transform: rotateY(180deg); }
 }
 
+/* notepad (phones): flips about the top binding */
+@keyframes pad-flip-up {
+  from { transform: rotateX(0deg); }
+  to { transform: rotateX(180deg); }
+}
+
+@keyframes pad-flip-down {
+  from { transform: rotateX(180deg); }
+  to { transform: rotateX(0deg); }
+}
+
+@keyframes pad-cover-open {
+  from { transform: rotateX(10deg); }
+  to { transform: rotateX(180deg); }
+}
+
 @keyframes shade-out {
   from { opacity: 0; }
   to { opacity: 0.55; }
@@ -824,22 +840,119 @@
     display: block;
   }
 
+  /* square under the binding; the stack of sheets peeks out below */
   .page {
-    border-radius: var(--radius);
+    border-radius: 2px 2px var(--radius) var(--radius);
     box-shadow:
-      3px 3px 0 var(--paper-raised),
-      6px 6px 0 var(--paper-edge),
+      0 3px 0 var(--paper-raised),
+      0 6px 0 var(--paper-edge),
       0 24px 40px -18px var(--shadow-soft);
   }
 
-  .spine {
-    left: 0;
-    transform: none;
+  /* the notepad's first sheet keeps just the headline and the link */
+  .prefaceIntro {
+    display: none;
   }
 
-  .leafPrev .leafFront::after {
-    right: auto;
-    left: -1px;
+  /* ─── Notepad: bound along the top, sheets flip up and over ─── */
+
+  /* the binding replaces the spine, and sits on the stage so it shows over
+     the closed cover too */
+  .spine,
+  .leafFace::after {
+    display: none;
+  }
+
+  .stage::before {
+    content: "";
+    position: absolute;
+    z-index: 12;
+    top: -7px;
+    left: 4%;
+    right: 4%;
+    height: 14px;
+    border-radius: 7px;
+    background: var(--spine);
+    transform: translateZ(2px);
+    pointer-events: none;
+  }
+
+  /* punched holes along the binding */
+  .stage::after {
+    content: "";
+    position: absolute;
+    z-index: 13;
+    top: -2px;
+    left: calc(4% + 14px);
+    right: calc(4% + 14px);
+    border-top: 4px dotted var(--ink);
+    transform: translateZ(3px);
+    pointer-events: none;
+  }
+
+  .leaf,
+  .leafNext,
+  .leafPrev {
+    transform-origin: center top;
+  }
+
+  .leafNext {
+    animation-name: pad-flip-up;
+  }
+
+  /* going back, the previous sheet drops down over the current one, its shade
+     clearing as it lands */
+  .leafPrev {
+    animation-name: pad-flip-down;
+  }
+
+  .leafPrev .shadeFront {
+    animation-name: shade-in;
+  }
+
+  .leafBack {
+    transform: rotateX(180deg);
+  }
+
+  /* a sheet's blank back only shows above the pad, so it dissolves as it
+     leaves (forward) and gathers as it arrives (back) instead of popping */
+  .leafNext .leafBack {
+    animation: cover-settle 0.95s linear forwards;
+  }
+
+  .leafPrev .leafBack {
+    animation: cover-settle 0.95s linear reverse both;
+  }
+
+  .cover {
+    transform-origin: center top;
+  }
+
+  .stage[data-cover="closed"] .cover:hover,
+  .stage[data-cover="closed"] .cover:focus-visible {
+    transform: rotateX(10deg);
+  }
+
+  .stage[data-cover="opening"] .cover {
+    animation-name: pad-cover-open;
+  }
+
+  .coverFace,
+  .coverFront {
+    border-radius: 2px 2px var(--radius) var(--radius);
+  }
+
+  .coverInside {
+    transform: rotateX(180deg);
+  }
+
+  .coverFront {
+    box-shadow:
+      0 3px 0 var(--paper-raised),
+      0 6px 0 var(--paper-edge),
+      0 9px 0 var(--paper-raised),
+      0 12px 0 var(--paper-edge),
+      0 30px 50px -20px var(--shadow-soft);
   }
 
   .single {
@@ -879,6 +992,10 @@
   .leafPrev {
     left: 0;
     width: 100%;
+  }
+
+  .leafFace {
+    border-radius: 2px 2px var(--radius) var(--radius);
   }
 
   .cover {
