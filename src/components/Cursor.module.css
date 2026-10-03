@@ -1,0 +1,43 @@
+/* Outer node is moved by JS; inner ring handles size and state. */
+.cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  mix-blend-mode: difference;
+  will-change: transform;
+}
+
+.cursor[data-visible="true"] {
+  opacity: 1;
+}
+
+.ring {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 28px;
+  height: 28px;
+  border: 1.5px solid #fff;
+  border-radius: 50%;
+  background: transparent;
+  transform: translate(-50%, -50%) scale(1);
+  transition: transform 0.35s var(--ease-out);
+}
+
+.cursor[data-hover="true"] .ring {
+  transform: translate(-50%, -50%) scale(1.7);
+}
+
+.cursor[data-down="true"] .ring {
+  transform: translate(-50%, -50%) scale(0.75);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ring {
+    transition: none;
+  }
+}

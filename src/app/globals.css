@@ -218,3 +218,13 @@ label {
     animation-delay: 0s !important;
   }
 }
+
+/* Custom ring cursor (see components/Cursor) replaces the native one on
+ * mouse/trackpad devices. !important so no component rule can bring it back. */
+@media (hover: hover) and (pointer: fine) {
+  *,
+  *::before,
+  *::after {
+    cursor: none !important;
+  }
+}
