@@ -14,12 +14,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       images: [absoluteUrl(defaultOgImage)],
     },
     {
-      url: absoluteUrl("/about"),
-      lastModified,
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
       url: absoluteUrl("/projects"),
       lastModified,
       changeFrequency: "weekly",
@@ -31,6 +25,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified,
       changeFrequency: "monthly",
       priority: 0.7,
+    },
+    {
+      url: absoluteUrl("/contact"),
+      lastModified,
+      changeFrequency: "monthly",
+      priority: 0.9,
     },
   ];
 

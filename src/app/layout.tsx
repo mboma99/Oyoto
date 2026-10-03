@@ -1,8 +1,10 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
+import { DM_Sans, DM_Serif_Display } from "next/font/google";
 import "./globals.css";
-import { Navigation } from "@/components/Navigation";
+import { SiteHeader } from "@/components/SiteHeader";
+import { SiteFooter } from "@/components/SiteFooter";
+import { Cursor } from "@/components/Cursor";
 import {
-  absoluteUrl,
   contactEmail,
   createMetadata,
   founderName,
@@ -36,9 +38,6 @@ export const metadata: Metadata = {
     default: "Oyoto · Build your digital presence",
     template: "%s · Oyoto",
   },
-  icons: {
-    icon: "/favicon.ico",
-  },
   robots: {
     index: true,
     follow: true,
@@ -62,17 +61,39 @@ export const metadata: Metadata = {
   },
 };
 
+const serif = DM_Serif_Display({
+  subsets: ["latin"],
+  weight: "400",
+  style: ["normal", "italic"],
+  variable: "--font-serif",
+});
+
+const sans = DM_Sans({
+  subsets: ["latin"],
+  variable: "--font-sans",
+});
+
+export const viewport: Viewport = {
+  themeColor: "#f3f3f3",
+  colorScheme: "dark",
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${serif.variable} ${sans.variable}`}>
       <body>
         <script {...jsonLdScript(siteJsonLd())} />
-        <Navigation />
+        <a href="#main" className="skip-link">
+          Skip to content
+        </a>
+        <SiteHeader />
         {children}
+        <SiteFooter />
+        <Cursor />
       </body>
     </html>
   );

@@ -5,7 +5,28 @@ export const siteUrl = "https://oyoto.co.uk";
 export const siteName = "Oyoto";
 export const founderName = "James Mboma";
 export const contactEmail = "oyotostudios@outlook.com";
+export const contactMailto = `mailto:${contactEmail}?subject=${encodeURIComponent(
+  "Project enquiry for Oyoto"
+)}&body=${encodeURIComponent(`Hi Oyoto Team,
+
+I'm interested in working with Oyoto.
+
+Name:
+Company / project:
+Website or socials:
+
+What are you looking to build?
+
+What stage is the project at?
+
+Ideal timeline:
+Budget range:
+
+Anything else I should know?
+
+Thanks,`)}`;
 export const defaultOgImage = "/hero-images/meta_thumbnail.jpg";
+export const defaultCalLink = "james-mboma-kzbj0s/30min";
 
 export const socialLinks = [
   "https://github.com/mboma99",

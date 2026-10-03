@@ -1,100 +1,312 @@
-.layout {
-  min-height: 100vh;
-  background-color: #161616;
-  color: #ffffff;
-  overflow-x: hidden;
-}
-
 .page {
-  /* Match home page spacing */
-  padding: 5.5rem 10rem 2rem;
-  position: relative;
-  z-index: 10;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: calc(var(--header-h) + clamp(3rem, 8vw, 6rem)) var(--gutter) clamp(4rem, 10vw, 8rem);
 }
 
-.header {
+/* ─── Intro ─── */
+
+.intro {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 3rem;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.5rem;
+  margin-bottom: clamp(3rem, 7vw, 5.5rem);
 }
 
-.logo {
-  font-family: "Space Mono", monospace;
-  font-weight: 700;
-  letter-spacing: 0.5em;
-  text-transform: lowercase;
-  text-decoration: none;
-  color: white;
-  font-size: 1.5rem;
+.title {
+  font-family: var(--serif);
+  font-size: clamp(3.25rem, 9vw, 7.5rem);
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+  animation: rise 0.9s var(--ease-out) both;
 }
 
-.nav {
+.title em {
+  display: inline-block;
+  padding-bottom: 0.08em;
+  color: var(--accent);
+  font-style: italic;
+}
+
+.lead {
+  max-width: 44ch;
+  font-size: 1.05rem;
+  color: var(--muted);
+  animation: rise 0.9s var(--ease-out) 0.08s both;
+}
+
+.filters {
   display: flex;
-  gap: 3rem;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 0.75rem;
+  animation: rise 0.9s var(--ease-out) 0.16s both;
 }
 
-.nav a {
-  text-decoration: none;
-  color: white;
-  font-family: "Space Grotesk", sans-serif;
-  font-size: 1rem; /* Match home page */
-  letter-spacing: 0.12em; /* Match home page */
-  opacity: 0.8;
-  transition: opacity 0.3s ease;
+.pill {
+  padding: 0.55rem 1.1rem;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--muted);
+  font: inherit;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: background-color 0.3s var(--ease-out), color 0.3s var(--ease-out),
+    border-color 0.3s var(--ease-out), transform 0.2s var(--ease-out);
 }
 
-.nav a:hover {
-  opacity: 1;
+.pill:hover {
+  color: var(--text);
+  border-color: var(--text);
 }
 
-.content {
-  padding: 4rem 0;
+.pill[aria-pressed="true"] {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--on-accent);
 }
 
-.sectionTitle {
-  font-family: "Space Mono", monospace;
-  font-size: 0.8rem;
-  letter-spacing: 0.4em;
-  margin-bottom: 3rem;
-  opacity: 0.5;
-  text-transform: uppercase;
+.pill:active {
+  transform: scale(0.96);
 }
 
-.projectsGrid {
+/* ─── Index + plate ─── */
+
+.body {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 3rem;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: start;
 }
 
-@media (max-width: 1024px) {
-  .page {
-    padding: 5.5rem 4rem 2rem 8rem;
+.list {
+  list-style: none;
+  border-top: 1px solid var(--line);
+}
+
+.item {
+  animation: rise 0.8s var(--ease-out) both;
+  animation-delay: calc(var(--i) * 70ms + 0.2s);
+}
+
+.row {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-columns: 3rem minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: 1.5rem;
+  padding: clamp(1.5rem, 3vw, 2.25rem) 0;
+  border-bottom: 1px solid var(--line);
+}
+
+/* hover fill rises from the baseline like ink soaking in */
+.row::before {
+  content: "";
+  position: absolute;
+  inset: 0 calc(var(--gutter) * -0.5);
+  z-index: -1;
+  background: var(--paper);
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform 0.5s var(--ease-out);
+}
+
+.row[data-active="true"]::before {
+  transform: scaleY(1);
+}
+
+.rowNum {
+  font-family: var(--serif);
+  font-size: 1rem;
+  color: var(--faint);
+  font-variant-numeric: tabular-nums;
+}
+
+.rowMain {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  min-width: 0;
+}
+
+.rowTitle {
+  font-family: var(--serif);
+  font-size: clamp(1.9rem, 3.6vw, 3.1rem);
+  line-height: 1.05;
+  transition: color 0.35s var(--ease-out), transform 0.5s var(--ease-out);
+}
+
+.row[data-active="true"] .rowTitle {
+  color: var(--accent);
+  transform: translateX(8px);
+}
+
+.rowDesc {
+  max-width: 44ch;
+  font-size: 0.925rem;
+  color: var(--muted);
+}
+
+.rowMeta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.15rem;
+  font-size: 0.8rem;
+  color: var(--faint);
+  white-space: nowrap;
+}
+
+.rowArrow {
+  color: var(--faint);
+  transition: transform 0.45s var(--ease-out), color 0.3s var(--ease-out);
+}
+
+.row[data-active="true"] .rowArrow {
+  color: var(--accent);
+  transform: translate(3px, -3px);
+}
+
+.rowPlate {
+  display: none;
+}
+
+.plate {
+  position: sticky;
+  top: calc(var(--header-h) + 2rem);
+}
+
+.plateFrame {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border-radius: var(--radius);
+  background: var(--paper);
+  box-shadow:
+    6px 6px 0 var(--paper-raised),
+    12px 12px 0 var(--paper-edge);
+}
+
+.plateLayer {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transform: scale(1.06);
+  transition: opacity 0.6s var(--ease-out), transform 1.2s var(--ease-out);
+}
+
+.plateLayer[data-active="true"] {
+  opacity: 1;
+  transform: none;
+}
+
+.plateImage {
+  object-fit: cover;
+}
+
+.plateCaption {
+  margin-top: 1.5rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.empty {
+  padding: 3rem 0;
+  font-family: var(--serif);
+  font-size: 1.5rem;
+  color: var(--muted);
+}
+
+.emptyReset {
+  border: 0;
+  border-bottom: 1px solid var(--accent);
+  background: none;
+  color: var(--accent);
+  font: inherit;
+  cursor: pointer;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
   }
-  .projectsGrid {
-    gap: 2rem;
+  to {
+    opacity: 1;
+    transform: none;
   }
 }
 
-@media (max-width: 768px) {
-  .page {
-    padding: 5rem 1.5rem 2rem;
+/* ─── Phones: single column, plate under each row ─── */
+
+@media (max-width: 1023px) {
+  .row {
+    grid-template-columns: 2.25rem minmax(0, 1fr) auto;
   }
-  .header {
-    display: none; /* mobile top bar handles navigation */
+
+  .rowArrow {
+    display: none;
   }
-  .projectsGrid {
+}
+
+@media (max-width: 767px) {
+  .body {
     grid-template-columns: 1fr;
-    gap: 1.5rem;
+  }
+
+  .plate {
+    display: none;
+  }
+
+  .row {
+    grid-template-columns: 2rem minmax(0, 1fr);
+    gap: 0.5rem 1rem;
+  }
+
+  .rowMeta {
+    grid-column: 2;
+    flex-direction: row;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  .rowPlate {
+    display: block;
+    position: relative;
+    grid-column: 1 / -1;
+    aspect-ratio: 16 / 10;
+    margin-top: 0.75rem;
+    overflow: hidden;
+    border-radius: var(--radius);
+    background: var(--paper);
+  }
+
+  .row::before {
+    display: none;
   }
 }
 
-@media (max-width: 480px) {
-  .page {
-    padding: 5rem 1rem 2rem;
+@media (prefers-reduced-motion: reduce) {
+  .title,
+  .lead,
+  .filters,
+  .item {
+    animation: none;
   }
-  .sectionTitle {
-    font-size: 0.7rem;
-    letter-spacing: 0.2em;
+
+  .row::before,
+  .rowTitle,
+  .rowArrow,
+  .plateLayer {
+    transition: opacity 0.2s;
+  }
+
+  .row[data-active="true"] .rowTitle,
+  .row[data-active="true"] .rowArrow,
+  .plateLayer {
+    transform: none;
   }
 }

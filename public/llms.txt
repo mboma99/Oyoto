@@ -5,7 +5,6 @@
 ## Core URLs
 
 - Home: https://oyoto.co.uk/
-- About: https://oyoto.co.uk/about
 - Projects: https://oyoto.co.uk/projects
 - Resume: https://oyoto.co.uk/resume
 - Sitemap: https://oyoto.co.uk/sitemap.xml
@@ -23,9 +22,9 @@
 ## Case Studies
 
 - Congraduation: ecommerce photography platform for modern graduation ceremonies.
-- VengCity: custom ecommerce launch for a streetwear brand.
 - Trakr: AI-driven career intelligence and application tracking ecosystem.
-- The Well Church: digital presence and high-availability streaming ecosystem.
+- Lloyds Banking Group: data pipelines and AI summarisation for senior leadership reporting.
+- Nike: recommender and classification models driving member engagement.
 
 ## Contact
 
