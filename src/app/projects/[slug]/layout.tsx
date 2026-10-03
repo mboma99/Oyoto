@@ -3,8 +3,10 @@ import {
   createMetadata,
   getProjectBySlug,
   jsonLdScript,
+  projectBreadcrumbJsonLd,
   projectJsonLd,
 } from "@/lib/seo";
+import { titleCase } from "@/lib/text";
 
 type ProjectLayoutProps = Readonly<{
   children: React.ReactNode;
@@ -28,17 +30,10 @@ export async function generateMetadata({
   }
 
   return createMetadata({
-    title: `${project.title} Case Study`,
-    description: `${project.description} ${project.caseStudy.outcome}`,
+    title: `${titleCase(project.title)} Case Study`,
+    description: `${project.description} ${project.category} case study by Oyoto, ${project.year}.`,
     path: `/projects/${project.slug}`,
-    image: project.image,
-    keywords: [
-      project.title,
-      project.client,
-      project.role,
-      ...project.tags,
-      ...project.caseStudy.techStack,
-    ],
+    type: "article",
   });
 }
 
@@ -48,10 +43,12 @@ export default async function ProjectLayout({
 }: ProjectLayoutProps) {
   const { slug } = await params;
   const jsonLd = projectJsonLd(slug);
+  const breadcrumb = projectBreadcrumbJsonLd(slug);
 
   return (
     <>
       {jsonLd ? <script {...jsonLdScript(jsonLd)} /> : null}
+      {breadcrumb ? <script {...jsonLdScript(breadcrumb)} /> : null}
       {children}
     </>
   );

@@ -7,13 +7,11 @@ import Link from "next/link";
 import { ArrowUpRight } from "@phosphor-icons/react";
 import styles from "./page.module.css";
 import { projects } from "@/data/projects";
+import { titleCase } from "@/lib/text";
 import { PageTransition } from "@/components/PageTransition";
 
 const ALL = "All work";
 const filters = [ALL, ...Array.from(new Set(projects.map((p) => p.category)))];
-
-const titleCase = (s: string) =>
-  s.toLowerCase().replace(/(^|\s)(\S)/g, (_, space: string, ch: string) => space + ch.toUpperCase());
 
 /* The active filter lives in ?category= so it can be linked to and survives
    back/forward. Read it from window rather than useSearchParams, which would

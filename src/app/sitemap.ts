@@ -2,7 +2,8 @@ import type { MetadataRoute } from "next";
 import { absoluteUrl, defaultOgImage } from "@/lib/seo";
 import { projects } from "@/data/projects";
 
-const lastModified = new Date("2026-05-16");
+// Stamped at build; the site is static, so a deploy is the content change.
+const lastModified = new Date();
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticRoutes: MetadataRoute.Sitemap = [
