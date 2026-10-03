@@ -121,6 +121,13 @@
     grid-template-columns: 1fr auto;
   }
 
+  /* solid on phones: no content showing through the bar while scrolling */
+  .header::before {
+    background: var(--paper);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+
   .nav,
   .cta {
     display: none;
