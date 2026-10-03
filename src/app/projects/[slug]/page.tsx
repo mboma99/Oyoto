@@ -4,13 +4,11 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowUpRight } from "@phosphor-icons/react/ssr";
 import { projects } from "@/data/projects";
+import { titleCase } from "@/lib/text";
 import { PageTransition } from "@/components/PageTransition";
 import styles from "./page.module.css";
 
 const CHAPTER_WORDS = ["one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"];
-
-const titleCase = (s: string) =>
-  s.toLowerCase().replace(/(^|\s)(\S)/g, (_, space: string, ch: string) => space + ch.toUpperCase());
 
 export function generateStaticParams() {
   return projects.map((p) => ({ slug: p.slug }));

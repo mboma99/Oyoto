@@ -1,12 +1,12 @@
 import type { MetadataRoute } from "next";
-import { siteName } from "@/lib/seo";
+import { siteName, siteTagline } from "@/lib/seo";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Oyoto - Digital Product Development",
+    name: `${siteName} | ${siteTagline}`,
     short_name: siteName,
     description:
-      "UK digital product studio and software engineering portfolio by James Mboma.",
+      "UK studio building web, mobile and AI products, founded by software engineer James Mboma.",
     start_url: "/",
     display: "standalone",
     background_color: "#f3f3f3",
@@ -16,6 +16,11 @@ export default function manifest(): MetadataRoute.Manifest {
         src: "/favicon.ico",
         sizes: "any",
         type: "image/x-icon",
+      },
+      {
+        src: "/icon.svg",
+        sizes: "any",
+        type: "image/svg+xml",
       },
     ],
   };

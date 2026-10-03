@@ -7,6 +7,7 @@ import { ArrowLeft, ArrowRight, ArrowUpRight } from "@phosphor-icons/react";
 import { LogoMark } from "@/components/Logo";
 import PlateMedia from "@/components/PlateMedia";
 import { projects, type Project } from "@/data/projects";
+import { titleCase } from "@/lib/text";
 import { contactEmail, contactMailto } from "@/lib/seo";
 import styles from "./CaseBook.module.css";
 
@@ -18,9 +19,6 @@ type Spread =
   | { kind: "colophon"; id: string; label: string };
 
 const CHAPTER_WORDS = ["one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"];
-
-const titleCase = (s: string) =>
-  s.toLowerCase().replace(/(^|\s)(\S)/g, (_, space: string, ch: string) => space + ch.toUpperCase());
 
 const spreads: Spread[] = [
   { kind: "contents", id: "contents", label: "Contents" },
@@ -87,7 +85,7 @@ function LeftPage({ spread, index, reveal }: PageProps) {
             ecommerce launches to AI products in closed beta.
           </p>
           <Link href="/contact" className={styles.textLink}>
-            Start a project <ArrowUpRight size={14} weight="regular" aria-hidden="true" />
+            Contact <ArrowUpRight size={14} weight="regular" aria-hidden="true" />
           </Link>
         </div>
         <span className={styles.folio}>{leftFolio(index)}</span>

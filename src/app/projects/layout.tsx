@@ -1,18 +1,11 @@
 import type { Metadata } from "next";
-import { createMetadata } from "@/lib/seo";
+import { createMetadata, jsonLdScript, projectListJsonLd } from "@/lib/seo";
 
 export const metadata: Metadata = createMetadata({
   title: "Projects",
   description:
-    "Explore Oyoto case studies across ecommerce, AI career intelligence, digital strategy, web platforms, mobile apps, and cloud-backed product engineering.",
+    "Case studies from Oyoto: AI career tracking, machine learning at Nike, data and AI reporting at Lloyds Banking Group, and ecommerce.",
   path: "/projects",
-  image: "/hero-images/congraduation-new.jpg",
-  keywords: [
-    "Oyoto projects",
-    "software case studies",
-    "AI career intelligence",
-    "ecommerce development portfolio",
-  ],
 });
 
 export default function ProjectsLayout({
@@ -20,5 +13,10 @@ export default function ProjectsLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return children;
+  return (
+    <>
+      <script {...jsonLdScript(projectListJsonLd())} />
+      {children}
+    </>
+  );
 }

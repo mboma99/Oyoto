@@ -5,12 +5,13 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { Cursor } from "@/components/Cursor";
 import {
-  contactEmail,
   createMetadata,
   founderName,
   jsonLdScript,
+  siteDescription,
   siteJsonLd,
   siteName,
+  siteTagline,
   siteUrl,
 } from "@/lib/seo";
 
@@ -20,23 +21,14 @@ export const metadata: Metadata = {
   authors: [{ name: founderName, url: siteUrl }],
   creator: founderName,
   publisher: siteName,
-  category: "Digital product development",
-  classification: "Software engineering portfolio and digital product studio",
+  category: "technology",
   ...createMetadata({
-    title: "Oyoto · Build your digital presence",
-    description:
-      "Oyoto is a UK digital product studio founded by software engineer James Mboma, building full-stack platforms, AI integrations, mobile apps, and cloud systems.",
+    description: siteDescription,
     path: "/",
-    keywords: [
-      "digital product studio",
-      "software portfolio",
-      "AI product development",
-      "portfolio of James Mboma",
-    ],
   }),
   title: {
-    default: "Oyoto · Build your digital presence",
-    template: "%s · Oyoto",
+    default: `${siteName} | ${siteTagline}`,
+    template: `%s | ${siteName}`,
   },
   robots: {
     index: true,
@@ -54,11 +46,6 @@ export const metadata: Metadata = {
     address: false,
     telephone: false,
   },
-  other: {
-    "contact:email": contactEmail,
-    "ai-purpose":
-      "Portfolio and digital product studio website for software engineering, cloud architecture, AI integration, mobile apps, and case studies.",
-  },
 };
 
 const serif = DM_Serif_Display({
@@ -75,7 +62,7 @@ const sans = DM_Sans({
 
 export const viewport: Viewport = {
   themeColor: "#f3f3f3",
-  colorScheme: "dark",
+  colorScheme: "light",
 };
 
 export default function RootLayout({
