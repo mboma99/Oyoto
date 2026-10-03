@@ -84,25 +84,35 @@ function resumeFilm(src: string) {
   return ref;
 }
 
-/* A still copy shows where the film got to and never loads or plays, so it
-   can't disturb the playhead the live copy will resume from. */
-const showLastFrame = (src: string) => (video: HTMLVideoElement | null) => {
-  const frame = video && playheads.get(src)?.frame;
-  if (frame) video.poster = frame;
-};
+const filmProps = (src: string, priority?: boolean) =>
+  ({
+    ref: resumeFilm(src),
+    src,
+    autoPlay: true,
+    muted: true,
+    loop: true,
+    playsInline: true,
+    preload: priority ? "auto" : "metadata",
+  }) as const;
 
-const filmProps = (src: string, priority?: boolean, still?: boolean) =>
-  still
-    ? ({ ref: showLastFrame(src), src, muted: true, playsInline: true, preload: "none" } as const)
-    : ({
-        ref: resumeFilm(src),
-        src,
-        autoPlay: true,
-        muted: true,
-        loop: true,
-        playsInline: true,
-        preload: priority ? "auto" : "metadata",
-      } as const);
+/* A still copy is a plain image of where the film got to: it never loads or
+   plays, so it can't disturb the playhead the live copy will resume from, and
+   it's no <video> on the turning leaf (Safari draws video layers through
+   backface-visibility: hidden, and flickers re-compositing them in 3D). The
+   frame is read in the ref, after the live copy it replaces has saved it. */
+function FilmStill({ src, poster, className, style }: {
+  src: string;
+  poster: string;
+  className?: string;
+  style?: React.CSSProperties;
+}) {
+  const showLastFrame = (img: HTMLImageElement | null) => {
+    const frame = img && playheads.get(src)?.frame;
+    if (frame) img.src = frame;
+  };
+  // eslint-disable-next-line @next/next/no-img-element -- a data: URL frame, not an optimisable asset
+  return <img ref={showLastFrame} src={poster} alt="" className={className} style={style} />;
+}
 
 /* A project's plate. Screen recordings sit whole in phone shells, side by
    side; any other film fills the plate the way <Image fill> does; otherwise
@@ -126,12 +136,16 @@ export default function PlateMedia({ project, alt, sizes, className, priority, s
       >
         {project.phones.map((phone) => (
           <div key={phone.video} className={styles.phone}>
-            <video
-              className={styles.screen}
-              poster={phone.poster}
-              aria-label={alt ? `${phone.label} screen recording` : undefined}
-              {...filmProps(phone.video, priority, still)}
-            />
+            {still ? (
+              <FilmStill src={phone.video} poster={phone.poster} className={styles.screen} />
+            ) : (
+              <video
+                className={styles.screen}
+                poster={phone.poster}
+                aria-label={alt ? `${phone.label} screen recording` : undefined}
+                {...filmProps(phone.video, priority)}
+              />
+            )}
           </div>
         ))}
       </div>
@@ -139,6 +153,16 @@ export default function PlateMedia({ project, alt, sizes, className, priority, s
   }
 
   if (project.video && !reduceMotion) {
+    if (still) {
+      return (
+        <FilmStill
+          src={project.video}
+          poster={project.image}
+          className={`${styles.fill} ${className ?? ""}`}
+          style={{ objectPosition: "center" }}
+        />
+      );
+    }
     return (
       <video
         className={`${styles.fill} ${className ?? ""}`}
@@ -147,7 +171,7 @@ export default function PlateMedia({ project, alt, sizes, className, priority, s
         poster={project.image}
         aria-label={alt || undefined}
         aria-hidden={alt ? undefined : true}
-        {...filmProps(project.video, priority, still)}
+        {...filmProps(project.video, priority)}
       />
     );
   }

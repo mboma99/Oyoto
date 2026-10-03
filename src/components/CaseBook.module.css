@@ -24,15 +24,20 @@
   white-space: nowrap;
 }
 
+/* The book itself stays flat. Only the two things that actually turn (the
+   leaf and the cover) are 3D, and each takes its perspective from its direct
+   parent (.book, .stage), so no preserve-3d chain runs down from the shell.
+   Switching that chain on and off around every turn made Safari rebuild its
+   layers and flash a blank frame as the page landed; flat pages also keep
+   their text crisp. */
 .stageWrap {
   width: min(100%, 1200px, (100dvh - var(--header-h) - 190px) * 1.6);
-  transform-style: preserve-3d;
 }
 
 .stage {
   position: relative;
   aspect-ratio: 1.6;
-  transform-style: preserve-3d;
+  perspective: 2200px;
   transition: transform 1.1s var(--ease-turn);
 }
 
@@ -48,18 +53,9 @@
   inset: 0;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  transform-style: preserve-3d;
+  perspective: 2200px;
   touch-action: pan-y;
   transition: opacity 0.7s var(--ease-out) 0.35s, transform 1.1s var(--ease-out);
-}
-
-/* An open, idle book drops out of 3D entirely so the browser draws its text
-   crisply instead of as a texture on a 3D plane; the chain comes back for
-   the length of each page turn. */
-.stageWrap:has(> .stage[data-cover="open"][data-turning="false"]),
-.stage[data-cover="open"][data-turning="false"],
-.stage[data-cover="open"][data-turning="false"] .book {
-  transform-style: flat;
 }
 
 .stage[data-cover="closed"] .book {
@@ -605,6 +601,7 @@
   container-type: inline-size;
   transform-origin: left center;
   transform-style: preserve-3d;
+  transform: rotateY(0deg);
   transition: transform 0.6s var(--ease-out);
 }
 
@@ -873,7 +870,6 @@
     height: 14px;
     border-radius: 7px;
     background: var(--spine);
-    transform: translateZ(2px);
     pointer-events: none;
   }
 
@@ -886,7 +882,6 @@
     left: calc(4% + 14px);
     right: calc(4% + 14px);
     border-top: 4px dotted var(--ink);
-    transform: translateZ(3px);
     pointer-events: none;
   }
 
@@ -926,6 +921,7 @@
 
   .cover {
     transform-origin: center top;
+    transform: rotateX(0deg);
   }
 
   .stage[data-cover="closed"] .cover:hover,

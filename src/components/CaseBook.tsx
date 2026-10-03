@@ -249,6 +249,12 @@ function SinglePage(props: PageProps) {
 
 type Turn = { dir: "next" | "prev"; from: number; to: number };
 type CoverState = "closed" | "opening" | "open";
+/* Which spread each base half is revealing (its content rises in, its plate
+   wipes up). It outlives the turn on purpose: the reveal runs ~1.6s but the
+   turn lands at 0.95s, and dropping the class mid-animation snapped the plate
+   and text to their end state (and made Safari redraw the film). It's only
+   replaced when the next turn starts, by which point the animations are done. */
+type Reveal = { left?: number; right?: number; single?: number } | null;
 
 export function CaseBook() {
   const reduceMotion = useReducedMotion();
@@ -256,6 +262,7 @@ export function CaseBook() {
   const [cover, setCover] = useState<CoverState>("closed");
   const [current, setCurrent] = useState(0);
   const [turn, setTurn] = useState<Turn | null>(null);
+  const [reveal, setReveal] = useState<Reveal>(null);
   const bookRef = useRef<HTMLDivElement | null>(null);
   const statusRef = useRef<HTMLParagraphElement | null>(null);
   const swipeStart = useRef<number | null>(null);
@@ -291,6 +298,7 @@ export function CaseBook() {
       setCover("open");
       return;
     }
+    setReveal({ left: 0, right: 0, single: 0 });
     setCover("opening");
   };
 
@@ -301,7 +309,9 @@ export function CaseBook() {
         setCurrent(to);
         return;
       }
-      setTurn({ dir: to > current ? "next" : "prev", from: current, to });
+      const dir = to > current ? "next" : "prev";
+      setReveal(dir === "next" ? { right: to, single: to } : { left: to });
+      setTurn({ dir, from: current, to });
     },
     [isOpen, turn, current, reduceMotion]
   );
@@ -379,8 +389,8 @@ export function CaseBook() {
      going back, the previous sheet drops down over the current one. */
   const baseSingle = turn ? (turn.dir === "next" ? turn.to : turn.from) : current;
   const leafSingle = turn ? (turn.dir === "next" ? turn.from : turn.to) : current;
-  const revealLeft = (!!turn && turn.dir === "prev") || cover === "opening";
-  const revealRight = (!!turn && turn.dir === "next") || cover === "opening";
+  const revealLeft = reveal?.left === baseLeft;
+  const revealRight = reveal?.right === baseRight;
 
   return (
     <section className={styles.shell} aria-label="Selected work">
@@ -392,7 +402,7 @@ export function CaseBook() {
         onPointerMove={handlePointerMove}
         onPointerLeave={resetTilt}
       >
-        <div className={styles.stage} data-cover={cover} data-turning={!!turn}>
+        <div className={styles.stage} data-cover={cover}>
           <div
             ref={bookRef}
             className={styles.book}
@@ -409,7 +419,7 @@ export function CaseBook() {
                   key={spreads[baseSingle].id}
                   spread={spreads[baseSingle]}
                   index={baseSingle}
-                  reveal={turn?.dir === "next" || cover === "opening"}
+                  reveal={reveal?.single === baseSingle}
                   onJump={jump}
                 />
               </div>
