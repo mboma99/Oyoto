@@ -30,8 +30,156 @@
    Switching that chain on and off around every turn made Safari rebuild its
    layers and flash a blank frame as the page landed; flat pages also keep
    their text crisp. */
-.stageWrap {
+.desk {
+  position: relative;
   width: min(100%, 1200px, (100dvh - var(--header-h) - 190px) * 1.6);
+}
+
+.stageWrap {
+  width: 100%;
+}
+
+/* ─── Jacket flaps (wide screens, closed book only) ───
+   The closed cover is the middle half of .desk, so each flap sits just
+   outside it, top and bottom aligned with the cover. */
+
+.flap {
+  display: none;
+}
+
+@media (min-width: 1100px) {
+  .flap {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 15rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 2rem;
+    padding: 1.5rem 0;
+    transition: opacity 0.5s var(--ease-out), transform 0.8s var(--ease-out);
+  }
+
+  .flapLeft {
+    right: calc(75% + clamp(2rem, 4vw, 4.5rem));
+  }
+
+  .flapRight {
+    left: calc(75% + clamp(2rem, 4vw, 4.5rem));
+  }
+
+  .flap[data-visible="false"] {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .flapLeft[data-visible="false"] {
+    transform: translateX(-24px);
+  }
+
+  .flapRight[data-visible="false"] {
+    transform: translateX(24px);
+  }
+}
+
+.flapEyebrow {
+  padding-bottom: 0.9rem;
+  border-bottom: 1px solid var(--line);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+
+.flapBody {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.flapTitle {
+  font-family: var(--serif);
+  font-size: clamp(1.6rem, 2.1vw, 2.1rem);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  color: var(--text);
+}
+
+.flapTitle em {
+  color: var(--accent);
+}
+
+.flapText {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+.flapCta {
+  align-self: flex-start;
+  padding: 0.75em 1.6em;
+  border-radius: 999px;
+  background: var(--cta);
+  color: var(--on-cta);
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background-color 0.3s var(--ease-out), transform 0.2s var(--ease-out);
+}
+
+.flapCta:hover {
+  background: var(--cta-hi);
+}
+
+.flapCta:active {
+  transform: scale(0.97);
+}
+
+.flapList {
+  list-style: none;
+  margin-block: auto;
+}
+
+.flapList li + li {
+  border-top: 1px solid var(--line);
+}
+
+.flapRow {
+  display: grid;
+  grid-template-columns: 2rem 1fr;
+  row-gap: 0.15rem;
+  padding: 0.85rem 0;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.flapNum {
+  grid-row: span 2;
+  padding-top: 0.2rem;
+  font-size: 0.75rem;
+  color: var(--faint);
+  font-variant-numeric: tabular-nums;
+}
+
+.flapName {
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  transition: color 0.3s var(--ease-out);
+}
+
+.flapRow:hover .flapName {
+  color: var(--accent);
+}
+
+.flapMeta {
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+/* .textLink sizes in cqi for the pages; out here there's no page container */
+.flap .textLink {
+  font-size: 0.875rem;
 }
 
 .stage {
@@ -814,7 +962,7 @@
     justify-content: flex-start;
   }
 
-  .stageWrap {
+  .desk {
     width: 100%;
   }
 
@@ -1027,7 +1175,8 @@
   .book,
   .cover,
   .controls,
-  .hint {
+  .hint,
+  .flap {
     transition: none;
   }
 

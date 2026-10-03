@@ -396,111 +396,158 @@ export function CaseBook() {
     <section className={styles.shell} aria-label="Selected work">
       <h1 className={styles.srOnly}>Oyotō, a digital product studio: selected work</h1>
 
-      <motion.div
-        className={styles.stageWrap}
-        style={{ rotateX, rotateY }}
-        onPointerMove={handlePointerMove}
-        onPointerLeave={resetTilt}
-      >
-        <div className={styles.stage} data-cover={cover}>
-          <div
-            ref={bookRef}
-            className={styles.book}
-            inert={!isOpen}
-            onPointerDown={onPointerDown}
-            onPointerUp={onPointerUp}
-            onPointerCancel={() => (swipeStart.current = null)}
-          >
-            <span className={styles.spine} aria-hidden="true" />
+      <div className={styles.desk}>
+        {/* Jacket flaps: a studio note and the volume's chapters either side of
+            the closed cover, filling the desk until the book opens over them. */}
+        <aside
+          className={`${styles.flap} ${styles.flapLeft}`}
+          data-visible={cover === "closed"}
+          inert={cover !== "closed"}
+          aria-label="About the studio"
+        >
+          <span className={styles.flapEyebrow}>Oyotō</span>
+          <div className={styles.flapBody}>
+            <p className={styles.flapTitle}>
+              Web, mobile and AI products, <em>built to last.</em>
+            </p>
+            <p className={styles.flapText}>
+              A UK digital product studio for founders and teams, from first launch to scale.
+            </p>
+          </div>
+          <Link href="/contact" className={styles.flapCta}>
+            Contact
+          </Link>
+        </aside>
 
-            {isNarrow ? (
-              <div className={styles.page}>
-                <SinglePage
-                  key={spreads[baseSingle].id}
-                  spread={spreads[baseSingle]}
-                  index={baseSingle}
-                  reveal={reveal?.single === baseSingle}
-                  onJump={jump}
-                />
-              </div>
-            ) : (
-              <>
-                <div className={`${styles.page} ${styles.leftPage}`}>
-                  <LeftPage
-                    key={`${spreads[baseLeft].id}-l`}
-                    spread={spreads[baseLeft]}
-                    index={baseLeft}
-                    reveal={revealLeft}
-                  />
-                </div>
-                <div className={`${styles.page} ${styles.rightPage}`}>
-                  <RightPage
-                    key={`${spreads[baseRight].id}-r`}
-                    spread={spreads[baseRight]}
-                    index={baseRight}
-                    reveal={revealRight}
+        <aside
+          className={`${styles.flap} ${styles.flapRight}`}
+          data-visible={cover === "closed"}
+          inert={cover !== "closed"}
+          aria-label="In this volume"
+        >
+          <span className={styles.flapEyebrow}>In this volume</span>
+          <ol className={styles.flapList}>
+            {projects.map((project, i) => (
+              <li key={project.slug}>
+                <Link href={`/projects/${project.slug}`} className={styles.flapRow}>
+                  <span className={styles.flapNum}>{String(i + 1).padStart(2, "0")}</span>
+                  <span className={styles.flapName}>{titleCase(project.title)}</span>
+                  <span className={styles.flapMeta}>{project.category}</span>
+                </Link>
+              </li>
+            ))}
+          </ol>
+          <Link href="/projects" className={styles.textLink}>
+            Browse every project <ArrowUpRight size={14} weight="regular" aria-hidden="true" />
+          </Link>
+        </aside>
+
+        <motion.div
+          className={styles.stageWrap}
+          style={{ rotateX, rotateY }}
+          onPointerMove={handlePointerMove}
+          onPointerLeave={resetTilt}
+        >
+          <div className={styles.stage} data-cover={cover}>
+            <div
+              ref={bookRef}
+              className={styles.book}
+              inert={!isOpen}
+              onPointerDown={onPointerDown}
+              onPointerUp={onPointerUp}
+              onPointerCancel={() => (swipeStart.current = null)}
+            >
+              <span className={styles.spine} aria-hidden="true" />
+
+              {isNarrow ? (
+                <div className={styles.page}>
+                  <SinglePage
+                    key={spreads[baseSingle].id}
+                    spread={spreads[baseSingle]}
+                    index={baseSingle}
+                    reveal={reveal?.single === baseSingle}
                     onJump={jump}
                   />
                 </div>
-              </>
-            )}
+              ) : (
+                <>
+                  <div className={`${styles.page} ${styles.leftPage}`}>
+                    <LeftPage
+                      key={`${spreads[baseLeft].id}-l`}
+                      spread={spreads[baseLeft]}
+                      index={baseLeft}
+                      reveal={revealLeft}
+                    />
+                  </div>
+                  <div className={`${styles.page} ${styles.rightPage}`}>
+                    <RightPage
+                      key={`${spreads[baseRight].id}-r`}
+                      spread={spreads[baseRight]}
+                      index={baseRight}
+                      reveal={revealRight}
+                      onJump={jump}
+                    />
+                  </div>
+                </>
+              )}
 
-            {turn && (
-              <div
-                className={`${styles.leaf} ${turn.dir === "next" ? styles.leafNext : styles.leafPrev}`}
-                onAnimationEnd={finishTurn}
-                aria-hidden="true"
+              {turn && (
+                <div
+                  className={`${styles.leaf} ${turn.dir === "next" ? styles.leafNext : styles.leafPrev}`}
+                  onAnimationEnd={finishTurn}
+                  aria-hidden="true"
+                >
+                  <div className={`${styles.leafFace} ${styles.leafFront}`}>
+                    {isNarrow ? (
+                      <SinglePage spread={spreads[leafSingle]} index={leafSingle} still />
+                    ) : turn.dir === "next" ? (
+                      <RightPage spread={spreads[turn.from]} index={turn.from} still />
+                    ) : (
+                      <LeftPage spread={spreads[turn.from]} index={turn.from} />
+                    )}
+                    <span className={styles.shadeFront} />
+                  </div>
+                  <div className={`${styles.leafFace} ${styles.leafBack}`}>
+                    {isNarrow ? null : turn.dir === "next" ? (
+                      <LeftPage spread={spreads[turn.to]} index={turn.to} />
+                    ) : (
+                      <RightPage spread={spreads[turn.to]} index={turn.to} still />
+                    )}
+                    <span className={styles.shadeBack} />
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {cover !== "open" && (
+              <button
+                type="button"
+                className={styles.cover}
+                onClick={openBook}
+                onAnimationEnd={finishOpening}
+                aria-label="Open the book of selected work"
+                disabled={cover === "opening"}
               >
-                <div className={`${styles.leafFace} ${styles.leafFront}`}>
-                  {isNarrow ? (
-                    <SinglePage spread={spreads[leafSingle]} index={leafSingle} still />
-                  ) : turn.dir === "next" ? (
-                    <RightPage spread={spreads[turn.from]} index={turn.from} still />
-                  ) : (
-                    <LeftPage spread={spreads[turn.from]} index={turn.from} />
-                  )}
-                  <span className={styles.shadeFront} />
-                </div>
-                <div className={`${styles.leafFace} ${styles.leafBack}`}>
-                  {isNarrow ? null : turn.dir === "next" ? (
-                    <LeftPage spread={spreads[turn.to]} index={turn.to} />
-                  ) : (
-                    <RightPage spread={spreads[turn.to]} index={turn.to} still />
-                  )}
-                  <span className={styles.shadeBack} />
-                </div>
-              </div>
-            )}
-          </div>
-
-          {cover !== "open" && (
-            <button
-              type="button"
-              className={styles.cover}
-              onClick={openBook}
-              onAnimationEnd={finishOpening}
-              aria-label="Open the book of selected work"
-              disabled={cover === "opening"}
-            >
-              <span className={`${styles.coverFace} ${styles.coverFront}`}>
-                <LogoMark className={styles.coverMark} />
-                <span className={styles.coverTitle}>
-                  Define your <em>future</em>
-                </span>
-                <span className={styles.coverFoot}>
-                  <span>Selected work, 2021-2026</span>
-                  <span className={styles.coverPrompt}>
-                    Open the book <ArrowRight size={14} weight="regular" aria-hidden="true" />
+                <span className={`${styles.coverFace} ${styles.coverFront}`}>
+                  <LogoMark className={styles.coverMark} />
+                  <span className={styles.coverTitle}>
+                    Define your <em>future</em>
+                  </span>
+                  <span className={styles.coverFoot}>
+                    <span>Selected work, 2021-2026</span>
+                    <span className={styles.coverPrompt}>
+                      Open the book <ArrowRight size={14} weight="regular" aria-hidden="true" />
+                    </span>
                   </span>
                 </span>
-              </span>
-              <span className={`${styles.coverFace} ${styles.coverInside}`} aria-hidden="true">
-                <LogoMark className={styles.insideMark} />
-              </span>
-            </button>
-          )}
-        </div>
-      </motion.div>
+                <span className={`${styles.coverFace} ${styles.coverInside}`} aria-hidden="true">
+                  <LogoMark className={styles.insideMark} />
+                </span>
+              </button>
+            )}
+          </div>
+        </motion.div>
+      </div>
 
       <div className={styles.controls} data-visible={isOpen}>
         <button
