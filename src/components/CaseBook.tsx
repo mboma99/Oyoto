@@ -414,9 +414,6 @@ export function CaseBook() {
               A UK digital product studio for founders and teams, from first launch to scale.
             </p>
           </div>
-          <Link href="/contact" className={styles.flapCta}>
-            Contact
-          </Link>
         </aside>
 
         <aside
@@ -437,9 +434,6 @@ export function CaseBook() {
               </li>
             ))}
           </ol>
-          <Link href="/projects" className={styles.textLink}>
-            Browse every project <ArrowUpRight size={14} weight="regular" aria-hidden="true" />
-          </Link>
         </aside>
 
         <motion.div

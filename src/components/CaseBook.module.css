@@ -93,6 +93,7 @@
 }
 
 .flapBody {
+  margin-block: auto;
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -114,26 +115,6 @@
   font-size: 0.9rem;
   line-height: 1.6;
   color: var(--muted);
-}
-
-.flapCta {
-  align-self: flex-start;
-  padding: 0.75em 1.6em;
-  border-radius: 999px;
-  background: var(--cta);
-  color: var(--on-cta);
-  font-size: 0.875rem;
-  font-weight: 600;
-  text-decoration: none;
-  transition: background-color 0.3s var(--ease-out), transform 0.2s var(--ease-out);
-}
-
-.flapCta:hover {
-  background: var(--cta-hi);
-}
-
-.flapCta:active {
-  transform: scale(0.97);
 }
 
 .flapList {
@@ -175,11 +156,6 @@
 .flapMeta {
   font-size: 0.8rem;
   color: var(--muted);
-}
-
-/* .textLink sizes in cqi for the pages; out here there's no page container */
-.flap .textLink {
-  font-size: 0.875rem;
 }
 
 .stage {
