@@ -53,6 +53,17 @@ export default async function ProjectCaseStudy({
             <em>{tail}</em>
           </h1>
           <p className={styles.lead}>{project.description}</p>
+          {project.liveUrl && (
+            <a
+              href={project.liveUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.live}
+            >
+              Visit the live site
+              <ArrowUpRight size={16} weight="regular" aria-hidden="true" />
+            </a>
+          )}
         </header>
 
         <dl className={styles.meta}>

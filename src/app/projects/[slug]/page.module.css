@@ -67,6 +67,32 @@
   animation: rise 1s var(--ease-out) 0.16s both;
 }
 
+.live {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+  padding: 0.6rem 1.1rem;
+  border-radius: 999px;
+  background: var(--cta);
+  color: var(--on-cta);
+  font-size: 0.9rem;
+  transition: background 0.3s var(--ease-out);
+  animation: rise 1s var(--ease-out) 0.2s both;
+}
+
+.live:hover {
+  background: var(--cta-hi);
+}
+
+.live svg {
+  transition: transform 0.4s var(--ease-out);
+}
+
+.live:hover svg {
+  transform: translate(2px, -2px);
+}
+
 .meta {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -272,6 +298,7 @@
   .chapter,
   .title,
   .lead,
+  .live,
   .meta {
     animation: none;
   }

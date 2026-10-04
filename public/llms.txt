@@ -25,7 +25,7 @@
 - [Trakr](https://oyoto.co.uk/projects/trakr): AI-driven career intelligence and application tracking, in closed beta.
 - [Lloyds Banking Group](https://oyoto.co.uk/projects/lloyds-banking-group): data pipelines and AI summarisation behind senior leadership reporting.
 - [Nike](https://oyoto.co.uk/projects/nike): recommender and classification models driving member engagement.
-- [Congraduation](https://oyoto.co.uk/projects/congraduation): ecommerce photography platform for graduation ceremonies.
+- [River Life Church](https://oyoto.co.uk/projects/river-life-church): website and self-managed content for a church family in Bulwell, Nottingham.
 
 ## Contact
 

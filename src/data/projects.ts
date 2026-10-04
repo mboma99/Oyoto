@@ -17,6 +17,8 @@ export interface Project {
   }[];
   /** The recordings' width / height, so each shell matches exactly. */
   screenRatio?: number;
+  /** Public URL of the shipped product, when there is one to visit. */
+  liveUrl?: string;
   category: string;
   tags: string[];
   year: string;
@@ -97,21 +99,22 @@ export const projects: Project[] = [
   },
   {
     id: "1",
-    slug: "congraduation",
-    title: "CONGRADUATION",
-    description: "An ecommerce platform for buying and downloading graduation photos.",
-    image: "/hero-images/congraduation-new.jpg",
-    category: "Ecommerce",
-    tags: ["REACT", "FASTAPI", "POSTGRESQL", "ECOMMERCE"],
-    year: "2024",
-    client: "Development Project",
-    role: "Full-stack Development Team",
+    slug: "river-life-church",
+    title: "RIVER LIFE CHURCH",
+    description: "A new home online for a church family in Bulwell, Nottingham.",
+    image: "/projects/riverlife.jpg",
+    liveUrl: "https://riverlifechurch.netlify.app/",
+    category: "Web",
+    tags: ["NEXT.JS", "CMS", "NETLIFY", "COMMUNITY"],
+    year: "2026",
+    client: "River Life Church",
+    role: "Design & Development",
     caseStudy: {
-      overview: "Congraduation is a modern web-based ecommerce platform developed by our team as a modern alternative in the graduation photography market. It focuses on the digital distribution of memories, allowing graduates and guests to easily search, view, and purchase digital copies of their graduation photos.",
-      challenge: "The existing market was dominated by legacy providers with outdated platforms that failed to meet modern expectations, such as charging exorbitant fees for physical CDs and lacking support for direct digital downloads, creating significant friction for a social-media-driven generation.",
-      solution: "We built a user-centric ecommerce photography platform that prioritizes digital accessibility. By reducing the friction between photo acquisition and device download, we let graduates claim their photos and share them straight away.",
-      outcome: "A fast platform that gives graduates a real alternative to legacy providers, with fair pricing for digital photos and a modern, straightforward checkout.",
-      techStack: ["React", "FastAPI", "PostgreSQL", "Tailwind CSS", "AWS S3", "SQLAlchemy", "Pydantic", "Uvicorn"],
+      overview: "River Life Church, formerly The Well Church, is a Spirit-filled church family in Bulwell, Nottingham. The new name marked a new season for the church, and it needed a website to match: somewhere newcomers could find out when and where to come, and the congregation could keep up with church life through the week.",
+      challenge: "The site had to welcome first-time visitors and serve regular members at once. Notices change every week, services are streamed online, and the people keeping it current are pastors and volunteers rather than developers, so every update had to be possible without touching code.",
+      solution: "We designed and built a fast Next.js site around the church's own photography, with the essentials (service time, address and directions) up front. A content manager lets the team publish weekly notices and events themselves, a live-stream countdown switches to a 'we're live' banner during Sunday services, and recent videos come straight from the church's YouTube channel.",
+      outcome: "River Life now has a warm, modern front door that tells newcomers exactly where to be on a Sunday, and a site the church team keeps up to date themselves each week.",
+      techStack: ["Next.js", "React", "TypeScript", "Netlify", "Netlify CMS", "YouTube", "Google Analytics"],
     },
   },
 ];
