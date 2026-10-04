@@ -8,12 +8,11 @@ import { Logo } from "@/components/Logo";
 import styles from "./SiteHeader.module.css";
 
 const links = [
+  { href: "/services", label: "Services" },
   { href: "/projects", label: "Projects" },
-  { href: "/resume", label: "Resume" },
 ];
 
 const socials = [
-  { href: "https://github.com/mboma99", label: "GitHub" },
   { href: "https://www.linkedin.com/in/james-mboma/", label: "LinkedIn" },
 ];
 

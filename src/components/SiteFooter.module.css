@@ -86,6 +86,15 @@
   color: var(--faint);
 }
 
+.base a {
+  color: inherit;
+  transition: color 0.3s var(--ease-out);
+}
+
+.base a:hover {
+  color: var(--accent);
+}
+
 @media (max-width: 767px) {
   .top {
     grid-template-columns: 1fr;

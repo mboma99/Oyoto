@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from "react";
 import Link from "next/link";
 import { motion, useMotionValue, useReducedMotion, useSpring } from "framer-motion";
-import { ArrowLeft, ArrowRight, ArrowUpRight } from "@phosphor-icons/react";
+import { ArrowDown, ArrowLeft, ArrowRight, ArrowUpRight } from "@phosphor-icons/react";
 import { LogoMark } from "@/components/Logo";
 import PlateMedia from "@/components/PlateMedia";
 import { projects, type Project } from "@/data/projects";
@@ -207,8 +207,8 @@ function RightPage({ spread, index, reveal, onJump, still }: PageProps) {
       <RunningHead left="Elsewhere" right="Oyotō" />
       <ul className={styles.elsewhere}>
         {[
-          { href: "/resume", label: "Resume" },
-          { href: "https://github.com/mboma99", label: "GitHub", external: true },
+          { href: "/services", label: "Services" },
+          { href: "/projects", label: "All projects" },
           { href: "https://www.linkedin.com/in/james-mboma/", label: "LinkedIn", external: true },
         ].map((item) => (
           <li key={item.href}>
@@ -239,6 +239,30 @@ function SinglePage(props: PageProps) {
     <div className={styles.single}>
       {plateFirst ? <RightPage {...props} /> : <LeftPage {...props} />}
       {plateFirst ? <LeftPage {...props} /> : <RightPage {...props} />}
+    </div>
+  );
+}
+
+/** What the studio does and how to start: the left flap on wide screens,
+    and a block above the book everywhere else. */
+function Pitch() {
+  return (
+    <div className={styles.pitch}>
+      <p className={styles.flapTitle}>
+        We design and build <em>web, mobile and AI products.</em>
+      </p>
+      <p className={styles.flapText}>
+        A UK product studio for founders and teams, from first launch to scale, with work
+        for Nike and Lloyds Banking Group.
+      </p>
+      <div className={styles.pitchActions}>
+        <Link href="/contact" className={styles.pitchCta}>
+          Book a call
+        </Link>
+        <a href="#work" className={styles.pitchLink}>
+          See the work <ArrowDown size={14} weight="regular" aria-hidden="true" />
+        </a>
+      </div>
     </div>
   );
 }
@@ -394,6 +418,10 @@ export function CaseBook() {
     <section className={styles.shell} aria-label="Selected work">
       <h1 className={styles.srOnly}>Oyotō, a digital product studio: selected work</h1>
 
+      <div className={styles.intro}>
+        <Pitch />
+      </div>
+
       <div className={styles.desk}>
         {/* Jacket flaps: a studio note and the volume's chapters either side of
             the closed cover, filling the desk until the book opens over them. */}
@@ -405,12 +433,7 @@ export function CaseBook() {
         >
           <span className={styles.flapEyebrow}>Oyotō</span>
           <div className={styles.flapBody}>
-            <p className={styles.flapTitle}>
-              Web, mobile and AI products, <em>built to last.</em>
-            </p>
-            <p className={styles.flapText}>
-              A UK digital product studio for founders and teams, from first launch to scale.
-            </p>
+            <Pitch />
           </div>
         </aside>
 

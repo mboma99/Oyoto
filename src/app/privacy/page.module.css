@@ -1,0 +1,80 @@
+.page {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: calc(var(--header-h) + clamp(2rem, 5vw, 3.5rem)) var(--gutter) clamp(4rem, 10vw, 8rem);
+}
+
+.hero {
+  padding: clamp(2rem, 6vw, 4.5rem) 0 clamp(2rem, 4vw, 3rem);
+  border-bottom: 1px solid var(--line);
+}
+
+.title {
+  font-family: var(--serif);
+  font-size: clamp(3rem, 8vw, 6rem);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.title em {
+  color: var(--accent);
+}
+
+.updated {
+  margin-top: 1.25rem;
+  font-size: 0.9rem;
+  color: var(--faint);
+}
+
+.body {
+  max-width: 44rem;
+  padding-top: clamp(2rem, 5vw, 3.5rem);
+}
+
+.body section + section {
+  margin-top: clamp(2.25rem, 4vw, 3rem);
+}
+
+.body h2 {
+  margin-bottom: 0.85rem;
+  font-family: var(--serif);
+  font-size: clamp(1.5rem, 2.4vw, 1.9rem);
+  line-height: 1.15;
+}
+
+.body p,
+.body li {
+  font-size: 1.025rem;
+  line-height: 1.75;
+  color: var(--text);
+}
+
+.body p + p,
+.body ul + p {
+  margin-top: 1rem;
+}
+
+.body ul {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  padding-left: 1.1rem;
+  list-style: disc;
+}
+
+.body li::marker {
+  color: var(--accent);
+}
+
+.body strong {
+  font-weight: 600;
+}
+
+.body a {
+  color: var(--accent);
+  border-bottom: 1px solid currentColor;
+}
+
+.body a:hover {
+  border-bottom-color: transparent;
+}

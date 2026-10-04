@@ -167,6 +167,33 @@
   color: var(--muted);
 }
 
+.marginTitleNext {
+  margin-top: 2.5rem;
+}
+
+.services {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.serviceLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--accent);
+  border-bottom: 1px solid transparent;
+  padding-bottom: 1px;
+  transition: border-color 0.3s var(--ease-out);
+}
+
+.serviceLink:hover {
+  border-color: var(--accent);
+}
+
 .reading {
   max-width: 44rem;
 }

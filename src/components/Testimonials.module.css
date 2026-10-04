@@ -1,0 +1,88 @@
+.section {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 var(--gutter) clamp(4rem, 9vw, 7rem);
+}
+
+.title {
+  padding-bottom: 1.25rem;
+  margin-bottom: clamp(2rem, 4vw, 3rem);
+  border-bottom: 1px solid var(--line);
+  font-family: var(--serif);
+  font-size: clamp(2.25rem, 5vw, 3.75rem);
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+}
+
+.title em {
+  color: var(--accent);
+}
+
+.grid {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 2rem;
+  padding: clamp(1.5rem, 3vw, 2.25rem);
+  border-radius: var(--radius);
+  background: var(--paper);
+  box-shadow:
+    6px 6px 0 var(--paper-raised),
+    12px 12px 0 var(--paper-edge);
+}
+
+.quote {
+  font-family: var(--serif);
+  font-size: clamp(1.2rem, 1.8vw, 1.45rem);
+  line-height: 1.4;
+  color: var(--text);
+}
+
+.quote p::before {
+  content: "\201C";
+  color: var(--accent);
+}
+
+.quote p::after {
+  content: "\201D";
+  color: var(--accent);
+}
+
+.who {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
+}
+
+.name {
+  font-weight: 600;
+}
+
+.role {
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.link {
+  width: fit-content;
+  margin-top: 0.5rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--accent);
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.3s var(--ease-out);
+}
+
+.link:hover {
+  border-color: var(--accent);
+}

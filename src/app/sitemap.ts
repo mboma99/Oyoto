@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { absoluteUrl, defaultOgImage } from "@/lib/seo";
 import { projects } from "@/data/projects";
+import { services } from "@/data/services";
 
 // Stamped at build; the site is static, so a deploy is the content change.
 const lastModified = new Date();
@@ -15,6 +16,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       images: [absoluteUrl(defaultOgImage)],
     },
     {
+      url: absoluteUrl("/services"),
+      lastModified,
+      changeFrequency: "monthly",
+      priority: 0.9,
+    },
+    {
       url: absoluteUrl("/projects"),
       lastModified,
       changeFrequency: "weekly",
@@ -22,16 +29,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
       images: projects.map((project) => absoluteUrl(project.image)),
     },
     {
-      url: absoluteUrl("/resume"),
-      lastModified,
-      changeFrequency: "monthly",
-      priority: 0.7,
-    },
-    {
       url: absoluteUrl("/contact"),
       lastModified,
       changeFrequency: "monthly",
       priority: 0.9,
+    },
+    {
+      url: absoluteUrl("/privacy"),
+      lastModified,
+      changeFrequency: "yearly",
+      priority: 0.3,
     },
   ];
 
@@ -43,5 +50,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     images: [absoluteUrl(project.image)],
   }));
 
-  return [...staticRoutes, ...projectRoutes];
+  const serviceRoutes: MetadataRoute.Sitemap = services.map((service) => ({
+    url: absoluteUrl(`/services/${service.slug}`),
+    lastModified,
+    changeFrequency: "monthly",
+    priority: 0.85,
+  }));
+
+  return [...staticRoutes, ...serviceRoutes, ...projectRoutes];
 }

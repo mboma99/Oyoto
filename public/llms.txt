@@ -1,24 +1,21 @@
 # Oyoto
 
-> Oyoto (written Oyotō) is a UK digital product studio founded by software engineer James Mboma. It designs and builds web platforms, mobile apps, AI integrations and cloud systems for founders and teams.
+> Oyoto (written Oyotō) is a UK digital product studio. It designs and builds websites, mobile apps, AI and data platforms for founders and established teams, with work for Nike and Lloyds Banking Group.
 
 ## Core URLs
 
 - Home: https://oyoto.co.uk/
+- Services: https://oyoto.co.uk/services
 - Projects: https://oyoto.co.uk/projects
-- Resume: https://oyoto.co.uk/resume
 - Contact: https://oyoto.co.uk/contact
 - Sitemap: https://oyoto.co.uk/sitemap.xml
 
 ## Services
 
-- Full-stack development
-- Cloud architecture
-- UI/UX engineering
-- AI integration
-- Mobile apps
-- Business intelligence
-- Technical consulting
+- [Websites & CMS](https://oyoto.co.uk/services/websites): fast Next.js websites with a content manager your team updates without a developer.
+- [Mobile apps](https://oyoto.co.uk/services/mobile-apps): cross-platform Flutter apps, with the backend and infrastructure behind them.
+- [AI & machine learning](https://oyoto.co.uk/services/ai-machine-learning): machine learning models and AI features built into real products.
+- [Data & reporting](https://oyoto.co.uk/services/data-engineering): data pipelines and reporting that turn operational data into decision-ready insight.
 
 ## Case Studies
 
@@ -29,6 +26,5 @@
 
 ## Contact
 
-- Email: oyotostudios@outlook.com
-- GitHub: https://github.com/mboma99
+- Email: hello@oyoto.co.uk
 - LinkedIn: https://www.linkedin.com/in/james-mboma/

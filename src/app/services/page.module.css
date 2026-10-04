@@ -1,0 +1,187 @@
+.page {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: calc(var(--header-h) + clamp(2rem, 5vw, 3.5rem)) var(--gutter) clamp(4rem, 10vw, 8rem);
+}
+
+.hero {
+  max-width: 62rem;
+  padding: clamp(2rem, 6vw, 4.5rem) 0 clamp(2.5rem, 5vw, 4rem);
+}
+
+.title {
+  font-family: var(--serif);
+  font-size: clamp(3.25rem, 10vw, 8rem);
+  line-height: 0.98;
+  letter-spacing: -0.02em;
+  animation: rise 1s var(--ease-out) both;
+}
+
+.title em {
+  color: var(--accent);
+}
+
+.lead {
+  max-width: 46ch;
+  margin-top: 1.75rem;
+  font-size: clamp(1.05rem, 1.4vw, 1.2rem);
+  line-height: 1.65;
+  color: var(--muted);
+  animation: rise 1s var(--ease-out) 0.1s both;
+}
+
+/* ─── The four services ─── */
+
+.list {
+  list-style: none;
+  border-top: 1px solid var(--line);
+}
+
+.list li {
+  border-bottom: 1px solid var(--line);
+  animation: rise 1s var(--ease-out) both;
+}
+
+.list li:nth-child(2) { animation-delay: 0.06s; }
+.list li:nth-child(3) { animation-delay: 0.12s; }
+.list li:nth-child(4) { animation-delay: 0.18s; }
+
+.row {
+  display: grid;
+  grid-template-columns: 3rem minmax(0, 2.2fr) minmax(0, 1fr) auto;
+  align-items: center;
+  gap: clamp(1rem, 3vw, 2.5rem);
+  padding: clamp(1.75rem, 3.5vw, 2.75rem) 0;
+  color: var(--text);
+}
+
+.num {
+  font-size: 0.8rem;
+  color: var(--faint);
+  font-variant-numeric: tabular-nums;
+}
+
+.rowMain {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.name {
+  font-family: var(--serif);
+  font-size: clamp(1.9rem, 4.2vw, 3.5rem);
+  line-height: 1.05;
+  transition: color 0.3s var(--ease-out), transform 0.5s var(--ease-out);
+}
+
+.desc {
+  max-width: 52ch;
+  font-size: 0.975rem;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+.proof {
+  font-size: 0.85rem;
+  color: var(--faint);
+}
+
+.proof::before {
+  content: "Case study: ";
+}
+
+.arrow {
+  color: var(--faint);
+  transition: color 0.3s var(--ease-out), transform 0.5s var(--ease-out);
+}
+
+.row:hover .name {
+  color: var(--accent);
+  transform: translateX(8px);
+}
+
+.row:hover .arrow {
+  color: var(--accent);
+  transform: translate(4px, -4px);
+}
+
+/* ─── Call to action ─── */
+
+.cta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.25rem;
+  margin-top: clamp(4rem, 10vw, 7rem);
+}
+
+.ctaTitle {
+  font-family: var(--serif);
+  font-size: clamp(2.25rem, 5vw, 3.75rem);
+  line-height: 1.05;
+}
+
+.ctaTitle em {
+  color: var(--accent);
+}
+
+.ctaText {
+  max-width: 44ch;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.ctaButton {
+  padding: 0.85rem 1.6rem;
+  border-radius: 999px;
+  background: var(--cta);
+  color: var(--on-cta);
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: background-color 0.3s var(--ease-out), transform 0.2s var(--ease-out);
+}
+
+.ctaButton:hover {
+  background: var(--cta-hi);
+}
+
+.ctaButton:active {
+  transform: scale(0.97);
+}
+
+@media (max-width: 767px) {
+  .row {
+    grid-template-columns: 2rem minmax(0, 1fr) auto;
+    align-items: start;
+  }
+
+  .proof {
+    grid-column: 2;
+    grid-row: 2;
+  }
+
+  .arrow {
+    grid-column: 3;
+    grid-row: 1;
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .title,
+  .lead,
+  .list li {
+    animation: none;
+  }
+
+  .row:hover .name,
+  .row:hover .arrow {
+    transform: none;
+  }
+}
