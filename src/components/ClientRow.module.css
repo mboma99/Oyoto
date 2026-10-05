@@ -65,20 +65,57 @@
   transition: opacity 0.3s var(--ease-out);
 }
 
-a.item:hover,
+.item:hover,
 a.item:focus-visible {
   opacity: 1;
 }
 
+/* Grey at rest, brand colour on hover: the colour version sits exactly over
+   the grey one (same size and outline) and crossfades in. */
+.mark {
+  position: relative;
+  display: block;
+}
+
 /* Logos are one-colour black art; the row's opacity softens them to grey. */
 .logo {
+  display: block;
   width: auto;
   height: calc(var(--logo-h) * var(--scale, 1));
+  transition: opacity 0.35s var(--ease-out);
 }
 
 /* the logo art is black: flip it to white on the dark theme */
 :global(:root[data-theme="dark"]) .logo {
   filter: invert(1);
+}
+
+.logoColor {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 0.35s var(--ease-out);
+}
+
+.item:hover .logoColor,
+.item:focus-visible .logoColor {
+  opacity: 1;
+}
+
+.item:hover .mark:has(.logoColor) .logo,
+.item:focus-visible .mark:has(.logoColor) .logo {
+  opacity: 0;
+}
+
+.darkOnly,
+:global(:root[data-theme="dark"]) .lightOnly {
+  display: none;
+}
+
+:global(:root[data-theme="dark"]) .darkOnly {
+  display: block;
 }
 
 .name {
@@ -116,7 +153,9 @@ a.item:focus-visible {
     display: none;
   }
 
-  .item {
+  .item,
+  .logo,
+  .logoColor {
     transition: none;
   }
 }

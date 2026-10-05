@@ -3,17 +3,37 @@ import Link from "next/link";
 import { clients, type Client } from "@/data/clients";
 import styles from "./ClientRow.module.css";
 
+/** The grey logo, with its brand-colour version stacked on top to fade in on
+    hover (a dark-theme variant too, where the light one would vanish). */
 function Mark({ client }: { client: Client }) {
-  if (!client.logo) return <span className={styles.name}>{client.name}</span>;
+  const { logo, color } = client;
+  if (!logo) return <span className={styles.name}>{client.name}</span>;
+  const size = { width: logo.width, height: logo.height };
   return (
-    <Image
-      src={client.logo.src}
-      alt={client.name}
-      width={client.logo.width}
-      height={client.logo.height}
-      className={styles.logo}
+    <span
+      className={styles.mark}
       style={{ "--scale": client.scale ?? 1 } as React.CSSProperties}
-    />
+    >
+      <Image src={logo.src} alt={client.name} {...size} className={styles.logo} />
+      {color && (
+        <Image
+          src={color.src}
+          alt=""
+          aria-hidden="true"
+          {...size}
+          className={`${styles.logoColor} ${color.dark ? styles.lightOnly : ""}`}
+        />
+      )}
+      {color?.dark && (
+        <Image
+          src={color.dark}
+          alt=""
+          aria-hidden="true"
+          {...size}
+          className={`${styles.logoColor} ${styles.darkOnly}`}
+        />
+      )}
+    </span>
   );
 }
 

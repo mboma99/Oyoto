@@ -114,6 +114,13 @@ function FilmStill({ src, poster, className, style }: {
   return <img ref={showLastFrame} src={poster} alt="" className={className} style={style} />;
 }
 
+/* Apple's iPhone 17 Pro product bezel (Deep Blue), served exactly as Apple
+   ships it: the Apple Design Resources licence forbids modifying it, so it is
+   never re-encoded (plain <img>, not next/image). Its screen opening is
+   1206 × 2622 at (72, 69) in a 1350 × 2760 image; the recording sits in that
+   opening (see .screen) and the bezel lies over it. */
+const BEZEL = { src: "/devices/iphone-17-pro-deep-blue.png", width: 1350, height: 2760 };
+
 /* A project's plate. Screen recordings sit whole in phone shells, side by
    side; any other film fills the plate the way <Image fill> does; otherwise
    the still. Reduced-motion visitors get the still instead of any film. */
@@ -126,7 +133,7 @@ export default function PlateMedia({ project, alt, sizes, className, priority, s
         className={`${styles.stage} ${className ?? ""}`}
         style={
           {
-            "--screen-ratio": project.screenRatio ?? 9 / 19.5,
+            "--frame-ratio": BEZEL.width / BEZEL.height,
             "--phones": project.phones.length,
           } as React.CSSProperties
         }
@@ -146,6 +153,16 @@ export default function PlateMedia({ project, alt, sizes, className, priority, s
                 {...filmProps(phone.video, priority)}
               />
             )}
+            {/* eslint-disable-next-line @next/next/no-img-element -- Apple's bezel must be served unmodified */}
+            <img
+              src={BEZEL.src}
+              width={BEZEL.width}
+              height={BEZEL.height}
+              alt=""
+              aria-hidden="true"
+              className={styles.bezel}
+              decoding="async"
+            />
           </div>
         ))}
       </div>

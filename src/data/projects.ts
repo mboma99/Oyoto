@@ -15,8 +15,6 @@ export interface Project {
     poster: string;
     label: string;
   }[];
-  /** The recordings' width / height, so each shell matches exactly. */
-  screenRatio?: number;
   /** Public URL of the shipped product, when there is one to visit. */
   liveUrl?: string;
   category: string;
@@ -43,7 +41,6 @@ export const projects: Project[] = [
     phones: [
       { video: "/work/trakr.mp4", poster: "/work/trakr.jpg", label: "sign-in and onboarding" },
     ],
-    screenRatio: 600 / 1304,
     category: "AI / SaaS",
     tags: ["AI/ML", "MOBILE", "AUTOMATION", "SAAS"],
     year: "2026",
