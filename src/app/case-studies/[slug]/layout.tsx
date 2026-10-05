@@ -32,7 +32,7 @@ export async function generateMetadata({
   return createMetadata({
     title: `${titleCase(project.title)} Case Study`,
     description: `${project.description} ${project.category} case study by Oyoto, ${project.year}.`,
-    path: `/projects/${project.slug}`,
+    path: `/case-studies/${project.slug}`,
     type: "article",
   });
 }

@@ -1,0 +1,122 @@
+.row {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: clamp(2rem, 5vw, 3rem) var(--gutter) 0;
+  display: flex;
+  align-items: center;
+  gap: 1.25rem clamp(1.5rem, 4vw, 3rem);
+}
+
+.label {
+  flex: none;
+  font-size: 0.75rem;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+
+/* ─── Marquee: two identical lists side by side, slid left by exactly one
+   list's width, so the loop point is invisible. ─── */
+
+.viewport {
+  --logo-h: clamp(28px, 3.2vw, 40px);
+  --gap: clamp(2.5rem, 5vw, 4.5rem);
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  /* room for focus rings, which the clip would otherwise shave */
+  padding-block: 4px;
+}
+
+.track {
+  display: flex;
+  width: max-content;
+  animation: marquee 32s linear infinite;
+}
+
+.viewport:hover .track,
+.viewport:focus-within .track {
+  animation-play-state: paused;
+}
+
+.list {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: var(--gap);
+  /* the gap between the two copies matches the gaps inside them */
+  padding-right: var(--gap);
+}
+
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* Slots size to their logo (some are scaled past --logo-h), so the
+   marquee's clipping window never cuts a logo off top or bottom. */
+.item {
+  display: flex;
+  align-items: center;
+  min-height: var(--logo-h);
+  opacity: 0.72;
+  transition: opacity 0.3s var(--ease-out);
+}
+
+a.item:hover,
+a.item:focus-visible {
+  opacity: 1;
+}
+
+/* Logos are one-colour black art; the row's opacity softens them to grey. */
+.logo {
+  width: auto;
+  height: calc(var(--logo-h) * var(--scale, 1));
+}
+
+/* the logo art is black: flip it to white on the dark theme */
+:global(:root[data-theme="dark"]) .logo {
+  filter: invert(1);
+}
+
+.name {
+  font-family: var(--serif);
+  font-size: calc(var(--logo-h) * 0.7);
+  line-height: 1;
+  white-space: nowrap;
+  color: var(--text);
+}
+
+@media (max-width: 767px) {
+  .row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .viewport {
+    width: 100%;
+  }
+}
+
+/* Still for reduced motion: one wrapping row, the copy dropped. */
+@media (prefers-reduced-motion: reduce) {
+  .track {
+    width: auto;
+    animation: none;
+  }
+
+  .list {
+    flex-wrap: wrap;
+    padding-right: 0;
+  }
+
+  .list[aria-hidden="true"] {
+    display: none;
+  }
+
+  .item {
+    transition: none;
+  }
+}

@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, useSyncExternalStore, useTransition } from "react";
+import Link from "next/link";
 import {
   ArrowLeft,
   ArrowUpRight,
@@ -19,20 +20,13 @@ import {
 import styles from "./page.module.css";
 import { PageTransition } from "@/components/PageTransition";
 import { contactEmail, contactMailto } from "@/lib/seo";
+import { createBooking, getAvailability, type BookingResult } from "./actions";
 
 const GREETINGS = ["hello", "olá", "bonjour", "salve", "konnichiwa", "ciao"];
 
-const TIME_SLOTS = [
-  "10:00",
-  "11:00",
-  "13:00",
-  "13:30",
-  "14:00",
-  "14:30",
-  "15:00",
-  "15:30",
-  "16:00",
-];
+/** YYYY-MM-DD for a local calendar date: the keys Cal.com's slots come back under. */
+const dateKey = (d: Date) =>
+  `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
 
 const monthFormat = new Intl.DateTimeFormat("en-GB", { month: "long", year: "numeric" });
 const weekdayFormat = new Intl.DateTimeFormat("en-GB", { weekday: "long" });
@@ -42,6 +36,9 @@ const longDateFormat = new Intl.DateTimeFormat("en-GB", {
   year: "numeric",
 });
 const fullDateFormat = new Intl.DateTimeFormat("en-GB", { dateStyle: "full" });
+/** The visitor's time zone never changes mid-visit; nothing to subscribe to. */
+const noSubscribe = () => () => {};
+const timeFormat = new Intl.DateTimeFormat("en-GB", { hour: "2-digit", minute: "2-digit" });
 
 const FAQS = [
   {
@@ -84,7 +81,8 @@ export default function Contact() {
   // Scheduler state
   const [currentMonthDate, setCurrentMonthDate] = useState(() => new Date());
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-  const [selectedTime, setSelectedTime] = useState<string>("13:00");
+  // ISO start of the chosen Cal.com slot
+  const [selectedTime, setSelectedTime] = useState<string | null>(null);
   const [bookingStep, setBookingStep] = useState<
     "select_date" | "select_time" | "fill_form" | "confirmed"
   >("select_date");
@@ -96,6 +94,20 @@ export default function Contact() {
   const [additionalNotes, setAdditionalNotes] = useState("");
   const [showGuests, setShowGuests] = useState(false);
   const [guestEmail, setGuestEmail] = useState("");
+
+  // Live availability from Cal.com, per day, in the visitor's own time zone
+  const timeZone = useSyncExternalStore(
+    noSubscribe,
+    () => Intl.DateTimeFormat().resolvedOptions().timeZone || "Europe/London",
+    () => "Europe/London"
+  );
+  const [slotsByDay, setSlotsByDay] = useState<Record<string, string[]>>({});
+  const [slotsMonth, setSlotsMonth] = useState<string | null>(null);
+  const [slotsError, setSlotsError] = useState<string | null>(null);
+  const [slotsReload, setSlotsReload] = useState(0);
+  const [booking, setBooking] = useState<Extract<BookingResult, { ok: true }> | null>(null);
+  const [bookingError, setBookingError] = useState<string | null>(null);
+  const [isBooking, startBooking] = useTransition();
 
   // Keyboard focus: the element each booking step hands focus to, and the
   // calendar's roving-tabindex day (moved with the arrow keys)
@@ -149,6 +161,33 @@ export default function Contact() {
     return firstDayIndex === 0 ? 6 : firstDayIndex - 1;
   }, [year, month]);
 
+  // Fetch the shown month's open times (from today, if it's this month)
+  const monthKey = `${year}-${month}`;
+  useEffect(() => {
+    let cancelled = false;
+    const today = new Date();
+    const first = new Date(year, month, 1);
+    const start = first > today ? first : today;
+    const end = new Date(year, month + 1, 0);
+    if (end < today) return;
+    getAvailability(dateKey(start), dateKey(end), timeZone).then((res) => {
+      if (cancelled) return;
+      if (res.ok) {
+        setSlotsByDay(res.slots);
+        setSlotsError(null);
+      } else {
+        setSlotsByDay({});
+        setSlotsError(res.error);
+      }
+      setSlotsMonth(monthKey);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [year, month, monthKey, timeZone, slotsReload]);
+
+  const slotsLoading = slotsMonth !== monthKey;
+
   const isCurrentMonthOrPast = useMemo(() => {
     const today = new Date();
     return (
@@ -166,20 +205,21 @@ export default function Contact() {
     setCurrentMonthDate(new Date(year, month + 1, 1));
   };
 
-  const isDateDisabled = (day: number) => isPastOrWeekend(new Date(year, month, day));
+  const isDateDisabled = (day: number) => isUnbookable(new Date(year, month, day));
 
-  const isPastOrWeekend = (d: Date) => {
+  /* A day is bookable when Cal.com has open times for it. Days in other
+     months (arrow keys crossing a month edge) aren't loaded yet, so they
+     fall back to "not past, not a weekend" until that month's times arrive. */
+  const isUnbookable = (d: Date) => {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-
-    // Disable past days
     if (d < today) return true;
 
-    // Disable weekends (Sat = 6, Sun = 0)
+    if (d.getFullYear() === year && d.getMonth() === month) {
+      return slotsLoading || !slotsByDay[dateKey(d)]?.length;
+    }
     const dayOfWeek = d.getDay();
-    if (dayOfWeek === 0 || dayOfWeek === 6) return true;
-
-    return false;
+    return dayOfWeek === 0 || dayOfWeek === 6;
   };
 
   const isToday = (day: number) => {
@@ -257,7 +297,7 @@ export default function Contact() {
       const d = new Date(from);
       for (let i = 0; i < 31; i++) {
         d.setDate(d.getDate() + delta);
-        if (!isPastOrWeekend(d)) {
+        if (!isUnbookable(d)) {
           target = d;
           break;
         }
@@ -266,8 +306,8 @@ export default function Contact() {
       const offset = e.key === "PageUp" ? -1 : 1;
       const lastDay = new Date(year, month + offset + 1, 0).getDate();
       const d = new Date(year, month + offset, Math.min(day, lastDay));
-      for (let i = 0; i < 7 && isPastOrWeekend(d); i++) d.setDate(d.getDate() + 1);
-      if (!isPastOrWeekend(d)) target = d;
+      for (let i = 0; i < 7 && isUnbookable(d); i++) d.setDate(d.getDate() + 1);
+      if (!isUnbookable(d)) target = d;
     } else {
       return;
     }
@@ -283,42 +323,55 @@ export default function Contact() {
 
   const handleBookingSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setBookingStep("confirmed");
+    if (!selectedTime || isBooking) return;
+    setBookingError(null);
+    startBooking(async () => {
+      const res = await createBooking({
+        start: selectedTime,
+        timeZone,
+        name: attendeeName,
+        email: attendeeEmail,
+        topic: meetingTopic,
+        notes: additionalNotes,
+        guest: showGuests ? guestEmail : "",
+      });
+      if (res.ok) {
+        setBooking(res);
+        setBookingStep("confirmed");
+      } else {
+        setBookingError(res.error);
+        // the slot may have gone: refresh the month's times
+        setSlotsReload((n) => n + 1);
+      }
+    });
   };
+
+  const daySlots = selectedDate ? slotsByDay[dateKey(selectedDate)] ?? [] : [];
+  const confirmedTime = booking
+    ? `${timeFormat.format(new Date(booking.start))}–${timeFormat.format(new Date(booking.end))}`
+    : "";
 
   // Selected date formatting
   const selectedDateWeekday = selectedDate ? weekdayFormat.format(selectedDate) : "";
   const selectedDateFormatted = selectedDate ? longDateFormat.format(selectedDate) : "";
 
-  // Google Calendar URL generator
+  // Google Calendar URL generator: the confirmed booking, with its real video link
   const googleCalendarUrl = useMemo(() => {
-    if (!selectedDate || !selectedTime) return "#";
+    if (!booking) return "#";
 
-    const [hoursStr, minutesStr] = selectedTime.split(":");
-    const hours = Number(hoursStr);
-    const minutes = Number(minutesStr);
-
-    const start = new Date(selectedDate);
-    start.setHours(hours, minutes, 0, 0);
-    const end = new Date(start.getTime() + 30 * 60 * 1000);
-
-    const pad = (n: number) => String(n).padStart(2, "0");
-    const formatGCal = (d: Date) =>
-      `${d.getUTCFullYear()}${pad(d.getUTCMonth() + 1)}${pad(d.getUTCDate())}T${pad(
-        d.getUTCHours()
-      )}${pad(d.getUTCMinutes())}00Z`;
-
-    const dates = `${formatGCal(start)}/${formatGCal(end)}`;
-    const title = encodeURIComponent("Oyoto · Discovery Session (Google Meet)");
+    const formatGCal = (iso: string) => new Date(iso).toISOString().replace(/[-:]|\.\d{3}/g, "");
+    const dates = `${formatGCal(booking.start)}/${formatGCal(booking.end)}`;
+    const title = encodeURIComponent("Oyotō · Discovery call");
+    const meeting = booking.meetingUrl ?? "See your Cal.com confirmation email";
     const details = encodeURIComponent(
-      `Discovery consultation between ${attendeeName || "Client"} and Oyoto Studio.\n\nMeeting link: https://meet.google.com/oyo-tost-udo\nAgenda: ${
-        meetingTopic || "Digital Product Architecture & Engineering"
-      }\nGuest: ${guestEmail || "None"}\nNotes: ${additionalNotes || "N/A"}\nContact: ${contactEmail}`
+      `Discovery call between ${attendeeName || "you"} and Oyotō.\n\nVideo: ${meeting}\nAgenda: ${
+        meetingTopic || "Your project"
+      }\nContact: ${contactEmail}`
     );
-    const location = encodeURIComponent("Google Meet (https://meet.google.com/oyo-tost-udo)");
+    const location = encodeURIComponent(booking.meetingUrl ?? "Video call");
 
     return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${dates}&details=${details}&location=${location}`;
-  }, [selectedDate, selectedTime, attendeeName, meetingTopic, guestEmail, additionalNotes]);
+  }, [booking, attendeeName, meetingTopic]);
 
   const currentGreeting = GREETINGS[greetingIndex];
 
@@ -347,7 +400,7 @@ export default function Contact() {
               </p>
 
               <p className={styles.subtext}>
-                Select an available date below to schedule a 30-minute discovery call, or reach out directly by email.
+                Pick an available date to book a 30-minute discovery call, or reach out directly by email.
               </p>
 
               <a href={contactMailto} className={styles.emailBtn}>
@@ -362,7 +415,7 @@ export default function Contact() {
                 </div>
                 <div className={styles.studioMetaItem}>
                   <span className={styles.studioMetaLabel}>Platform</span>
-                  <span className={styles.studioMetaVal}>Google Meet (Cal.com)</span>
+                  <span className={styles.studioMetaVal}>Video call via Cal.com</span>
                 </div>
                 <div className={styles.studioMetaItem}>
                   <span className={styles.studioMetaLabel}>Direct Contact</span>
@@ -464,6 +517,24 @@ export default function Contact() {
                         );
                       })}
                     </div>
+
+                    {slotsLoading ? (
+                      <p className={styles.calStatus} role="status">
+                        Loading available times…
+                      </p>
+                    ) : slotsError ? (
+                      <p className={styles.calError} role="alert">
+                        {slotsError}{" "}
+                        <button
+                          type="button"
+                          className={styles.calRetry}
+                          onClick={() => setSlotsReload((n) => n + 1)}
+                        >
+                          Try again
+                        </button>{" "}
+                        or email <a href={contactMailto}>{contactEmail}</a>.
+                      </p>
+                    ) : null}
                   </div>
                 )}
 
@@ -499,21 +570,26 @@ export default function Contact() {
                       </span>
                       <span className={styles.timeSelectMetaItem}>
                         <GlobeHemisphereWest size={14} aria-hidden="true" />
-                        Europe/London
+                        {timeZone}
                       </span>
                     </div>
 
                     <div className={styles.timeSelectDivider} />
 
                     <div className={styles.timeSlotsStack}>
-                      {TIME_SLOTS.map((slot) => (
+                      {daySlots.length === 0 && (
+                        <p className={styles.calStatus}>
+                          No times left on this day. Please pick another.
+                        </p>
+                      )}
+                      {daySlots.map((slot) => (
                         <button
                           key={slot}
                           type="button"
                           onClick={() => handleTimeSelect(slot)}
                           className={styles.timeSlotRowBtn}
                         >
-                          {slot}
+                          {timeFormat.format(new Date(slot))}
                         </button>
                       ))}
                     </div>
@@ -628,8 +704,15 @@ export default function Contact() {
                     )}
 
                     <p className={styles.calDisclaimer}>
-                      By proceeding, you agree to Oyoto&apos;s <a href="/terms">Terms</a> and <a href="/privacy">Privacy Policy</a>.
+                      Bookings are handled by Cal.com. See our <Link href="/privacy">Privacy Policy</Link>{" "}
+                      for how we use your details.
                     </p>
+
+                    {bookingError && (
+                      <p className={styles.calError} role="alert">
+                        {bookingError}
+                      </p>
+                    )}
 
                     <div className={styles.calFormActions}>
                       <button
@@ -639,8 +722,13 @@ export default function Contact() {
                       >
                         Back
                       </button>
-                      <button type="submit" className={styles.calConfirmBtn}>
-                        Confirm
+                      <button
+                        type="submit"
+                        className={styles.calConfirmBtn}
+                        disabled={isBooking}
+                        aria-busy={isBooking}
+                      >
+                        {isBooking ? "Booking…" : "Confirm"}
                       </button>
                     </div>
                   </form>
@@ -661,10 +749,10 @@ export default function Contact() {
                             stepFocusRef.current = el;
                           }}
                         >
-                          Meeting Scheduled
+                          Call booked
                         </h2>
                         <p className={styles.successDesc}>
-                          Your Google Meet session is ready to add to your calendar.
+                          A calendar invite is on its way to {attendeeEmail}.
                         </p>
                       </div>
                     </div>
@@ -676,15 +764,23 @@ export default function Contact() {
                       </div>
                       <div className={styles.successSpecRow}>
                         <span><Clock size={15} aria-hidden="true" /> Time:</span>
-                        <strong>{selectedTime} (30 mins)</strong>
+                        <strong>{confirmedTime}</strong>
                       </div>
                       <div className={styles.successSpecRow}>
                         <span><VideoCamera size={15} aria-hidden="true" /> Video:</span>
-                        <strong>Google Meet</strong>
+                        <strong>
+                          {booking?.meetingUrl ? (
+                            <a href={booking.meetingUrl} target="_blank" rel="noopener noreferrer">
+                              Join link
+                            </a>
+                          ) : (
+                            "Link in your invite"
+                          )}
+                        </strong>
                       </div>
                       <div className={styles.successSpecRow}>
                         <span><User size={15} aria-hidden="true" /> Host:</span>
-                        <strong>James Mboma (Oyoto Studio)</strong>
+                        <strong>Oyotō</strong>
                       </div>
                     </div>
 
@@ -703,6 +799,9 @@ export default function Contact() {
                         onClick={() => {
                           setBookingStep("select_date");
                           setSelectedDate(null);
+                          setSelectedTime(null);
+                          setBooking(null);
+                          setSlotsReload((n) => n + 1);
                         }}
                         className={styles.secondaryActionBtn}
                       >

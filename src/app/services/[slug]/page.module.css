@@ -1,0 +1,340 @@
+.page {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: calc(var(--header-h) + clamp(2rem, 5vw, 3.5rem)) var(--gutter) clamp(4rem, 10vw, 8rem);
+}
+
+.back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  color: var(--muted);
+  transition: color 0.3s var(--ease-out);
+}
+
+.back svg {
+  transition: transform 0.4s var(--ease-out);
+}
+
+.back:hover {
+  color: var(--accent);
+}
+
+.back:hover svg {
+  transform: translateX(-4px);
+}
+
+/* ─── Title ─── */
+
+.hero {
+  max-width: 62rem;
+  padding: clamp(3rem, 8vw, 6rem) 0 clamp(2.5rem, 5vw, 4rem);
+}
+
+.eyebrow {
+  display: block;
+  margin-bottom: 1.25rem;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1.15rem;
+  color: var(--accent);
+  animation: rise 1s var(--ease-out) both;
+}
+
+.title {
+  font-family: var(--serif);
+  font-size: clamp(3rem, 8.5vw, 7rem);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  animation: rise 1s var(--ease-out) 0.08s both;
+}
+
+.title em {
+  color: var(--accent);
+}
+
+.lead {
+  max-width: 52ch;
+  margin-top: 1.75rem;
+  font-size: clamp(1.05rem, 1.4vw, 1.2rem);
+  line-height: 1.7;
+  color: var(--muted);
+  animation: rise 1s var(--ease-out) 0.16s both;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem 1.5rem;
+  margin-top: 2rem;
+  animation: rise 1s var(--ease-out) 0.22s both;
+}
+
+.ctaButton {
+  padding: 0.85rem 1.6rem;
+  border-radius: 999px;
+  background: var(--cta);
+  color: var(--on-cta);
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: background-color 0.3s var(--ease-out), transform 0.2s var(--ease-out);
+}
+
+.ctaButton:hover {
+  background: var(--cta-hi);
+}
+
+.ctaButton:active {
+  transform: scale(0.97);
+}
+
+.textLink {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--accent);
+  border-bottom: 1px solid transparent;
+  padding-bottom: 1px;
+  transition: border-color 0.3s var(--ease-out);
+}
+
+.textLink:hover {
+  border-color: var(--accent);
+}
+
+/* ─── Margin notes beside the offers ─── */
+
+.body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2.2fr);
+  gap: clamp(2rem, 6vw, 6rem);
+  padding-top: clamp(2.5rem, 5vw, 4rem);
+  border-top: 1px solid var(--line);
+}
+
+.margin {
+  position: sticky;
+  top: calc(var(--header-h) + 2rem);
+  align-self: start;
+}
+
+.marginTitle {
+  padding-bottom: 0.75rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid var(--line);
+  font-family: var(--serif);
+  font-size: 1.5rem;
+}
+
+.fit + .marginTitle {
+  margin-top: 2.5rem;
+}
+
+.fit {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.fit li {
+  padding-left: 1.25rem;
+  position: relative;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: var(--muted);
+}
+
+.fit li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.6em;
+  width: 0.5rem;
+  height: 1px;
+  background: var(--accent);
+}
+
+.stack {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.stack li {
+  padding: 0.35rem 0.85rem;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.sectionTitle {
+  margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
+  font-family: var(--serif);
+  font-size: clamp(1.9rem, 3.4vw, 2.6rem);
+  line-height: 1.1;
+}
+
+.sectionTitle em {
+  color: var(--accent);
+}
+
+.offers {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(2rem, 4vw, 3rem) clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.offer {
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--line-strong);
+}
+
+.offerNum {
+  font-size: 0.8rem;
+  color: var(--faint);
+  font-variant-numeric: tabular-nums;
+}
+
+.offerTitle {
+  margin-top: 0.5rem;
+  font-family: var(--serif);
+  font-size: clamp(1.35rem, 2vw, 1.6rem);
+  line-height: 1.2;
+}
+
+.offerBody {
+  margin-top: 0.6rem;
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--text);
+}
+
+/* ─── The case studies ─── */
+
+.work {
+  margin-top: clamp(5rem, 10vw, 8rem);
+  scroll-margin-top: calc(var(--header-h) + 1rem);
+}
+
+.workGrid {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(2.5rem, 5vw, 4rem) clamp(1.5rem, 3vw, 2.5rem);
+}
+
+/* ─── Close ─── */
+
+.cta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.25rem;
+  margin-top: clamp(5rem, 10vw, 8rem);
+  padding: clamp(2.5rem, 6vw, 4rem) 0;
+  border-top: 1px solid var(--line);
+}
+
+.ctaTitle {
+  font-family: var(--serif);
+  font-size: clamp(2.25rem, 5vw, 3.75rem);
+  line-height: 1.05;
+}
+
+.ctaTitle em {
+  color: var(--accent);
+}
+
+.ctaText {
+  max-width: 44ch;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+.others {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2.2fr);
+  gap: 1rem clamp(2rem, 6vw, 6rem);
+  padding-top: 2rem;
+  border-top: 1px solid var(--line);
+}
+
+.othersLabel {
+  font-size: 0.8rem;
+  color: var(--faint);
+}
+
+.others ul {
+  list-style: none;
+}
+
+.others li + li {
+  border-top: 1px solid var(--line);
+}
+
+.otherLink {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 0;
+  font-family: var(--serif);
+  font-size: clamp(1.4rem, 2.4vw, 1.9rem);
+  color: var(--text);
+  transition: color 0.3s var(--ease-out);
+}
+
+.otherLink svg {
+  color: var(--faint);
+  transition: transform 0.4s var(--ease-out), color 0.3s var(--ease-out);
+}
+
+.otherLink:hover {
+  color: var(--accent);
+}
+
+.otherLink:hover svg {
+  color: var(--accent);
+  transform: translate(3px, -3px);
+}
+
+@media (max-width: 767px) {
+  .body,
+  .others {
+    grid-template-columns: 1fr;
+  }
+
+  .margin {
+    position: static;
+  }
+
+  .offers,
+  .workGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .eyebrow,
+  .title,
+  .lead,
+  .actions {
+    animation: none;
+  }
+
+  .back:hover svg,
+  .otherLink:hover svg {
+    transform: none;
+  }
+}

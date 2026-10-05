@@ -484,6 +484,45 @@
   transform: scale(0.97);
 }
 
+.calConfirmBtn:disabled {
+  background: var(--cta-hi);
+  cursor: progress;
+  transform: none;
+}
+
+/* live availability: loading and error lines under the calendar and form */
+.calStatus,
+.calError {
+  margin-top: 1rem;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+.calError {
+  color: var(--text);
+}
+
+.calError a,
+.calRetry {
+  color: var(--accent);
+  border-bottom: 1px solid currentColor;
+}
+
+.calRetry {
+  padding: 0;
+  border-top: 0;
+  border-inline: 0;
+  background: none;
+  font: inherit;
+  cursor: pointer;
+}
+
+.successSpecRow a {
+  color: var(--accent);
+  border-bottom: 1px solid currentColor;
+}
+
 /* step 4: confirmed */
 
 .successHeader {

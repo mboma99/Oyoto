@@ -4,6 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowUpRight } from "@phosphor-icons/react/ssr";
 import { projects } from "@/data/projects";
+import { servicesForProject } from "@/data/services";
 import { titleCase } from "@/lib/text";
 import { PageTransition } from "@/components/PageTransition";
 import styles from "./page.module.css";
@@ -25,6 +26,7 @@ export default async function ProjectCaseStudy({
 
   const project = projects[index];
   const next = projects[(index + 1) % projects.length];
+  const related = servicesForProject(project.slug);
   const words = titleCase(project.title).split(" ");
   const head = words.slice(0, -1).join(" ");
   const tail = words[words.length - 1];
@@ -39,9 +41,9 @@ export default async function ProjectCaseStudy({
   return (
     <PageTransition>
       <main id="main" className={styles.page}>
-        <Link href="/projects" className={styles.back}>
+        <Link href="/case-studies" className={styles.back}>
           <ArrowLeft size={16} weight="regular" aria-hidden="true" />
-          All projects
+          All case studies
         </Link>
 
         <header className={styles.hero}>
@@ -53,6 +55,17 @@ export default async function ProjectCaseStudy({
             <em>{tail}</em>
           </h1>
           <p className={styles.lead}>{project.description}</p>
+          {project.liveUrl && (
+            <a
+              href={project.liveUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.live}
+            >
+              Visit the live site
+              <ArrowUpRight size={16} weight="regular" aria-hidden="true" />
+            </a>
+          )}
         </header>
 
         <dl className={styles.meta}>
@@ -94,6 +107,21 @@ export default async function ProjectCaseStudy({
                 <li key={tech}>{tech}</li>
               ))}
             </ul>
+            {related.length > 0 && (
+              <>
+                <h2 className={`${styles.marginTitle} ${styles.marginTitleNext}`}>Service</h2>
+                <ul className={styles.services}>
+                  {related.map((service) => (
+                    <li key={service.slug}>
+                      <Link href={`/services/${service.slug}`} className={styles.serviceLink}>
+                        {service.name}
+                        <ArrowUpRight size={16} weight="regular" aria-hidden="true" />
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </>
+            )}
           </aside>
 
           <article className={styles.reading}>
@@ -106,7 +134,7 @@ export default async function ProjectCaseStudy({
           </article>
         </div>
 
-        <Link href={`/projects/${next.slug}`} className={styles.next}>
+        <Link href={`/case-studies/${next.slug}`} className={styles.next}>
           <span className={styles.nextLabel}>Next chapter</span>
           <span className={styles.nextTitle}>
             {titleCase(next.title)}

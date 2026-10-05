@@ -117,6 +117,87 @@
   color: var(--muted);
 }
 
+.pitch {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.pitchActions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1.25rem;
+  margin-top: 0.5rem;
+}
+
+.pitchCta {
+  padding: 0.7rem 1.4rem;
+  border-radius: 999px;
+  background: var(--cta);
+  color: var(--on-cta);
+  font-size: 0.9rem;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: background-color 0.3s var(--ease-out), transform 0.2s var(--ease-out);
+}
+
+.pitchCta:hover {
+  background: var(--cta-hi);
+}
+
+.pitchCta:active {
+  transform: scale(0.97);
+}
+
+.pitchLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--accent);
+  border-bottom: 1px solid transparent;
+  padding-bottom: 1px;
+  transition: border-color 0.3s var(--ease-out);
+}
+
+.pitchLink:hover {
+  border-color: var(--accent);
+}
+
+.pitchLink svg {
+  transition: transform 0.35s var(--ease-out);
+}
+
+.pitchLink:hover svg {
+  transform: translateY(2px);
+}
+
+/* Below the flaps' breakpoint the pitch sits above the book instead. */
+.intro {
+  width: min(100%, 40rem);
+  align-self: flex-start;
+}
+
+.intro .flapTitle {
+  font-size: clamp(2rem, 6.5vw, 2.75rem);
+  line-height: 1.08;
+}
+
+@media (min-width: 1100px) {
+  .intro {
+    display: none;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1099px) {
+  .intro {
+    align-self: center;
+  }
+}
+
 .flapList {
   list-style: none;
   margin-block: auto;
@@ -168,6 +249,17 @@
 /* closed: the cover (right half) sits centred, like a book on a desk */
 .stage[data-cover="closed"] {
   transform: translateX(-25%);
+}
+
+/* While closed, the hidden spread still spans the desk and would sit over the
+   left flap's buttons: only the cover itself takes the pointer. */
+.stage[data-cover="closed"],
+.stage[data-cover="opening"] {
+  pointer-events: none;
+}
+
+.stage[data-cover="closed"] .cover {
+  pointer-events: auto;
 }
 
 /* ─── Book body ─── */
@@ -757,12 +849,22 @@
   --muted: #a3a3a3;
   --accent: var(--sky);
   color: var(--text);
+  /* The page block: thin solid leaves stacked out to the right and bottom,
+     alternating paper and edge so each reads as a separate sheet, then the
+     shadow it casts on the desk. */
   box-shadow:
-    3px 3px 0 var(--paper-raised),
-    6px 6px 0 var(--paper-edge),
-    9px 9px 0 var(--paper-raised),
+    2px 2px 0 var(--paper),
+    4px 4px 0 var(--paper-edge),
+    6px 6px 0 var(--paper),
+    8px 8px 0 var(--paper-edge),
+    10px 10px 0 var(--paper),
     12px 12px 0 var(--paper-edge),
-    24px 40px 60px -20px var(--shadow-soft);
+    14px 14px 0 var(--paper),
+    16px 16px 0 var(--paper-edge),
+    18px 18px 0 var(--paper),
+    19px 19px 0 var(--line-strong),
+    40px 60px 70px -24px var(--shadow-soft),
+    16px 24px 30px -12px var(--shadow-soft);
 }
 
 /* inset foil frame */

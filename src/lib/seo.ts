@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { projects } from "@/data/projects";
+import { getServiceBySlug, services } from "@/data/services";
 import { titleCase } from "@/lib/text";
 
 export const siteUrl = "https://oyoto.co.uk";
@@ -8,9 +9,11 @@ export const siteName = "Oyoto";
 export const brandName = "Oyotō";
 export const siteTagline = "Web, mobile and AI product studio";
 export const siteDescription =
-  "Oyoto is a UK digital product studio founded by software engineer James Mboma, designing and building web platforms, mobile apps, AI integrations and cloud systems.";
+  "Oyoto is a UK digital product studio designing and building websites, mobile apps, AI and data platforms for founders and established teams, with work for Nike and Lloyds Banking Group.";
 export const founderName = "James Mboma";
-export const contactEmail = "oyotostudios@outlook.com";
+export const contactEmail = "hello@oyoto.co.uk";
+export const founderEmail = "james@oyoto.co.uk";
+export const privacyEmail = "privacy@oyoto.co.uk";
 export const contactMailto = `mailto:${contactEmail}?subject=${encodeURIComponent(
   "Project enquiry for Oyoto"
 )}&body=${encodeURIComponent(`Hi Oyoto Team,
@@ -39,12 +42,10 @@ const defaultOgCard = {
   height: 630,
   alt: `${siteName}, a UK studio building web, mobile and AI products`,
 };
-export const defaultCalLink = "james-mboma-kzbj0s/30min";
+/** The Cal.com account and event the contact page books into. */
+export const calUsername = "oyoto";
+export const calEventSlug = "30min";
 
-export const socialLinks = [
-  "https://github.com/mboma99",
-  "https://www.linkedin.com/in/james-mboma/",
-];
 
 export const serviceAreas = [
   "Full-stack development",
@@ -121,7 +122,7 @@ export function jsonLdScript(data: JsonLdValue) {
 }
 
 export function projectUrl(slug: string) {
-  return absoluteUrl(`/projects/${slug}`);
+  return absoluteUrl(`/case-studies/${slug}`);
 }
 
 export function getProjectBySlug(slug: string) {
@@ -174,7 +175,7 @@ export function projectBreadcrumbJsonLd(slug: string): JsonLdValue | null {
     "@type": "BreadcrumbList",
     itemListElement: [
       { "@type": "ListItem", position: 1, name: "Home", item: absoluteUrl("/") },
-      { "@type": "ListItem", position: 2, name: "Projects", item: absoluteUrl("/projects") },
+      { "@type": "ListItem", position: 2, name: "Case studies", item: absoluteUrl("/case-studies") },
       {
         "@type": "ListItem",
         position: 3,
@@ -185,7 +186,7 @@ export function projectBreadcrumbJsonLd(slug: string): JsonLdValue | null {
   };
 }
 
-/** The case studies as an ordered list, for the home and projects pages. */
+/** The case studies as an ordered list, for the home and case studies pages. */
 export function projectListJsonLd(): JsonLdValue {
   return {
     "@context": "https://schema.org",
@@ -218,13 +219,14 @@ export function siteJsonLd(): JsonLdValue {
         founder: {
           "@id": `${siteUrl}/#person`,
         },
-        sameAs: socialLinks,
         knowsAbout: serviceAreas,
-        makesOffer: serviceAreas.map((service) => ({
+        makesOffer: services.map((service) => ({
           "@type": "Offer",
           itemOffered: {
+            "@id": `${absoluteUrl(`/services/${service.slug}`)}#service`,
             "@type": "Service",
-            name: service,
+            name: service.name,
+            url: absoluteUrl(`/services/${service.slug}`),
           },
         })),
       },
@@ -232,10 +234,9 @@ export function siteJsonLd(): JsonLdValue {
         "@type": "Person",
         "@id": `${siteUrl}/#person`,
         name: founderName,
-        jobTitle: "Software Engineer",
+        jobTitle: "Founder",
         url: siteUrl,
-        email: contactEmail,
-        sameAs: socialLinks,
+        email: founderEmail,
         worksFor: {
           "@id": `${siteUrl}/#organization`,
         },
@@ -252,6 +253,44 @@ export function siteJsonLd(): JsonLdValue {
           "@id": `${siteUrl}/#organization`,
         },
         inLanguage: "en-GB",
+      },
+    ],
+  };
+}
+
+export function serviceJsonLd(slug: string): JsonLdValue | null {
+  const service = getServiceBySlug(slug);
+
+  if (!service) {
+    return null;
+  }
+
+  const url = absoluteUrl(`/services/${service.slug}`);
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Service",
+        "@id": `${url}#service`,
+        name: service.name,
+        description: service.description,
+        url,
+        serviceType: service.name,
+        areaServed: "GB",
+        provider: {
+          "@id": `${siteUrl}/#organization`,
+        },
+        subjectOf: service.projects.map((projectSlug) => ({
+          "@id": `${projectUrl(projectSlug)}#case-study`,
+        })),
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Home", item: absoluteUrl("/") },
+          { "@type": "ListItem", position: 2, name: "Services", item: absoluteUrl("/services") },
+          { "@type": "ListItem", position: 3, name: service.name, item: url },
+        ],
       },
     ],
   };

@@ -6,7 +6,7 @@ export default function manifest(): MetadataRoute.Manifest {
     name: `${siteName} | ${siteTagline}`,
     short_name: siteName,
     description:
-      "UK studio building web, mobile and AI products, founded by software engineer James Mboma.",
+      "UK studio designing and building web, mobile and AI products.",
     start_url: "/",
     display: "standalone",
     background_color: "#f3f3f3",

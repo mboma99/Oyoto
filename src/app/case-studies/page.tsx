@@ -59,7 +59,7 @@ export default function ProjectsPage() {
             Platforms, launches and products built since 2021. Choose one to read the full case
             study.
           </p>
-          <div className={styles.filters} role="group" aria-label="Filter projects by category">
+          <div className={styles.filters} role="group" aria-label="Filter case studies by category">
             {filters.map((filter) => (
               <button
                 key={filter}
@@ -94,7 +94,7 @@ export default function ProjectsPage() {
                     style={{ "--i": i } as React.CSSProperties}
                   >
                     <Link
-                      href={`/projects/${project.slug}`}
+                      href={`/case-studies/${project.slug}`}
                       className={styles.row}
                       data-active={isActive}
                       onMouseEnter={() => setActiveSlug(project.slug)}
