@@ -6,15 +6,14 @@
   height: 100%;
 }
 
-/* ─── Phone shells: portrait screen recordings shown whole, never cropped ───
-   Flat charcoal bodies, no gradients, side by side. The stage is a size
+/* ─── Phone frames: portrait screen recordings shown whole inside Apple's
+   iPhone 17 Pro bezel, side by side, never cropped. The stage is a size
    container, so each phone takes the largest height that still lets every
-   phone (and the gaps) fit across the plate. The recordings carry their own
-   status bar and island, so each shell is just the bezel. */
+   phone (and the gaps) fit across the plate. ─── */
 
 .stage {
   position: absolute;
-  inset: 8% 4%;
+  inset: 6% 4%;
   container-type: size;
   display: flex;
   align-items: center;
@@ -25,26 +24,32 @@
 .phone {
   --gap: 5cqw;
   position: relative;
-  container-type: inline-size;
   flex: none;
-  height: min(100cqh, (100cqw / var(--phones) - var(--gap)) / var(--screen-ratio));
-  aspect-ratio: var(--screen-ratio);
+  height: min(100cqh, (100cqw / var(--phones) - var(--gap)) / var(--frame-ratio));
+  aspect-ratio: var(--frame-ratio);
   margin-inline: calc(var(--gap) / 2);
-  border-radius: 13% / 6%;
-  background: var(--spine);
-  box-shadow:
-    0 0 0 1px var(--line-strong),
-    0 24px 40px -18px var(--shadow-soft);
+  filter: drop-shadow(0 24px 28px var(--shadow-soft));
 }
 
-/* cqi = this phone's own width, so the bezel stays in proportion */
+/* The bezel's screen opening, as fractions of the bezel image: 1206 × 2622
+   at (72, 69) in 1350 × 2760. The corner radius (about 200px on that screen)
+   tucks the recording's corners under the bezel's black border. */
 .screen {
   position: absolute;
-  inset: 3.4cqi;
+  left: 5.3333%;
+  top: 2.5%;
   display: block;
-  width: calc(100% - 6.8cqi);
-  height: calc(100% - 6.8cqi);
-  border-radius: 10.5% / 4.9%;
+  width: 89.3333%;
+  height: 95%;
+  border-radius: 16.6% / 7.6%;
   object-fit: cover;
-  background: var(--spine);
+  background: #000;
+}
+
+.bezel {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
 }
