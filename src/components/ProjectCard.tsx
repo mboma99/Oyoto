@@ -8,7 +8,7 @@ import styles from "./ProjectCard.module.css";
 export function ProjectCard({ project, headingLevel = 3 }: { project: Project; headingLevel?: 2 | 3 }) {
   const Heading = `h${headingLevel}` as const;
   return (
-    <Link href={`/projects/${project.slug}`} className={styles.card}>
+    <Link href={`/case-studies/${project.slug}`} className={styles.card}>
       <figure className={styles.plate}>
         <PlateMedia
           project={project}

@@ -33,6 +33,11 @@ const spreads: Spread[] = [
 ];
 
 const LAST = spreads.length - 1;
+
+/* The closed book's resting angle (degrees): leaning back, turned to show its
+   page block on the right, and set down slightly askew. */
+const REST_POSE = { x: 10, y: -14, z: -4 };
+const FLAT_POSE = { x: 0, y: 0, z: 0 };
 const leftFolio = (i: number) => i * 2 + 2;
 const rightFolio = (i: number) => i * 2 + 3;
 
@@ -112,7 +117,7 @@ function LeftPage({ spread, index, reveal }: PageProps) {
         <div className={styles.pageFoot}>
           <span className={styles.folio}>{leftFolio(index)}</span>
           <Link
-            href={`/projects/${project.slug}`}
+            href={`/case-studies/${project.slug}`}
             className={styles.textLink}
           >
             Read the case study <ArrowUpRight size={14} weight="regular" aria-hidden="true" />
@@ -169,8 +174,8 @@ function RightPage({ spread, index, reveal, onJump, still }: PageProps) {
               </li>
             ))}
           </ol>
-          <Link href="/projects" className={styles.textLink}>
-            Browse every project <ArrowUpRight size={14} weight="regular" aria-hidden="true" />
+          <Link href="/case-studies" className={styles.textLink}>
+            Browse every case study <ArrowUpRight size={14} weight="regular" aria-hidden="true" />
           </Link>
         </div>
         <span className={`${styles.folio} ${styles.folioRight}`}>{rightFolio(index)}</span>
@@ -208,21 +213,14 @@ function RightPage({ spread, index, reveal, onJump, still }: PageProps) {
       <ul className={styles.elsewhere}>
         {[
           { href: "/services", label: "Services" },
-          { href: "/projects", label: "All projects" },
-          { href: "https://www.linkedin.com/in/james-mboma/", label: "LinkedIn", external: true },
+          { href: "/case-studies", label: "All case studies" },
+          { href: "/contact", label: "Book a call" },
         ].map((item) => (
           <li key={item.href}>
-            {item.external ? (
-              <a href={item.href} target="_blank" rel="noopener noreferrer" className={styles.elsewhereLink}>
-                {item.label}
-                <ArrowUpRight size={20} weight="light" aria-hidden="true" />
-              </a>
-            ) : (
-              <Link href={item.href} className={styles.elsewhereLink}>
-                {item.label}
-                <ArrowUpRight size={20} weight="light" aria-hidden="true" />
-              </Link>
-            )}
+            <Link href={item.href} className={styles.elsewhereLink}>
+              {item.label}
+              <ArrowUpRight size={20} weight="light" aria-hidden="true" />
+            </Link>
           </li>
         ))}
       </ul>
@@ -291,31 +289,47 @@ export function CaseBook() {
 
   const isOpen = cover === "open";
 
-  /* pointer tilt: a few degrees of give while the cover is closed, driven by
-     motion values (no re-renders). Once open the spread lies flat: text on a
-     tilted 3D plane is resampled by the browser and reads soft. */
+  /* The closed book rests at an angle on the desk, in real perspective, and
+     gives a few degrees more to the pointer; driven by motion values (no
+     re-renders). It lies flat as it opens: text on a tilted 3D plane is
+     resampled by the browser and reads soft. Phones keep the flat notepad. */
+  const resting = cover === "closed" && !isNarrow;
+  const pose = resting ? REST_POSE : FLAT_POSE;
   const tiltX = useMotionValue(0);
   const tiltY = useMotionValue(0);
-  const rotateX = useSpring(tiltX, { stiffness: 120, damping: 20 });
-  const rotateY = useSpring(tiltY, { stiffness: 120, damping: 20 });
+  const tiltZ = useMotionValue(0);
+  const rotateX = useSpring(tiltX, { stiffness: 90, damping: 18 });
+  const rotateY = useSpring(tiltY, { stiffness: 90, damping: 18 });
+  const rotateZ = useSpring(tiltZ, { stiffness: 90, damping: 18 });
+
+  useEffect(() => {
+    tiltX.set(pose.x);
+    tiltY.set(pose.y);
+    tiltZ.set(pose.z);
+    if (reduceMotion) {
+      rotateX.jump(pose.x);
+      rotateY.jump(pose.y);
+      rotateZ.jump(pose.z);
+    }
+  }, [pose, reduceMotion, tiltX, tiltY, tiltZ, rotateX, rotateY, rotateZ]);
 
   const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
-    if (reduceMotion || isOpen || cover === "opening" || e.pointerType !== "mouse") return;
+    if (reduceMotion || !resting || e.pointerType !== "mouse") return;
     const rect = e.currentTarget.getBoundingClientRect();
     const px = (e.clientX - rect.left) / rect.width - 0.5;
     const py = (e.clientY - rect.top) / rect.height - 0.5;
-    tiltY.set(px * 6);
-    tiltX.set(-py * 4);
+    tiltY.set(pose.y + px * 8);
+    tiltX.set(pose.x - py * 6);
   };
 
   const resetTilt = () => {
-    tiltX.set(0);
-    tiltY.set(0);
+    tiltX.set(pose.x);
+    tiltY.set(pose.y);
+    tiltZ.set(pose.z);
   };
 
   const openBook = () => {
     if (cover !== "closed") return;
-    resetTilt();
     if (reduceMotion) {
       setCover("open");
       return;
@@ -447,7 +461,7 @@ export function CaseBook() {
           <ol className={styles.flapList}>
             {projects.map((project, i) => (
               <li key={project.slug}>
-                <Link href={`/projects/${project.slug}`} className={styles.flapRow}>
+                <Link href={`/case-studies/${project.slug}`} className={styles.flapRow}>
                   <span className={styles.flapNum}>{String(i + 1).padStart(2, "0")}</span>
                   <span className={styles.flapName}>{titleCase(project.title)}</span>
                   <span className={styles.flapMeta}>{project.category}</span>
@@ -459,7 +473,7 @@ export function CaseBook() {
 
         <motion.div
           className={styles.stageWrap}
-          style={{ rotateX, rotateY }}
+          style={{ rotateX, rotateY, rotate: rotateZ, transformPerspective: 2600 }}
           onPointerMove={handlePointerMove}
           onPointerLeave={resetTilt}
         >

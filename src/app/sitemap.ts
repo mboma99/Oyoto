@@ -22,7 +22,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.9,
     },
     {
-      url: absoluteUrl("/projects"),
+      url: absoluteUrl("/case-studies"),
       lastModified,
       changeFrequency: "weekly",
       priority: 0.9,
@@ -43,7 +43,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   ];
 
   const projectRoutes: MetadataRoute.Sitemap = projects.map((project) => ({
-    url: absoluteUrl(`/projects/${project.slug}`),
+    url: absoluteUrl(`/case-studies/${project.slug}`),
     lastModified,
     changeFrequency: "monthly",
     priority: 0.8,

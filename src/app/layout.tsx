@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { themeScript } from "@/components/ThemeToggle";
 import { DM_Sans, DM_Serif_Display } from "next/font/google";
 import "./globals.css";
 import { SiteHeader } from "@/components/SiteHeader";
@@ -71,7 +72,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${serif.variable} ${sans.variable}`}>
+    // data-theme is set before paint by themeScript, so it can differ from the server render
+    <html lang="en" className={`${serif.variable} ${sans.variable}`} suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+      </head>
       <body>
         <script {...jsonLdScript(siteJsonLd())} />
         <a href="#main" className="skip-link">

@@ -44,6 +44,32 @@
   --gutter: clamp(16px, 4vw, 48px);
 }
 
+/* Dark mode (header toggle, <html data-theme="dark">): the same editorial book
+   at night. Charcoal page, slightly lifted panels, warm-white ink, light pill
+   CTAs; the accent lightens to the pale sky so it keeps its contrast. Still
+   no gradients. */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --ink: #101113; /* page background */
+  --paper: #18191c; /* book pages, panels */
+  --paper-raised: #212327; /* inputs, hovered rows, panel edge */
+  --paper-edge: #2d3035; /* deepest page edge in shadow stacks */
+  --spine: #1d1f23; /* book cover: a step up from the page so it reads */
+  --text: #ededed; /* 16:1 on ink */
+  --muted: #a6a6a6; /* 8:1 on ink */
+  --faint: #8c8c8c; /* 5.5:1 on ink */
+  --line: rgba(237, 237, 237, 0.1);
+  --line-strong: rgba(237, 237, 237, 0.22);
+  --accent: #9db8d3; /* pale sky, 9:1 on ink */
+  --accent-hi: #b9cde1;
+  --on-accent: #101113;
+  --cta: #ededed;
+  --cta-hi: #cfcfcf;
+  --on-cta: #111111;
+  --glass: rgba(16, 17, 19, 0.66);
+  --shadow-soft: rgba(0, 0, 0, 0.55);
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -140,11 +166,6 @@ label {
   height: 2.4em;
   width: auto;
   flex-shrink: 0;
-}
-
-.logo-name {
-  height: 3em;
-  width: auto;
 }
 
 /* ─── Route transitions (React <ViewTransition>, see PageTransition.tsx) ───

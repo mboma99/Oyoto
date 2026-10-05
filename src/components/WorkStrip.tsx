@@ -12,8 +12,8 @@ export function WorkStrip() {
         <h2 id="work-title" className={styles.title}>
           Selected <em>work</em>
         </h2>
-        <Link href="/projects" className={styles.all}>
-          All projects <ArrowUpRight size={14} weight="regular" aria-hidden="true" />
+        <Link href="/case-studies" className={styles.all}>
+          All case studies <ArrowUpRight size={14} weight="regular" aria-hidden="true" />
         </Link>
       </header>
 

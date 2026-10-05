@@ -23,7 +23,7 @@ export function Testimonials() {
                   {t.role}, {t.organisation}
                 </span>
                 {t.projectSlug && (
-                  <Link href={`/projects/${t.projectSlug}`} className={styles.link}>
+                  <Link href={`/case-studies/${t.projectSlug}`} className={styles.link}>
                     Read the case study
                   </Link>
                 )}

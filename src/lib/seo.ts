@@ -43,12 +43,9 @@ const defaultOgCard = {
   alt: `${siteName}, a UK studio building web, mobile and AI products`,
 };
 /** The Cal.com account and event the contact page books into. */
-export const calUsername = "james-mboma-kzbj0s";
+export const calUsername = "oyoto";
 export const calEventSlug = "30min";
 
-export const socialLinks = [
-  "https://www.linkedin.com/in/james-mboma/",
-];
 
 export const serviceAreas = [
   "Full-stack development",
@@ -125,7 +122,7 @@ export function jsonLdScript(data: JsonLdValue) {
 }
 
 export function projectUrl(slug: string) {
-  return absoluteUrl(`/projects/${slug}`);
+  return absoluteUrl(`/case-studies/${slug}`);
 }
 
 export function getProjectBySlug(slug: string) {
@@ -178,7 +175,7 @@ export function projectBreadcrumbJsonLd(slug: string): JsonLdValue | null {
     "@type": "BreadcrumbList",
     itemListElement: [
       { "@type": "ListItem", position: 1, name: "Home", item: absoluteUrl("/") },
-      { "@type": "ListItem", position: 2, name: "Projects", item: absoluteUrl("/projects") },
+      { "@type": "ListItem", position: 2, name: "Case studies", item: absoluteUrl("/case-studies") },
       {
         "@type": "ListItem",
         position: 3,
@@ -189,7 +186,7 @@ export function projectBreadcrumbJsonLd(slug: string): JsonLdValue | null {
   };
 }
 
-/** The case studies as an ordered list, for the home and projects pages. */
+/** The case studies as an ordered list, for the home and case studies pages. */
 export function projectListJsonLd(): JsonLdValue {
   return {
     "@context": "https://schema.org",
@@ -222,7 +219,6 @@ export function siteJsonLd(): JsonLdValue {
         founder: {
           "@id": `${siteUrl}/#person`,
         },
-        sameAs: socialLinks,
         knowsAbout: serviceAreas,
         makesOffer: services.map((service) => ({
           "@type": "Offer",
@@ -241,7 +237,6 @@ export function siteJsonLd(): JsonLdValue {
         jobTitle: "Founder",
         url: siteUrl,
         email: founderEmail,
-        sameAs: socialLinks,
         worksFor: {
           "@id": `${siteUrl}/#organization`,
         },

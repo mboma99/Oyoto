@@ -41,9 +41,9 @@ export default async function ProjectCaseStudy({
   return (
     <PageTransition>
       <main id="main" className={styles.page}>
-        <Link href="/projects" className={styles.back}>
+        <Link href="/case-studies" className={styles.back}>
           <ArrowLeft size={16} weight="regular" aria-hidden="true" />
-          All projects
+          All case studies
         </Link>
 
         <header className={styles.hero}>
@@ -134,7 +134,7 @@ export default async function ProjectCaseStudy({
           </article>
         </div>
 
-        <Link href={`/projects/${next.slug}`} className={styles.next}>
+        <Link href={`/case-studies/${next.slug}`} className={styles.next}>
           <span className={styles.nextLabel}>Next chapter</span>
           <span className={styles.nextTitle}>
             {titleCase(next.title)}

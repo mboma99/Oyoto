@@ -22,26 +22,19 @@ export function SiteFooter() {
             <h2 className={styles.colTitle}>Pages</h2>
             <Link href="/">Home</Link>
             <Link href="/services">Services</Link>
-            <Link href="/projects">Projects</Link>
+            <Link href="/case-studies">Case studies</Link>
             <Link href="/contact">Contact</Link>
           </div>
           <div className={styles.col}>
-            <h2 className={styles.colTitle}>Elsewhere</h2>
-            <a
-              href="https://www.linkedin.com/in/james-mboma/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              LinkedIn
-            </a>
+            <h2 className={styles.colTitle}>Get in touch</h2>
+            <Link href="/contact">Book a call</Link>
+            <Link href="/privacy">Privacy</Link>
           </div>
         </nav>
       </div>
 
       <div className={styles.base}>
-        <span>
-          © 2026 Oyotō · <Link href="/privacy">Privacy</Link>
-        </span>
+        <span>© 2026 Oyotō</span>
         <span>London, United Kingdom</span>
       </div>
     </footer>

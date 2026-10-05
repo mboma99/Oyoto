@@ -6,25 +6,24 @@
 
 - Home: https://oyoto.co.uk/
 - Services: https://oyoto.co.uk/services
-- Projects: https://oyoto.co.uk/projects
+- Case studies: https://oyoto.co.uk/case-studies
 - Contact: https://oyoto.co.uk/contact
 - Sitemap: https://oyoto.co.uk/sitemap.xml
 
 ## Services
 
-- [Websites & CMS](https://oyoto.co.uk/services/websites): fast Next.js websites with a content manager your team updates without a developer.
-- [Mobile apps](https://oyoto.co.uk/services/mobile-apps): cross-platform Flutter apps, with the backend and infrastructure behind them.
-- [AI & machine learning](https://oyoto.co.uk/services/ai-machine-learning): machine learning models and AI features built into real products.
-- [Data & reporting](https://oyoto.co.uk/services/data-engineering): data pipelines and reporting that turn operational data into decision-ready insight.
+- [Build web platforms](https://oyoto.co.uk/services/websites): fast Next.js websites with a content manager your team updates without a developer.
+- [Ship mobile apps](https://oyoto.co.uk/services/mobile-apps): cross-platform Flutter apps, with the backend and infrastructure behind them.
+- [Integrate AI & ML](https://oyoto.co.uk/services/ai-machine-learning): machine learning models and AI features built into real products.
+- [Engineer data pipelines](https://oyoto.co.uk/services/data-engineering): data pipelines and reporting that turn operational data into decision-ready insight.
 
 ## Case Studies
 
-- [Trakr](https://oyoto.co.uk/projects/trakr): AI-driven career intelligence and application tracking, in closed beta.
-- [Lloyds Banking Group](https://oyoto.co.uk/projects/lloyds-banking-group): data pipelines and AI summarisation behind senior leadership reporting.
-- [Nike](https://oyoto.co.uk/projects/nike): recommender and classification models driving member engagement.
-- [River Life Church](https://oyoto.co.uk/projects/river-life-church): website and self-managed content for a church family in Bulwell, Nottingham.
+- [Trakr](https://oyoto.co.uk/case-studies/trakr): AI-driven career intelligence and application tracking, in closed beta.
+- [Lloyds Banking Group](https://oyoto.co.uk/case-studies/lloyds-banking-group): data pipelines and AI summarisation behind senior leadership reporting.
+- [Nike](https://oyoto.co.uk/case-studies/nike): recommender and classification models driving member engagement.
+- [River Life Church](https://oyoto.co.uk/case-studies/river-life-church): website and self-managed content for a church family in Bulwell, Nottingham.
 
 ## Contact
 
 - Email: hello@oyoto.co.uk
-- LinkedIn: https://www.linkedin.com/in/james-mboma/

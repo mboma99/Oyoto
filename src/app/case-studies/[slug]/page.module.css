@@ -122,7 +122,7 @@
   box-shadow:
     8px 8px 0 var(--paper-raised),
     16px 16px 0 var(--paper-edge);
-  /* no entrance animation: this plate is the morph target from /projects */
+  /* no entrance animation: this plate is the morph target from /case-studies */
 }
 
 .plateImage {
