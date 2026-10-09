@@ -378,8 +378,13 @@
     position: static;
   }
 
+  /* a smaller paper stack, inset by its own depth so it clears the gutter */
   .plate {
     aspect-ratio: 4 / 3;
+    margin-right: 8px;
+    box-shadow:
+      4px 4px 0 var(--paper-raised),
+      8px 8px 0 var(--paper-edge);
   }
 
   .pair,
@@ -389,6 +394,27 @@
 
   .phonePlate {
     aspect-ratio: 4 / 5;
+  }
+
+  /* the phones stack one to a row, each wide enough to read; the plate grows
+     to fit them. Only the film stage (a div) — the reduced-motion still keeps
+     the fixed plate above. */
+  .phonePlate:has(> div.phonePlateImage) {
+    aspect-ratio: auto;
+  }
+
+  .phonePlate div.phonePlateImage {
+    position: static;
+    container-type: normal;
+    flex-direction: column;
+    gap: 2.5rem;
+    padding: 2.5rem 0;
+  }
+
+  .phonePlate div.phonePlateImage > * {
+    width: min(68%, 280px);
+    height: auto;
+    margin-inline: 0;
   }
 }
 

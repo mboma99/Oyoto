@@ -4,13 +4,15 @@ import { useSyncExternalStore } from "react";
 import { Moon, Sun } from "@phosphor-icons/react";
 
 /* The theme lives on <html data-theme>, set before first paint by the inline
-   script in the root layout (themeScript) so a saved dark choice never
-   flashes light. This button flips it and remembers the choice. */
+   script in the root layout (themeScript) so dark never flashes light. Until
+   a visitor picks one, it follows their device and keeps following it if the
+   device switches (at sunset, say). This button flips it and remembers the
+   choice, which then wins over the device. */
 
 export const THEME_KEY = "oyoto-theme";
 
 /** Runs in <head> before the page paints. */
-export const themeScript = `try{if(localStorage.getItem("${THEME_KEY}")==="dark")document.documentElement.dataset.theme="dark"}catch(e){}`;
+export const themeScript = `(function(){var d=document.documentElement,m=matchMedia("(prefers-color-scheme: dark)");function saved(){try{return localStorage.getItem("${THEME_KEY}")}catch(e){}}function apply(dark){if(dark)d.dataset.theme="dark";else delete d.dataset.theme}var s=saved();apply(s?s==="dark":m.matches);m.addEventListener("change",function(e){if(!saved())apply(e.matches)})})()`;
 
 function subscribe(onChange: () => void) {
   const observer = new MutationObserver(onChange);

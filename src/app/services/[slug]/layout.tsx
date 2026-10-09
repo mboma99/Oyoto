@@ -22,8 +22,8 @@ export async function generateMetadata({ params }: ServiceLayoutProps): Promise<
   }
 
   return createMetadata({
-    title: service.name,
-    description: `${service.description} A UK studio, Oyoto.`,
+    title: service.seoTitle,
+    description: service.seoDescription,
     path: `/services/${service.slug}`,
   });
 }

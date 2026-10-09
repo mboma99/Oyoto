@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { createMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = createMetadata({
-  title: "Services",
+  title: "Web, App & AI Development Services, UK",
   description:
-    "What Oyoto builds: Next.js websites with a CMS, Flutter mobile apps, AI and machine learning, and data pipelines and reporting.",
+    "Websites, online stores, Flutter mobile apps, AI and data engineering from Oyoto, a UK web and app development studio. Each service backed by a case study.",
   path: "/services",
 });
 

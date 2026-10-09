@@ -4,8 +4,12 @@ export interface Service {
   name: string;
   /** Page headline; the last word is set in italics. */
   title: string;
-  /** One line for cards and meta descriptions. */
+  /** One line for cards. */
   description: string;
+  /** Search result title, without the brand; leads with the phrase people search for. */
+  seoTitle: string;
+  /** Search result snippet, around 155 characters. */
+  seoDescription: string;
   intro: string;
   /** What the engagement covers, each with a line on why it matters. */
   offers: { title: string; body: string }[];
@@ -22,6 +26,9 @@ export const services: Service[] = [
     name: "Build web platforms",
     title: "Architect and ship web platforms",
     description: "Fast Next.js websites with a content manager your team updates without a developer.",
+    seoTitle: "Web Design & Development Agency, UK",
+    seoDescription:
+      "Fast Next.js websites with a content manager your team updates without a developer. Web design and development for businesses across the UK.",
     intro:
       "A website should be quick to load, easy to find and easy to keep current. We design and build Next.js sites around your content, then hand over a content manager so your team can publish news, events and pages themselves.",
     offers: [
@@ -55,6 +62,9 @@ export const services: Service[] = [
     name: "Run online stores",
     title: "Build stores that sell out your drops",
     description: "Online stores with the payments, marketing and compliance behind them, run by your own team.",
+    seoTitle: "E-commerce Website Development, UK",
+    seoDescription:
+      "Online stores with payments, SMS and email marketing, analytics and stock built in, run by your own team. E-commerce development for UK brands.",
     intro:
       "A store is more than a product grid. We build storefronts on the platform you already use, then set up everything behind them: payments, inventory, email and SMS, analytics and the privacy rules that come with collecting customer data.",
     offers: [
@@ -104,6 +114,9 @@ export const services: Service[] = [
     name: "Ship mobile apps",
     title: "Design, build and launch mobile apps",
     description: "Cross-platform mobile apps in Flutter, with the backend and infrastructure behind them.",
+    seoTitle: "Mobile App Development Agency, UK",
+    seoDescription:
+      "iOS and Android apps built in Flutter, with the backend and APIs behind them. A UK mobile app development studio, from prototype to App Store launch.",
     intro:
       "We build mobile apps in Flutter from a single codebase, along with the APIs, authentication and cloud infrastructure they depend on. You get one team responsible for the whole product, not just the screens.",
     offers: [
@@ -137,6 +150,9 @@ export const services: Service[] = [
     name: "Integrate AI & ML",
     title: "Put machine learning into production",
     description: "Machine learning models and AI features built into real products, from recommenders to classifiers.",
+    seoTitle: "AI & Machine Learning Development, UK",
+    seoDescription:
+      "Machine learning models and AI features built into real products, from recommenders to document automation. AI development for UK businesses.",
     intro:
       "We build machine learning into products where it makes a measurable difference: recommenders, classifiers and AI features that handle the slow, repetitive work. Then we make sure the pipelines behind them stay reliable and affordable to run.",
     offers: [
@@ -170,6 +186,9 @@ export const services: Service[] = [
     name: "Engineer data pipelines",
     title: "Turn raw data into decisions",
     description: "Data pipelines and reporting that turn raw operational data into decision-ready insight.",
+    seoTitle: "Data Engineering & BI Consultancy, UK",
+    seoDescription:
+      "Data pipelines, dashboards and reporting that turn operational data into decisions. Data engineering and business intelligence for UK teams.",
     intro:
       "Good reporting starts long before the dashboard. We build the pipelines that gather, clean and shape your data, then the reporting on top, so the people making decisions get answers instead of spreadsheets.",
     offers: [

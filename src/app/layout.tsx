@@ -62,8 +62,12 @@ const sans = DM_Sans({
 });
 
 export const viewport: Viewport = {
-  themeColor: "#f3f3f3",
-  colorScheme: "light",
+  // follows the device, like the page does until a visitor picks a theme
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#f3f3f3" },
+    { media: "(prefers-color-scheme: dark)", color: "#101113" },
+  ],
+  colorScheme: "light dark",
 };
 
 export default function RootLayout({
