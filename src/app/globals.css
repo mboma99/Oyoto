@@ -44,10 +44,10 @@
   --gutter: clamp(16px, 4vw, 48px);
 }
 
-/* Dark mode (header toggle, <html data-theme="dark">): the same editorial book
-   at night. Charcoal page, slightly lifted panels, warm-white ink, light pill
-   CTAs; the accent lightens to the pale sky so it keeps its contrast. Still
-   no gradients. */
+/* Dark mode (<html data-theme="dark">, from the device setting or the header
+   toggle): the same editorial book at night. Charcoal page, slightly lifted
+   panels, warm-white ink, light pill CTAs; the accent lightens to the pale sky
+   so it keeps its contrast. Still no gradients. */
 :root[data-theme="dark"] {
   color-scheme: dark;
   --ink: #101113; /* page background */

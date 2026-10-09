@@ -430,7 +430,7 @@ export function CaseBook() {
 
   return (
     <section className={styles.shell} aria-label="Selected work">
-      <h1 className={styles.srOnly}>Oyotō, a digital product studio: selected work</h1>
+      <h1 className={styles.srOnly}>Oyotō, a UK web and app development studio: selected work</h1>
 
       <div className={styles.intro}>
         <Pitch />

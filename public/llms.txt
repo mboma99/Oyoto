@@ -1,6 +1,6 @@
 # Oyoto
 
-> Oyoto (written Oyotō) is a UK digital product studio. It designs and builds websites, online stores, mobile apps, AI and data platforms for founders and established teams, with work for Nike and Lloyds Banking Group.
+> Oyoto (written Oyotō) is a UK web and app development studio. It designs and builds websites, online stores, mobile apps, AI and data platforms for founders and established teams, with work for Nike and Lloyds Banking Group.
 
 ## Core URLs
 

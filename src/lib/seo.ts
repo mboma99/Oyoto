@@ -7,9 +7,9 @@ export const siteUrl = "https://oyoto.co.uk";
 export const siteName = "Oyoto";
 /** The wordmark as it appears on the page; search engines get both spellings. */
 export const brandName = "Oyotō";
-export const siteTagline = "Web, mobile and AI product studio";
+export const siteTagline = "Web & App Development Studio, UK";
 export const siteDescription =
-  "Oyoto is a UK digital product studio designing and building websites, mobile apps, AI and data platforms for founders and established teams, with work for Nike and Lloyds Banking Group.";
+  "Oyoto is a UK web and app development studio building websites, online stores, mobile apps, AI and data platforms for businesses across the UK, with work for Nike and Lloyds Banking Group.";
 export const founderName = "James Mboma";
 export const contactEmail = "hello@oyoto.co.uk";
 export const founderEmail = "james@oyoto.co.uk";
