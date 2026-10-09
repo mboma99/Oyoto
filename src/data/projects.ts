@@ -1,3 +1,18 @@
+/** A screenshot shown on the case study, below the write-up. */
+export interface Shot {
+  src: string;
+  alt: string;
+  caption: string;
+}
+
+/** A portrait screen recording, shown whole in a phone shell. */
+export interface Phone {
+  video: string;
+  /** Frame shown while the recording loads. */
+  poster: string;
+  label: string;
+}
+
 export interface Project {
   id: string;
   slug: string;
@@ -9,12 +24,14 @@ export interface Project {
   video?: string;
   /** Portrait screen recordings, each shown whole in its own phone shell,
       side by side, instead of a film that fills (and crops) the plate. */
-  phones?: {
-    video: string;
-    /** Frame shown while the recording loads. */
-    poster: string;
-    label: string;
-  }[];
+  phones?: Phone[];
+  /** Phone recordings for a project whose plate is already a desktop film,
+      shown in phone shells in their own section of the case study. */
+  mobile?: Phone[];
+  /** The client's site as we found it, set beside ours, pair by pair. */
+  comparisons?: { before: Shot; after: Shot }[];
+  /** More screens from the build. */
+  gallery?: Shot[];
   /** Public URL of the shipped product, when there is one to visit. */
   liveUrl?: string;
   category: string;
@@ -112,6 +129,78 @@ export const projects: Project[] = [
       solution: "We designed and built a fast Next.js site around the church's own photography, with the essentials (service time, address and directions) up front. A content manager lets the team publish weekly notices and events themselves, a live-stream countdown switches to a 'we're live' banner during Sunday services, and recent videos come straight from the church's YouTube channel.",
       outcome: "River Life now has a warm, modern front door that tells newcomers exactly where to be on a Sunday, and a site the church team keeps up to date themselves each week.",
       techStack: ["Next.js", "React", "TypeScript", "Netlify", "Netlify CMS", "YouTube", "Google Analytics"],
+    },
+  },
+  {
+    id: "5",
+    slug: "kontri-market",
+    title: "KONTRI MARKET",
+    description: "A storefront for a Togolese clothing label, rebuilt so the team can run drops themselves.",
+    image: "/work/kontri/home.jpg",
+    video: "/work/kontri/landing.mp4",
+    mobile: [
+      { video: "/work/kontri/mobile-home.mp4", poster: "/work/kontri/mobile-home.jpg", label: "homepage and lookbooks" },
+      { video: "/work/kontri/mobile-shop.mp4", poster: "/work/kontri/mobile-shop.jpg", label: "shop, product and bag" },
+    ],
+    comparisons: [
+      {
+        before: {
+          src: "/work/kontri/before-home.jpg",
+          alt: "The original Kontri Market homepage, covered by a sign-up popup and a currency banner",
+          caption: "Before: a sign-up popup and a currency banner on arrival, with nothing behind them but a welcome line.",
+        },
+        after: {
+          src: "/work/kontri/home.jpg",
+          alt: "The new Kontri Market homepage, a full-bleed broadcast-style hero with an Enter the Market button",
+          caption: "After: a broadcast-style hero from the latest lookbook, with one clear way into the shop.",
+        },
+      },
+      {
+        before: {
+          src: "/work/kontri/before-shop.jpg",
+          alt: "The original Kontri Market shop page, blank apart from the footer",
+          caption: "Before: the shop page loaded blank.",
+        },
+        after: {
+          src: "/work/kontri/shop.jpg",
+          alt: "The new Kontri Market shop, with category filters, grid density controls and product cards",
+          caption: "After: a full catalogue with categories, filters and a model/product photo toggle.",
+        },
+      },
+    ],
+    gallery: [
+      {
+        src: "/work/kontri/lookbooks.jpg",
+        alt: "The lookbook archive on the Kontri Market homepage, with numbered drops",
+        caption: "Every drop lives on in a numbered lookbook archive.",
+      },
+      {
+        src: "/work/kontri/lookbook.jpg",
+        alt: "The Made in Lomé lookbook page with campaign photography and a Shop the Drop button",
+        caption: "Lookbooks link straight to the pieces in them.",
+      },
+      {
+        src: "/work/kontri/product.jpg",
+        alt: "A Kontri Market product page with size selection, PayPal, Clearpay and Klarna",
+        caption: "Product pages with live size stock, PayPal and pay-later options.",
+      },
+      {
+        src: "/work/kontri/consent.jpg",
+        alt: "The Kontri Market cookie banner offering Accept all, Essential only and Preferences",
+        caption: "Cookie consent that asks before any tracking runs.",
+      },
+    ],
+    category: "E-commerce",
+    tags: ["WOOCOMMERCE", "WORDPRESS", "E-COMMERCE", "FASHION"],
+    year: "2026",
+    client: "Kontri Market",
+    role: "Design & Development",
+    caseStudy: {
+      overview: "Kontri Market is a clothing label and activist project from Togo, selling small runs of hoodies, tees and accessories that carry the country's story. They were already on WordPress, and wanted a platform that matched the strength of the brand and that their own team could run.",
+      challenge: "The original site was a single welcome screen behind a sign-up popup, and the shop page itself loaded blank. Drops sell out in small runs, customers buy from around the world, and the people running the label are designers and organisers, not developers, so launching a drop had to be something they could do themselves.",
+      solution: "We kept them on WordPress and WooCommerce, so nothing they knew was thrown away, and built a custom theme on top. A broadcast-style homepage leads into a lookbook archive where each drop links straight to its pieces, and the shop has category filters, size-level stock and pre-sale and sold-out states. Checkout offers PayPal, Klarna and Clearpay with a currency switcher for overseas buyers, and a consent banner, privacy and cookie policies and a mailing list for drop alerts are built in from the start.",
+      outcome: "Kontri Market now has a storefront that looks like the label and that the team runs themselves, from publishing a lookbook to opening a pre-sale. The new site is in final testing ahead of launch.",
+      techStack: ["WordPress", "WooCommerce", "Custom theme", "PHP", "PayPal", "Klarna", "Clearpay"],
     },
   },
 ];

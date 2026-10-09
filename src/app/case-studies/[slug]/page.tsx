@@ -1,13 +1,26 @@
 import { ViewTransition } from "react";
+import Image from "next/image";
 import PlateMedia from "@/components/PlateMedia";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowUpRight } from "@phosphor-icons/react/ssr";
-import { projects } from "@/data/projects";
+import { projects, type Shot } from "@/data/projects";
 import { servicesForProject } from "@/data/services";
 import { titleCase } from "@/lib/text";
 import { PageTransition } from "@/components/PageTransition";
 import styles from "./page.module.css";
+
+/** Screenshots are taken at 1440 × 900. */
+function Screen({ shot, sizes }: { shot: Shot; sizes: string }) {
+  return (
+    <figure className={styles.screen}>
+      <div className={styles.screenFrame}>
+        <Image src={shot.src} alt={shot.alt} width={1440} height={900} sizes={sizes} />
+      </div>
+      <figcaption className={styles.screenCaption}>{shot.caption}</figcaption>
+    </figure>
+  );
+}
 
 const CHAPTER_WORDS = ["one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"];
 
@@ -133,6 +146,49 @@ export default async function ProjectCaseStudy({
             ))}
           </article>
         </div>
+
+        {project.comparisons && (
+          <section className={styles.screens} aria-labelledby="before-after-title">
+            <h2 id="before-after-title" className={styles.sectionTitle}>
+              Before and <em>after</em>
+            </h2>
+            {project.comparisons.map((pair) => (
+              <div key={pair.after.src} className={styles.pair}>
+                <Screen shot={pair.before} sizes="(max-width: 767px) 100vw, 700px" />
+                <Screen shot={pair.after} sizes="(max-width: 767px) 100vw, 700px" />
+              </div>
+            ))}
+          </section>
+        )}
+
+        {project.gallery && (
+          <section className={styles.screens} aria-labelledby="gallery-title">
+            <h2 id="gallery-title" className={styles.sectionTitle}>
+              Inside the <em>build</em>
+            </h2>
+            <div className={styles.gallery}>
+              {project.gallery.map((shot) => (
+                <Screen key={shot.src} shot={shot} sizes="(max-width: 767px) 100vw, 700px" />
+              ))}
+            </div>
+          </section>
+        )}
+
+        {project.mobile && (
+          <section className={styles.screens} aria-labelledby="mobile-title">
+            <h2 id="mobile-title" className={styles.sectionTitle}>
+              On a <em>phone</em>
+            </h2>
+            <figure className={styles.phonePlate}>
+              <PlateMedia
+                project={{ ...project, video: undefined, image: project.mobile[0].poster, phones: project.mobile }}
+                alt={`${titleCase(project.title)} on a phone`}
+                sizes="(max-width: 1400px) 100vw, 1400px"
+                className={styles.phonePlateImage}
+              />
+            </figure>
+          </section>
+        )}
 
         <Link href={`/case-studies/${next.slug}`} className={styles.next}>
           <span className={styles.nextLabel}>Next chapter</span>

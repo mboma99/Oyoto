@@ -1,6 +1,6 @@
 # Oyoto
 
-> Oyoto (written Oyotō) is a UK digital product studio. It designs and builds websites, mobile apps, AI and data platforms for founders and established teams, with work for Nike and Lloyds Banking Group.
+> Oyoto (written Oyotō) is a UK digital product studio. It designs and builds websites, online stores, mobile apps, AI and data platforms for founders and established teams, with work for Nike and Lloyds Banking Group.
 
 ## Core URLs
 
@@ -13,6 +13,7 @@
 ## Services
 
 - [Build web platforms](https://oyoto.co.uk/services/websites): fast Next.js websites with a content manager your team updates without a developer.
+- [Run online stores](https://oyoto.co.uk/services/ecommerce): online stores with the payments, marketing and compliance behind them.
 - [Ship mobile apps](https://oyoto.co.uk/services/mobile-apps): cross-platform Flutter apps, with the backend and infrastructure behind them.
 - [Integrate AI & ML](https://oyoto.co.uk/services/ai-machine-learning): machine learning models and AI features built into real products.
 - [Engineer data pipelines](https://oyoto.co.uk/services/data-engineering): data pipelines and reporting that turn operational data into decision-ready insight.
@@ -23,6 +24,7 @@
 - [Lloyds Banking Group](https://oyoto.co.uk/case-studies/lloyds-banking-group): data pipelines and AI summarisation behind senior leadership reporting.
 - [Nike](https://oyoto.co.uk/case-studies/nike): recommender and classification models driving member engagement.
 - [River Life Church](https://oyoto.co.uk/case-studies/river-life-church): website and self-managed content for a church family in Bulwell, Nottingham.
+- [Kontri Market](https://oyoto.co.uk/case-studies/kontri-market): a WooCommerce storefront for a Togolese clothing label, rebuilt so the team runs drops themselves.
 
 ## Contact
 

@@ -329,7 +329,7 @@
     font-style: italic;
   }
 
-  /* the four services, tucked under "Services" in the phone index */
+  /* the services, tucked under "Services" in the phone index */
   .indexSub {
     list-style: none;
     display: flex;

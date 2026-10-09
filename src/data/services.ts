@@ -48,7 +48,56 @@ export const services: Service[] = [
       "You're rebranding and want the website to match",
     ],
     stack: ["Next.js", "React", "TypeScript", "Headless CMS", "Netlify", "Vercel"],
-    projects: ["river-life-church"],
+    projects: ["river-life-church", "kontri-market"],
+  },
+  {
+    slug: "ecommerce",
+    name: "Run online stores",
+    title: "Build stores that sell out your drops",
+    description: "Online stores with the payments, marketing and compliance behind them, run by your own team.",
+    intro:
+      "A store is more than a product grid. We build storefronts on the platform you already use, then set up everything behind them: payments, inventory, email and SMS, analytics and the privacy rules that come with collecting customer data.",
+    offers: [
+      {
+        title: "Set up SMS marketing",
+        body: "TCPA-compliant opt-in and opt-out through Klaviyo or Attentive, with abandoned cart and drop alerts.",
+      },
+      {
+        title: "Build your email list",
+        body: "Klaviyo or Omnisend set up with SPF, DKIM and DMARC so you land in the inbox, sign-up points across the site and automated flows.",
+      },
+      {
+        title: "Collect customer data properly",
+        body: "Cookie consent, a privacy policy, and data storage and retention rules that meet GDPR and CCPA.",
+      },
+      {
+        title: "Measure what sells",
+        body: "GA4, Meta and TikTok pixels, UTM tracking and server-side tagging, so you know which posts bring in orders.",
+      },
+      {
+        title: "Give customers accounts",
+        body: "Guest checkout for first-timers, and order history, saved addresses and wishlists for regulars.",
+      },
+      {
+        title: "Make it fast on a phone",
+        body: "A CDN, WebP images that load as you scroll, and a mobile-first build that stays quick on launch day.",
+      },
+      {
+        title: "Take payments and track stock",
+        body: "Klarna and Afterpay at checkout, inventory kept in sync, and restock and waitlist alerts for sold-out pieces.",
+      },
+      {
+        title: "Lock it down",
+        body: "SSL, PCI compliance, and rate limiting and bot protection on every form.",
+      },
+    ],
+    fit: [
+      "Your store is hard to update or doesn't look like your brand",
+      "You sell limited drops and need sign-ups ready before launch",
+      "You're collecting customer data and aren't sure you're compliant",
+    ],
+    stack: ["WooCommerce", "WordPress", "Shopify", "Klaviyo", "GA4", "Klarna", "Cloudflare"],
+    projects: ["kontri-market"],
   },
   {
     slug: "mobile-apps",

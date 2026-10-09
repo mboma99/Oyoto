@@ -229,6 +229,67 @@
   color: var(--accent);
 }
 
+/* ─── Screens: before and after, then the gallery ─── */
+
+.screens {
+  margin-top: clamp(4rem, 9vw, 7rem);
+}
+
+.screens .sectionTitle {
+  margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.screens .sectionTitle em {
+  font-style: italic;
+  color: var(--accent);
+}
+
+/* phone recordings sit whole in their shells; the still (reduced motion)
+   is portrait, so it's contained rather than cropped */
+.phonePlate {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: var(--radius);
+  background: var(--paper);
+}
+
+.phonePlateImage {
+  object-fit: contain;
+}
+
+.pair,
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(1.25rem, 3vw, 2.5rem);
+}
+
+.pair + .pair {
+  margin-top: clamp(2rem, 4vw, 3rem);
+}
+
+.screenFrame {
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--paper);
+}
+
+.screenFrame img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.screenCaption {
+  max-width: 48ch;
+  margin-top: 0.85rem;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: var(--muted);
+}
+
 /* ─── Next chapter ─── */
 
 .next {
@@ -295,6 +356,7 @@
   @media (prefers-reduced-motion: no-preference) {
     .section,
     .margin,
+    .screen,
     .next {
       animation: rise linear both;
       animation-timeline: view();
@@ -318,6 +380,15 @@
 
   .plate {
     aspect-ratio: 4 / 3;
+  }
+
+  .pair,
+  .gallery {
+    grid-template-columns: 1fr;
+  }
+
+  .phonePlate {
+    aspect-ratio: 4 / 5;
   }
 }
 
