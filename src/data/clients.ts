@@ -37,6 +37,13 @@ export const clients: Client[] = [
     projectSlug: "river-life-church",
   },
   {
+    name: "Kontri Market",
+    logo: { src: "/clients/kontri-market.png", width: 232, height: 288 },
+    color: { src: "/clients/kontri-market-color.png" },
+    scale: 1.6,
+    projectSlug: "kontri-market",
+  },
+  {
     name: "Trakr",
     logo: { src: "/clients/trakr.svg", width: 455, height: 176 },
     color: { src: "/clients/trakr-color.svg" },
