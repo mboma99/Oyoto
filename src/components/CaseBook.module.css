@@ -50,6 +50,9 @@
 @media (min-width: 1100px) {
   .flap {
     position: absolute;
+    /* Above .stageWrap: it spans the whole desk (and is transformed, so it
+       paints over earlier siblings), which would swallow clicks on the flaps. */
+    z-index: 1;
     top: 0;
     bottom: 0;
     width: 15rem;
@@ -211,9 +214,14 @@
   display: grid;
   grid-template-columns: 2rem 1fr;
   row-gap: 0.15rem;
+  width: 100%;
   padding: 0.85rem 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  text-align: left;
   color: var(--text);
-  text-decoration: none;
+  cursor: pointer;
 }
 
 .flapNum {
@@ -230,7 +238,8 @@
   transition: color 0.3s var(--ease-out);
 }
 
-.flapRow:hover .flapName {
+.flapRow:hover .flapName,
+.flapRow:focus-visible .flapName {
   color: var(--accent);
 }
 
