@@ -328,13 +328,16 @@ export function CaseBook() {
     tiltZ.set(pose.z);
   };
 
-  const openBook = () => {
+  /** Opens the cover onto spread `at`: the contents by default, or a chapter
+      picked from the jacket flap. */
+  const openBook = (at = 0) => {
     if (cover !== "closed") return;
+    setCurrent(at);
     if (reduceMotion) {
       setCover("open");
       return;
     }
-    setReveal({ left: 0, right: 0, single: 0 });
+    setReveal({ left: at, right: at, single: at });
     setCover("opening");
   };
 
@@ -461,11 +464,11 @@ export function CaseBook() {
           <ol className={styles.flapList}>
             {projects.map((project, i) => (
               <li key={project.slug}>
-                <Link href={`/case-studies/${project.slug}`} className={styles.flapRow}>
+                <button type="button" className={styles.flapRow} onClick={() => openBook(i + 1)}>
                   <span className={styles.flapNum}>{String(i + 1).padStart(2, "0")}</span>
                   <span className={styles.flapName}>{titleCase(project.title)}</span>
                   <span className={styles.flapMeta}>{project.category}</span>
-                </Link>
+                </button>
               </li>
             ))}
           </ol>
@@ -552,7 +555,7 @@ export function CaseBook() {
               <button
                 type="button"
                 className={styles.cover}
-                onClick={openBook}
+                onClick={() => openBook()}
                 onAnimationEnd={finishOpening}
                 aria-label="Open the book of selected work"
                 disabled={cover === "opening"}
